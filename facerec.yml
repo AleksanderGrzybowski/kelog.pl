@@ -1,0 +1,6 @@
+version: '3.1'
+services:
+  facerec:
+    image: kelog/facerec:latest
+    ports:
+      - 61934:8080

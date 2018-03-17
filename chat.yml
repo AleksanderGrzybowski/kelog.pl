@@ -1,0 +1,13 @@
+version: '3.1'
+services:
+  frontend:
+    image: kelog/chat:frontend-latest
+    environment:
+      - BACKEND_URL=/
+    ports:
+      - 51726:80
+      
+  backend:
+    image: kelog/chat:backend-latest
+    ports:
+      - 51727:80

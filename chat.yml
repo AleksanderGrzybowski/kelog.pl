@@ -3,11 +3,11 @@ services:
   frontend:
     image: kelog/chat:frontend-latest
     environment:
-      - BACKEND_URL=/
+      - BACKEND_URL=http://chat.kelog.pl
     ports:
       - 51726:80
       
   backend:
     image: kelog/chat:backend-latest
     ports:
-      - 51727:80
+        - 51727:8080

@@ -2,8 +2,6 @@ version: '3.1'
 services:
   app-2048:
     image: kelog/2048:latest
-    build: .
     ports:
       - 61922:2048
       - 63917:8080
-    restart: always

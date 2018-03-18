@@ -1,0 +1,6 @@
+datasources:
+  - name: influx
+    type: influxdb
+    access: proxy
+    url: http://influx:8086
+    database: cadvisor

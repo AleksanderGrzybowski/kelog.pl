@@ -4,3 +4,9 @@ services:
     image: kelog/aleksandergrzybowski.pl:latest
     ports:
       - 61925:80
+    deploy:
+      resources:
+        limits:
+          memory: 20M
+        reservations:
+          memory: 20M

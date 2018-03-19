@@ -4,3 +4,9 @@ services:
     image: kelog/facerec:latest
     ports:
       - 61934:8080
+    deploy:
+      resources:
+        limits:
+          memory: 150M
+        reservations:
+          memory: 150M

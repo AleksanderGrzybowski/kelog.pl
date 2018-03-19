@@ -12,6 +12,12 @@ services:
     secrets:
       - SMSALERTS_APIPASSWORD
       - SMSALERTS_RECIPIENT
+    deploy:
+      resources:
+        limits:
+          memory: 200M
+        reservations:
+          memory: 200M
 
 secrets:
   SMSALERTS_APIPASSWORD:

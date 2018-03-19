@@ -6,8 +6,20 @@ services:
       - BACKEND_URL=http://chat.kelog.pl
     ports:
       - 51726:80
+    deploy:
+      resources:
+        limits:
+          memory: 20M
+        reservations:
+          memory: 20M
       
   backend:
     image: kelog/chat:backend-latest
     ports:
         - 51727:8080
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+        reservations:
+          memory: 500M

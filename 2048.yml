@@ -5,3 +5,10 @@ services:
     ports:
       - 61922:2048
       - 63917:8080
+    deploy:
+      resources:
+        limits:
+          memory: 100M
+        reservations:
+          memory: 100M
+

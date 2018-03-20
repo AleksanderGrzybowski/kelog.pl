@@ -8,12 +8,16 @@ services:
     environment:
       INFLUXDB_DB: cadvisor
     deploy:
-      replicas: 1
+      resources: 
+        limits:
+          memory: 50M
+        reservations:
+          memory: 50M
 
   grafana:
     image: grafana/grafana:master
     ports:
-      - "8002:3000"
+      - 51827:3000
     environment:
       GF_DASHBOARDS_JSON_ENABLED: 'true'
       GF_DASHBOARDS_JSON_PATH: /dashboards
@@ -34,7 +38,11 @@ services:
         uid: '104'
         gid: '107'
     deploy:
-      replicas: 1
+      resources: 
+        limits:
+          memory: 50M
+        reservations:
+          memory: 50M
 
   cadvisor:
     image: google/cadvisor
@@ -47,6 +55,11 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
     deploy:
       mode: global
+      resources: 
+        limits:
+          memory: 50M
+        reservations:
+          memory: 50M
 
 
 configs:

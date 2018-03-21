@@ -4,7 +4,7 @@ services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:5.3.2
     environment:
-      ES_JAVA_OPTS: '-Xms256m -Xmx256m'
+      ES_JAVA_OPTS: '-Xms128m -Xmx128m'
       xpack.security.enabled: 'false'
       xpack.monitoring.enabled: 'false'
       xpack.graph.enabled: 'false'
@@ -12,19 +12,25 @@ services:
     volumes:
       - esdata:/usr/share/elasticsearch/data
     deploy:
-      replicas: 1
+      resources:
+        limits:
+          memory: 400M
+        reservations:
+          memory: 400M
 
   logstash:
     image: docker.elastic.co/logstash/logstash:5.3.2
     environment:
       XPACK_MONITORING_ENABLED: 'false'
-    deploy:
-      replicas: 1
     configs:
       - source: logstash.conf
         target: /usr/share/logstash/pipeline/logstash.conf
     deploy:
-      replicas: 1
+      resources:
+        limits:
+          memory: 400M
+        reservations:
+          memory: 400M
 
   logspout:
     image: bekt/logspout-logstash
@@ -34,17 +40,27 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     deploy:
       mode: global
+      resources:
+        limits:
+          memory: 20M
+        reservations:
+          memory: 20M
 
   kibana:
     image: docker.elastic.co/kibana/kibana:5.3.2
     ports:
-      - '8000:5601'
+      - 61555:5601
     environment:
       ELASTICSEARCH_URL: 'http://elasticsearch:9200'
       XPACK_SECURITY_ENABLED: 'false'
       XPACK_MONITORING_ENABLED: 'false'
+      NODE_OPTIONS: '--max-old-space-size=600'
     deploy:
-      replicas: 1
+      resources:
+        limits:
+          memory: 700M
+        reservations:
+          memory: 700M
 
 configs:
   logstash.conf:

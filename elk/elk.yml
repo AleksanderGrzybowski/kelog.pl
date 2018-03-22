@@ -61,9 +61,9 @@ services:
     deploy:
       resources:
         limits:
-          memory: 700M
+          memory: 900M
         reservations:
-          memory: 700M
+          memory: 900M
 
 configs:
   logstash.conf:

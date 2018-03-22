@@ -30,6 +30,9 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=jazzstandards
     deploy:
+      placement:
+        constraints:
+          - node.role == manager
       resources:
         limits:
           memory: 150M

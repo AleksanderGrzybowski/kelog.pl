@@ -12,6 +12,9 @@ services:
     volumes:
       - esdata:/usr/share/elasticsearch/data
     deploy:
+      placement:
+        constraints:
+          - node.role == manager
       resources:
         limits:
           memory: 400M

@@ -8,6 +8,9 @@ services:
     environment:
       INFLUXDB_DB: cadvisor
     deploy:
+      placement:
+        constraints:
+          - node.role == manager
       resources: 
         limits:
           memory: 50M

@@ -7,3 +7,12 @@ docker stack deploy -c chat.yml chat
 docker stack deploy -c facerec.yml facerec
 docker stack deploy -c smsalerts.yml smsalerts
 docker stack deploy -c jazzstandards.yml jazzstandards
+
+cd elk
+docker stack deploy -c elk.yml elk
+cd ..
+
+cd grafana
+docker stack deploy -c grafana.yml grafana
+cd ..
+

@@ -15,6 +15,11 @@ services:
     image: kelog/jazzstandards:backend-latest
     ports:
       - 52190:8080
+    configs:
+      - source: jazzstandards.json
+        target: /jazzstandards.json
+    environment:
+      IMPORTFILENAME: /jazzstandards.json
     deploy:
       resources:
         limits:

@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3.3'
 services:
   frontend:
     image: kelog/jazzstandards:frontend-latest
@@ -15,11 +15,11 @@ services:
     image: kelog/jazzstandards:backend-latest
     ports:
       - 52190:8080
+    environment:
+      IMPORTFILENAME: /jazzstandards.json
     configs:
       - source: jazzstandards.json
         target: /jazzstandards.json
-    environment:
-      IMPORTFILENAME: /jazzstandards.json
     deploy:
       resources:
         limits:
@@ -46,3 +46,8 @@ services:
       
 volumes:
   data:
+
+configs:
+  jazzstandards.json:
+    external: true
+

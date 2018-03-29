@@ -6,6 +6,8 @@ services:
     environment:
       MYSQL_DATABASE: tempdata
       MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - data:/var/lib/mysql
     deploy:
       placement:
         constraints:
@@ -47,3 +49,6 @@ services:
 configs:
   grafana-mysql.yml:
     external: true
+
+volumes:
+  data:

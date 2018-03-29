@@ -1,0 +1,8 @@
+datasources:
+  - name: mysql
+    type: mysql
+    access: proxy
+    url: mysql:3306
+    database: tempdata
+    user: root
+    password: root

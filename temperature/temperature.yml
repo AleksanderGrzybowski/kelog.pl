@@ -31,7 +31,7 @@ services:
       - source: dashboard.json
         target: /dashboards/dashboard.json
       - source: dashboards.yml
-        target: /usr/share/grafana/conf/provisioning/dashboards/dashboards.yml
+        target: /etc/grafana/provisioning/dashboards/dashboards.yml
     deploy:
       resources: 
         limits:

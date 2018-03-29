@@ -1,0 +1,9 @@
+version: '2'
+services:
+  collector:
+    image: kelog/temperature:raspberry
+    environment:
+      API_URL: http://temperature-backend.kelog.pl/api/store
+      INTERVAL: 60
+      PLACE: raspberry
+    restart: always

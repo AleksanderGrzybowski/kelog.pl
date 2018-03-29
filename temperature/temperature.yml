@@ -22,9 +22,16 @@ services:
     image: grafana/grafana:5.0.0
     ports:
       - 52222:3000
+    environment:
+      GF_DASHBOARDS_JSON_ENABLED: 'true'
+      GF_DASHBOARDS_JSON_PATH: /dashboards
     configs:
       - source: grafana-mysql.yml
         target: /etc/grafana/provisioning/datasources/datasource.yml
+      - source: dashboard.json
+        target: /dashboards/dashboard.json
+      - source: dashboards.yml
+        target: /usr/share/grafana/conf/provisioning/dashboards/dashboards.yml
     deploy:
       resources: 
         limits:
@@ -48,6 +55,10 @@ services:
 
 configs:
   grafana-mysql.yml:
+    external: true
+  dashboard.json:
+    external: true
+  dashboards.yml:
     external: true
 
 volumes:

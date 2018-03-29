@@ -25,6 +25,7 @@ services:
     environment:
       GF_DASHBOARDS_JSON_ENABLED: 'true'
       GF_DASHBOARDS_JSON_PATH: /dashboards
+      GF_AUTH_ANONYMOUS_ENABLED: 'true'
     configs:
       - source: grafana-mysql.yml
         target: /etc/grafana/provisioning/datasources/datasource.yml

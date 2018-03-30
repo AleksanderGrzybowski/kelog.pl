@@ -15,6 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
+  "id": 1,
   "links": [],
   "panels": [
     {
@@ -23,6 +24,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "mysql",
+      "decimals": 1,
       "fill": 1,
       "gridPos": {
         "h": 13,
@@ -89,7 +91,7 @@
           "format": "short",
           "label": "° C",
           "logBase": 1,
-          "max": "30",
+          "max": "25",
           "min": "10",
           "show": true
         },

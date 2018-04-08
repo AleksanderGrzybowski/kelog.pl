@@ -1,0 +1,11 @@
+version: '2'
+services:
+  icinga:
+    image: jordan/icinga2:latest
+    ports:
+      - 57270:80
+    volumes:
+      - .:/etc/icinga2
+    restart: always
+
+

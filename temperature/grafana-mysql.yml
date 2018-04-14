@@ -3,6 +3,6 @@ datasources:
     type: mysql
     access: proxy
     url: mysql:3306
-    database: tempdata
+    database: temperature
     user: root
     password: root

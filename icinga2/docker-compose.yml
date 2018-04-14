@@ -6,6 +6,7 @@ services:
       - 57270:80
     volumes:
       - .:/etc/icinga2
+      - ./id_rsa:/id_rsa
     restart: always
 
 

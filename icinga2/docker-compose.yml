@@ -1,12 +1,21 @@
-version: '2'
+version: '3.1'
 services:
   icinga:
-    image: jordan/icinga2:latest
+    image: kelog/icinga2:latest
     ports:
       - 57270:80
-    volumes:
-      - .:/etc/icinga2
-      - ./id_rsa:/id_rsa
+    secrets:
+      - KELOGPL_ID_RSA
     restart: always
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+        reservations:
+          memory: 500M
+
+secrets:
+  KELOGPL_ID_RSA:
+    external: true
 
 

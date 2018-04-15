@@ -10,9 +10,9 @@ services:
     deploy:
       resources:
         limits:
-          memory: 500M
+          memory: 300M
         reservations:
-          memory: 500M
+          memory: 300M
 
 secrets:
   KELOGPL_ID_RSA:

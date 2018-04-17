@@ -6,6 +6,9 @@ services:
       - 57270:80
     secrets:
       - KELOGPL_ID_RSA
+    environment:
+      - ICINGAWEB2_ADMIN_USER=${ICINGAWEB2_ADMIN_USER}
+      - ICINGAWEB2_ADMIN_PASS=${ICINGAWEB2_ADMIN_PASS}
     restart: always
     deploy:
       resources:

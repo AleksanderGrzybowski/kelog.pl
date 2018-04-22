@@ -15,9 +15,9 @@ services:
     deploy:
       resources:
         limits:
-          memory: 250M
+          memory: 300M
         reservations:
-          memory: 250M
+          memory: 300M
 
 secrets:
   SMSALERTS_APIPASSWORD:

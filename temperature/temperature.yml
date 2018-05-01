@@ -19,20 +19,13 @@ services:
           memory: 150M
       
   grafana:
-    image: grafana/grafana:5.0.0
+    image: kelog/temperature:grafana
     ports:
       - 52222:3000
     environment:
       GF_DASHBOARDS_JSON_ENABLED: 'true'
       GF_DASHBOARDS_JSON_PATH: /dashboards
       GF_AUTH_ANONYMOUS_ENABLED: 'true'
-    configs:
-      - source: grafana-mysql.yml
-        target: /etc/grafana/provisioning/datasources/datasource.yml
-      - source: dashboard.json
-        target: /dashboards/dashboard.json
-      - source: dashboards.yml
-        target: /etc/grafana/provisioning/dashboards/dashboards.yml
     deploy:
       resources: 
         limits:
@@ -56,14 +49,5 @@ services:
         reservations:
           memory: 300M
   
-
-configs:
-  grafana-mysql.yml:
-    external: true
-  dashboard.json:
-    external: true
-  dashboards.yml:
-    external: true
-
 volumes:
   data:

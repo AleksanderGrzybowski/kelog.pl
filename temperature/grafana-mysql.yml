@@ -1,8 +1,0 @@
-datasources:
-  - name: mysql
-    type: mysql
-    access: proxy
-    url: mysql:3306
-    database: temperature
-    user: root
-    password: root

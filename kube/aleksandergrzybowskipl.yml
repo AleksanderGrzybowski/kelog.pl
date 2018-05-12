@@ -1,0 +1,52 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aleksandergrzybowskipl
+spec:
+  selector:
+    matchLabels:
+      app: aleksandergrzybowskipl
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: aleksandergrzybowskipl
+    spec:
+      containers:
+      - name: aleksandergrzybowskipl
+        image: kelog/aleksandergrzybowski.pl:latest
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 30
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aleksandergrzybowskipl
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    app: aleksandergrzybowskipl
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: aleksandergrzybowski
+spec:
+  rules:
+  - host: aleksandergrzybowski.pl
+    http:
+      paths:
+      - path:
+        backend:
+          serviceName: aleksandergrzybowskipl
+          servicePort: 80
+
+

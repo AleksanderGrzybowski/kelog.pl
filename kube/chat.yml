@@ -1,0 +1,96 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-frontend
+spec:
+  selector:
+    matchLabels:
+      app: chat-frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: chat-frontend
+    spec:
+      containers:
+      - name: chat-frontend
+        image: kelog/chat:frontend-latest
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 30
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-backend
+spec:
+  selector:
+    matchLabels:
+      app: chat-backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: chat-backend
+    spec:
+      containers:
+      - name: chat-backend
+        image: kelog/chat:backend-latest
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chat-frontend
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    app: chat-frontend
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chat-backend
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    app: chat-backend
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: chat
+spec:
+  rules:
+  - host: chat.kelog.pl
+    http:
+      paths:
+      - path: /api
+        backend:
+          serviceName: chat-backend
+          servicePort: 8080
+      - path: /health
+        backend:
+          serviceName: chat-backend
+          servicePort: 8080
+      - path: /
+        backend:
+          serviceName: chat-frontend
+          servicePort: 80
+
+

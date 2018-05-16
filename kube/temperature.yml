@@ -1,0 +1,140 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: temperature-mariadb
+spec:
+  selector:
+    matchLabels:
+      app: temperature-mariadb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: temperature-mariadb
+    spec:
+      containers:
+      - name: temperature-mariadb
+        image: mariadb:latest
+        ports:
+        - containerPort: 3306
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: root
+          - name: MYSQL_DATABASE
+            value: temperature
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql # it's hardcoded in grafana image :(
+spec:
+  ports:
+  - port: 3306
+    protocol: TCP
+  selector:
+    app: temperature-mariadb
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: temperature-grafana
+spec:
+  selector:
+    matchLabels:
+      app: temperature-grafana
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: temperature-grafana
+    spec:
+      containers:
+      - name: temperature-grafana
+        image: kelog/temperature:grafana
+        ports:
+        - containerPort: 3000
+        env:
+          - name: GF_DASHBOARDS_JSON_ENABLED
+            value: 'true'
+          - name: GF_DASHBOARDS_JSON_PATH
+            value: '/dashboards'
+          - name: GF_AUTH_ANONYMOUS_ENABLED
+            value: 'true'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: temperature-grafana
+spec:
+  ports:
+  - port: 3000
+    protocol: TCP
+  selector:
+    app: temperature-grafana
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: temperature-backend
+spec:
+  selector:
+    matchLabels:
+      app: temperature-backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: temperature-backend
+    spec:
+      containers:
+      - name: temperature-backend
+        image: kelog/temperature:backend
+        ports:
+        - containerPort: 8080
+        env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: production
+          - name: SPRING_DATASOURCE_URL
+            value: 'jdbc:mysql://mysql:3306/temperature'
+          - name: SPRING_DATASOURCE_USERNAME
+            value: root
+          - name: SPRING_DATASOURCE_PASSWORD
+            value: root
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: temperature-backend
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    app: temperature-backend
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: temperature
+spec:
+  rules:
+  - host: temperature.kelog.pl
+    http:
+      paths:
+      - path: /api/store
+        backend:
+          serviceName: temperature-backend
+          servicePort: 8080
+      - path: /actuator
+        backend:
+          serviceName: temperature-backend
+          servicePort: 8080
+      - path: /
+        backend:
+          serviceName: temperature-grafana
+          servicePort: 3000
+

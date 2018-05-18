@@ -1,0 +1,145 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jazzstandards-mariadb
+spec:
+  selector:
+    matchLabels:
+      app: jazzstandards-mariadb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: jazzstandards-mariadb
+    spec:
+      containers:
+      - name: jazzstandards-mariadb
+        image: mariadb:latest
+        ports:
+        - containerPort: 3306
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: root
+          - name: MYSQL_DATABASE
+            value: jazzstandards
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jazzstandards-mariadb
+spec:
+  ports:
+  - port: 3306
+    protocol: TCP
+  selector:
+    app: jazzstandards-mariadb
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jazzstandards-backend
+spec:
+  selector:
+    matchLabels:
+      app: jazzstandards-backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: jazzstandards-backend
+    spec:
+      containers:
+      - name: jazzstandards-backend
+        image: kelog/jazzstandards:backend-latest
+        ports:
+        - containerPort: 8080
+        env:
+          - name: IMPORTFILENAME
+            value: '/jazzstandards-json/jazzstandards.json'
+          - name: SPRING_PROFILES_ACTIVE
+            value: production
+          - name: SPRING_DATASOURCE_URL
+            value: 'jdbc:mysql://jazzstandards-mariadb:3306/jazzstandards'
+          - name: SPRING_DATASOURCE_USERNAME
+            value: root
+          - name: SPRING_DATASOURCE_PASSWORD
+            value: root
+        volumeMounts:
+        - name: jazzstandards-json
+          mountPath: /jazzstandards-json
+      volumes:
+      - name: jazzstandards-json
+        configMap:
+          name: jazzstandards-json
+          items:
+          - key: jazzstandards.json
+            path: jazzstandards.json
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jazzstandards-backend
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    app: jazzstandards-backend
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jazzstandards-frontend
+spec:
+  selector:
+    matchLabels:
+      app: jazzstandards-frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: jazzstandards-frontend
+    spec:
+      containers:
+      - name: jazzstandards-frontend
+        image: kelog/jazzstandards:frontend-latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jazzstandards-frontend
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    app: jazzstandards-frontend
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: jazzstandards
+spec:
+  rules:
+  - host: jazzstandards.kelog.pl
+    http:
+      paths:
+      - path: /health
+        backend:
+          serviceName: jazzstandards-backend
+          servicePort: 8080
+      - path: /api
+        backend:
+          serviceName: jazzstandards-backend
+          servicePort: 8080
+      - path: /
+        backend:
+          serviceName: jazzstandards-frontend
+          servicePort: 80
+

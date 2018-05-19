@@ -1,0 +1,69 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smsalerts
+spec:
+  selector:
+    matchLabels:
+      app: smsalerts
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: smsalerts
+    spec:
+      automountServiceAccountToken: false # allow mounting the secret in known place
+      containers:
+      - name: smsalerts
+        image: kelog/smsalerts:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SMSALERTS_APIUSERNAME
+          value: ahneith6Ph
+        - name: SPRING_PROFILES_ACTIVE
+          value: production
+        - name: SMSALERTS_PATTERNS
+          value: 'Wis,Ustro,Skocz'
+        - name: SMSALERTS_INTERVAL
+          value: '300000'
+        volumeMounts:
+        - name: smsalerts-creds
+          mountPath: /run/secrets
+      volumes:
+      - name: smsalerts-creds
+        secret:
+          secretName: smsalerts-creds
+          items:
+          - key: apipassword
+            path: SMSALERTS_APIPASSWORD
+          - key: recipient
+            path: SMSALERTS_RECIPIENT
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: smsalerts
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    app: smsalerts
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: smsalerts
+spec:
+  rules:
+  - host: smsalerts-new.kelog.pl
+    http:
+      paths:
+      - path:
+        backend:
+          serviceName: smsalerts
+          servicePort: 8080
+
+

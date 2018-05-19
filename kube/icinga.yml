@@ -1,0 +1,69 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: icinga
+spec:
+  selector:
+    matchLabels:
+      app: icinga
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: icinga
+    spec:
+      automountServiceAccountToken: false # allow mounting the secret in known place
+      containers:
+      - name: icinga
+        image: kelog/icinga2:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: ICINGAWEB2_ADMIN_USER
+          valueFrom:
+            secretKeyRef:
+              name: icinga-creds
+              key: username
+        - name: ICINGAWEB2_ADMIN_PASS
+          valueFrom:
+            secretKeyRef:
+              name: icinga-creds
+              key: password
+        volumeMounts:
+        - name: icinga-sshkey
+          mountPath: /run/secrets
+      volumes:
+      - name: icinga-sshkey
+        secret:
+          secretName: icinga-creds
+          items:
+          - key: kelogpl_id_rsa
+            path: KELOGPL_ID_RSA
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: icinga
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    app: icinga
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: icinga
+spec:
+  rules:
+  - host: icinga-new.kelog.pl
+    http:
+      paths:
+      - path:
+        backend:
+          serviceName: icinga
+          servicePort: 80
+
+

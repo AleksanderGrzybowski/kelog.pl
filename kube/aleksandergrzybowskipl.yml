@@ -16,6 +16,9 @@ spec:
       containers:
       - name: aleksandergrzybowskipl
         image: kelog/aleksandergrzybowski.pl:latest
+        resources:
+          limits:
+            memory: "20Mi"
         ports:
         - containerPort: 80
         livenessProbe:

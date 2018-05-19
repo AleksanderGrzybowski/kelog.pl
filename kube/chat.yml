@@ -16,6 +16,9 @@ spec:
       containers:
       - name: chat-frontend
         image: kelog/chat:frontend-latest
+        resources:
+          limits:
+            memory: "20Mi"
         ports:
         - containerPort: 80
         livenessProbe:
@@ -41,6 +44,9 @@ spec:
       containers:
       - name: chat-backend
         image: kelog/chat:backend-latest
+        resources:
+          limits:
+            memory: "500Mi"
         ports:
         - containerPort: 8080
         livenessProbe:

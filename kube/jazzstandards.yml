@@ -16,6 +16,9 @@ spec:
       containers:
       - name: jazzstandards-mariadb
         image: mariadb:latest
+        resources:
+          limits:
+            memory: "150Mi"
         ports:
         - containerPort: 3306
         env:
@@ -53,6 +56,9 @@ spec:
       containers:
       - name: jazzstandards-backend
         image: kelog/jazzstandards:backend-latest
+        resources:
+          limits:
+            memory: "200Mi"
         ports:
         - containerPort: 8080
         env:
@@ -106,6 +112,9 @@ spec:
       containers:
       - name: jazzstandards-frontend
         image: kelog/jazzstandards:frontend-latest
+        resources:
+          limits:
+            memory: "20Mi"
         ports:
         - containerPort: 80
 ---

@@ -17,6 +17,9 @@ spec:
       containers:
       - name: icinga
         image: kelog/icinga2:latest
+        resources:
+          limits:
+            memory: "300Mi"
         ports:
         - containerPort: 80
         env:

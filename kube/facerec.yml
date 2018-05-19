@@ -16,6 +16,9 @@ spec:
       containers:
       - name: facerecapp
         image: kelog/facerec:latest
+        resources:
+          limits:
+            memory: "150Mi"
         ports:
         - containerPort: 8080
         livenessProbe:

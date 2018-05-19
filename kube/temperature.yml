@@ -16,6 +16,9 @@ spec:
       containers:
       - name: temperature-mariadb
         image: mariadb:latest
+        resources:
+          limits:
+            memory: "150Mi"
         ports:
         - containerPort: 3306
         env:
@@ -53,6 +56,9 @@ spec:
       containers:
       - name: temperature-grafana
         image: kelog/temperature:grafana
+        resources:
+          limits:
+            memory: "50Mi"
         ports:
         - containerPort: 3000
         env:
@@ -92,6 +98,9 @@ spec:
       containers:
       - name: temperature-backend
         image: kelog/temperature:backend
+        resources:
+          limits:
+            memory: "250Mi"
         ports:
         - containerPort: 8080
         env:

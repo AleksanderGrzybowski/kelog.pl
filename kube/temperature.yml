@@ -21,6 +21,14 @@ spec:
             memory: "150Mi"
         ports:
         - containerPort: 3306
+        livenessProbe:
+          exec:
+            command:
+            - 'mysqladmin'
+            - 'ping'
+            - '-uroot'
+            - '-proot'
+          initialDelaySeconds: 30
         env:
           - name: MYSQL_ROOT_PASSWORD
             value: root
@@ -61,6 +69,11 @@ spec:
             memory: "50Mi"
         ports:
         - containerPort: 3000
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 3000
+          initialDelaySeconds: 30
         env:
           - name: GF_DASHBOARDS_JSON_ENABLED
             value: 'true'
@@ -103,6 +116,11 @@ spec:
             memory: "250Mi"
         ports:
         - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 30
         env:
           - name: SPRING_PROFILES_ACTIVE
             value: production

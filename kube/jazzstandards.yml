@@ -21,6 +21,14 @@ spec:
             memory: "150Mi"
         ports:
         - containerPort: 3306
+        livenessProbe:
+          exec:
+            command:
+            - 'mysqladmin'
+            - 'ping'
+            - '-uroot'
+            - '-proot'
+          initialDelaySeconds: 30
         env:
           - name: MYSQL_ROOT_PASSWORD
             value: root
@@ -61,6 +69,11 @@ spec:
             memory: "200Mi"
         ports:
         - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /api/songs
+            port: 8080
+          initialDelaySeconds: 30
         env:
           - name: IMPORTFILENAME
             value: '/jazzstandards-json/jazzstandards.json'
@@ -115,6 +128,11 @@ spec:
         resources:
           limits:
             memory: "20Mi"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 30
         ports:
         - containerPort: 80
 ---

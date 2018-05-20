@@ -22,12 +22,12 @@ spec:
             memory: "200Mi"
         ports:
         - containerPort: 8080
-        env:
         livenessProbe:
           httpGet:
             path: /
             port: 8080
           initialDelaySeconds: 30
+        env:
         - name: SMSALERTS_APIUSERNAME
           value: ahneith6Ph
         - name: SPRING_PROFILES_ACTIVE

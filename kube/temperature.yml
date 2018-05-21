@@ -84,6 +84,11 @@ spec:
             path: /api/health
             port: 3000
           initialDelaySeconds: 480
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 3000
+          initialDelaySeconds: 480
         env:
           - name: GF_DASHBOARDS_JSON_ENABLED
             value: 'true'
@@ -127,6 +132,11 @@ spec:
         ports:
         - containerPort: 8080
         livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 480
+        readinessProbe:
           httpGet:
             path: /actuator/health
             port: 8080

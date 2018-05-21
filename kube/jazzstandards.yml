@@ -84,6 +84,11 @@ spec:
             path: /api/songs
             port: 8080
           initialDelaySeconds: 480
+        readinessProbe:
+          httpGet:
+            path: /api/songs
+            port: 8080
+          initialDelaySeconds: 480
         env:
           - name: IMPORTFILENAME
             value: '/jazzstandards-json/jazzstandards.json'
@@ -139,6 +144,11 @@ spec:
           limits:
             memory: "20Mi"
         livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 480
+        readinessProbe:
           httpGet:
             path: /
             port: 80

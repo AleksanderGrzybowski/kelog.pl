@@ -26,7 +26,7 @@ spec:
           httpGet:
             path: /
             port: 80
-          initialDelaySeconds: 240
+          initialDelaySeconds: 480
         env:
         - name: ICINGAWEB2_ADMIN_USER
           valueFrom:

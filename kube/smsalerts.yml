@@ -26,7 +26,7 @@ spec:
           httpGet:
             path: /
             port: 8080
-          initialDelaySeconds: 240
+          initialDelaySeconds: 480
         env:
         - name: SMSALERTS_APIUSERNAME
           value: ahneith6Ph

@@ -31,7 +31,7 @@ spec:
             - 'ping'
             - '-uroot'
             - '-proot'
-          initialDelaySeconds: 240
+          initialDelaySeconds: 480
         env:
           - name: MYSQL_ROOT_PASSWORD
             value: root
@@ -83,7 +83,7 @@ spec:
           httpGet:
             path: /api/songs
             port: 8080
-          initialDelaySeconds: 240
+          initialDelaySeconds: 480
         env:
           - name: IMPORTFILENAME
             value: '/jazzstandards-json/jazzstandards.json'
@@ -142,7 +142,7 @@ spec:
           httpGet:
             path: /
             port: 80
-          initialDelaySeconds: 240
+          initialDelaySeconds: 480
         ports:
         - containerPort: 80
 ---

@@ -31,7 +31,7 @@ spec:
             - 'ping'
             - '-uroot'
             - '-proot'
-          initialDelaySeconds: 30
+          initialDelaySeconds: 240
         env:
           - name: MYSQL_ROOT_PASSWORD
             value: root
@@ -76,14 +76,14 @@ spec:
         image: kelog/jazzstandards:backend-latest
         resources:
           limits:
-            memory: "200Mi"
+            memory: "300Mi"
         ports:
         - containerPort: 8080
         livenessProbe:
           httpGet:
             path: /api/songs
             port: 8080
-          initialDelaySeconds: 30
+          initialDelaySeconds: 240
         env:
           - name: IMPORTFILENAME
             value: '/jazzstandards-json/jazzstandards.json'
@@ -142,7 +142,7 @@ spec:
           httpGet:
             path: /
             port: 80
-          initialDelaySeconds: 30
+          initialDelaySeconds: 240
         ports:
         - containerPort: 80
 ---

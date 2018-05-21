@@ -19,14 +19,14 @@ spec:
         image: kelog/smsalerts:latest
         resources:
           limits:
-            memory: "200Mi"
+            memory: "250Mi"
         ports:
         - containerPort: 8080
         livenessProbe:
           httpGet:
             path: /
             port: 8080
-          initialDelaySeconds: 30
+          initialDelaySeconds: 240
         env:
         - name: SMSALERTS_APIUSERNAME
           value: ahneith6Ph
@@ -66,7 +66,7 @@ metadata:
   name: smsalerts
 spec:
   rules:
-  - host: smsalerts-new.kelog.pl
+  - host: smsalerts.kelog.pl
     http:
       paths:
       - path:

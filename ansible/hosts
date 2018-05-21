@@ -1,0 +1,1 @@
+scratch_droplet ansible_host=167.99.128.164 ansible_user=root ansible_ssh_common_args='-o StrictHostKeyChecking=no'

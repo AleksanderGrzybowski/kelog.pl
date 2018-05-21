@@ -19,7 +19,7 @@ spec:
         image: kelog/smsalerts:latest
         resources:
           limits:
-            memory: "250Mi"
+            memory: "300Mi"
         ports:
         - containerPort: 8080
         livenessProbe:

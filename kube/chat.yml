@@ -46,7 +46,7 @@ spec:
         image: kelog/chat:backend-latest
         resources:
           limits:
-            memory: "500Mi"
+            memory: "600Mi"
         ports:
         - containerPort: 8080
         livenessProbe:

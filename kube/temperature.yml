@@ -21,6 +21,9 @@ spec:
             memory: "150Mi"
         ports:
         - containerPort: 3306
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: mariadb-volume
         livenessProbe:
           exec:
             command:
@@ -34,6 +37,13 @@ spec:
             value: root
           - name: MYSQL_DATABASE
             value: temperature
+      volumes:
+      - name: mariadb-volume
+        hostPath:
+          path: /var/kelog.pl/k8s-temperature
+          type: Directory
+      nodeSelector:
+        isstoragehost: 'yes'
 ---
 apiVersion: v1
 kind: Service

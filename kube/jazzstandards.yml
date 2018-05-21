@@ -18,9 +18,12 @@ spec:
         image: mariadb:latest
         resources:
           limits:
-            memory: "150Mi"
+            memory: "300Mi"
         ports:
         - containerPort: 3306
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: mariadb-volume
         livenessProbe:
           exec:
             command:
@@ -34,6 +37,13 @@ spec:
             value: root
           - name: MYSQL_DATABASE
             value: jazzstandards
+      volumes:
+      - name: mariadb-volume
+        hostPath:
+          path: /var/kelog.pl/k8s-jazzstandards
+          type: Directory
+      nodeSelector:
+        isstoragehost: 'yes'
 ---
 apiVersion: v1
 kind: Service

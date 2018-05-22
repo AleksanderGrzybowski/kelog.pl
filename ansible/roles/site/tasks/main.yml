@@ -57,5 +57,8 @@
     msg:
     - '> kubeadm init --apiserver-advertise-address={{ ansible_default_ipv4.address }} --pod-network-cidr=10.244.0.0/16'
     - '> kubectl taint nodes --all node-role.kubernetes.io/master-'
-    - '> kubectl label nodes NODENAME isstoragehost=yes
-
+    - '> kubectl label nodes NODENAME isstoragehost=yes'
+    - '> kubectl create secret generic icinga-creds --from-literal=username=myuser --from-literal=password=mypassword --from-file=kelogpl_id_rsa=/tmp/kelogpl_id_rsa'
+    - '> kubectl create secret generic smsalerts-creds --from-literal=apipassword=letmein --from-literal=recipient=+48123456789'
+    - '> kubectl create configmap jazzstandards-json --from-file=../jazzstandards.json'
+    - '> kubectl create secret tls facerec-cert --key ./privkey2.pem --cert cert2.pem'

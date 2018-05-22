@@ -26,12 +26,14 @@ spec:
           httpGet:
             path: /
             port: 8080
-          initialDelaySeconds: 480
+          failureThreshold: 30
         readinessProbe:
           httpGet:
             path: /
             port: 8080
-          initialDelaySeconds: 480
+          failureThreshold: 30
+      nodeSelector:
+        isstoragehost: 'yes'
 ---
 apiVersion: v1
 kind: Service
@@ -44,7 +46,7 @@ spec:
     protocol: TCP
   - port: 2048
     targetPort: 2048
-    nodePort: 32094
+    nodePort: 32048
     protocol: TCP
     name: game
   type: NodePort

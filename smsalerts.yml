@@ -9,6 +9,7 @@ services:
       - SPRING_PROFILES_ACTIVE=production
       - SMSALERTS_PATTERNS=Wisła,Ustroń,Skoczów
       - SMSALERTS_INTERVAL=300000
+      - SMSALERTS_BASEURL=http://smsalerts.kelog.pl
     secrets:
       - SMSALERTS_APIPASSWORD
       - SMSALERTS_RECIPIENT

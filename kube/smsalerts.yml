@@ -41,6 +41,8 @@ spec:
           value: 'Wis,Ustro,Skocz'
         - name: SMSALERTS_INTERVAL
           value: '300000'
+        - name: SMSALERTS_BASEURL
+          value: 'http://smsalerts.kelog.pl'
         volumeMounts:
         - name: smsalerts-creds
           mountPath: /run/secrets

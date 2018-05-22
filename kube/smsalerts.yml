@@ -26,12 +26,12 @@ spec:
           httpGet:
             path: /
             port: 8080
-          initialDelaySeconds: 480
+          failureThreshold: 30
         readinessProbe:
           httpGet:
             path: /
             port: 8080
-          initialDelaySeconds: 480
+          failureThreshold: 30
         env:
         - name: SMSALERTS_APIUSERNAME
           value: ahneith6Ph

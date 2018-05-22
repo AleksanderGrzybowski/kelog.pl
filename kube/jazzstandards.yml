@@ -31,7 +31,7 @@ spec:
             - 'ping'
             - '-uroot'
             - '-proot'
-          initialDelaySeconds: 480
+          failureThreshold: 30
         env:
           - name: MYSQL_ROOT_PASSWORD
             value: root
@@ -83,12 +83,12 @@ spec:
           httpGet:
             path: /api/songs
             port: 8080
-          initialDelaySeconds: 480
+          failureThreshold: 30
         readinessProbe:
           httpGet:
             path: /api/songs
             port: 8080
-          initialDelaySeconds: 480
+          failureThreshold: 30
         env:
           - name: IMPORTFILENAME
             value: '/jazzstandards-json/jazzstandards.json'
@@ -147,12 +147,12 @@ spec:
           httpGet:
             path: /
             port: 80
-          initialDelaySeconds: 480
+          failureThreshold: 30
         readinessProbe:
           httpGet:
             path: /
             port: 80
-          initialDelaySeconds: 480
+          failureThreshold: 30
         ports:
         - containerPort: 80
 ---

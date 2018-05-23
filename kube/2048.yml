@@ -33,7 +33,7 @@ spec:
             port: 8080
           failureThreshold: 30
       nodeSelector:
-        isstoragehost: 'yes'
+        ismasterhost: 'yes'
 ---
 apiVersion: v1
 kind: Service

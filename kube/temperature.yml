@@ -43,7 +43,7 @@ spec:
           path: /var/kelog.pl/k8s-temperature
           type: Directory
       nodeSelector:
-        isstoragehost: 'yes'
+        ismasterhost: 'yes'
 ---
 apiVersion: v1
 kind: Service

@@ -81,12 +81,12 @@ spec:
         - containerPort: 8080
         livenessProbe:
           httpGet:
-            path: /api/songs
+            path: /health
             port: 8080
           failureThreshold: 30
         readinessProbe:
           httpGet:
-            path: /api/songs
+            path: /health
             port: 8080
           failureThreshold: 30
         env:
@@ -145,12 +145,12 @@ spec:
             memory: "20Mi"
         livenessProbe:
           httpGet:
-            path: /
+            path: /index.html
             port: 80
           failureThreshold: 30
         readinessProbe:
           httpGet:
-            path: /
+            path: /index.html
             port: 80
           failureThreshold: 30
         ports:

@@ -24,12 +24,12 @@ spec:
             memory: "100Mi"
         livenessProbe:
           httpGet:
-            path: /
+            path: /health
             port: 8080
           failureThreshold: 30
         readinessProbe:
           httpGet:
-            path: /
+            path: /health
             port: 8080
           failureThreshold: 30
       nodeSelector:
@@ -42,13 +42,13 @@ metadata:
 spec:
   ports:
   - port: 8080
-    name: info-page
+    name: infopage
     protocol: TCP
   - port: 2048
+    name: game
     targetPort: 2048
     nodePort: 32048
     protocol: TCP
-    name: game
   type: NodePort
   selector:
     app: app2048

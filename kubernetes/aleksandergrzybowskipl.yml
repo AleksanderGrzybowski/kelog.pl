@@ -23,12 +23,12 @@ spec:
         - containerPort: 80
         livenessProbe:
           httpGet:
-            path: /
+            path: /index.html
             port: 80
           failureThreshold: 30
         readinessProbe:
           httpGet:
-            path: /
+            path: /index.html
             port: 80
           failureThreshold: 30
 ---
@@ -60,5 +60,4 @@ spec:
         backend:
           serviceName: aleksandergrzybowskipl
           servicePort: 80
-
 

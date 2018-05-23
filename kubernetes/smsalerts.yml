@@ -24,12 +24,12 @@ spec:
         - containerPort: 8080
         livenessProbe:
           httpGet:
-            path: /
+            path: /health
             port: 8080
           failureThreshold: 30
         readinessProbe:
           httpGet:
-            path: /
+            path: /health
             port: 8080
           failureThreshold: 30
         env:
@@ -38,7 +38,7 @@ spec:
         - name: SPRING_PROFILES_ACTIVE
           value: production
         - name: SMSALERTS_PATTERNS
-          value: 'Wis,Ustro,Skocz'
+          value: 'Wisła,Ustroń,Skoczów'
         - name: SMSALERTS_INTERVAL
           value: '300000'
         - name: SMSALERTS_BASEURL
@@ -80,5 +80,4 @@ spec:
         backend:
           serviceName: smsalerts
           servicePort: 8080
-
 

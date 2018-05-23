@@ -48,6 +48,10 @@ kind: Ingress
 metadata:
   name: aleksandergrzybowski
 spec:
+  tls:
+  - hosts:
+    - aleksandergrzybowski.pl
+    secretName: aleksandergrzybowskipl-cert
   rules:
   - host: aleksandergrzybowski.pl
     http:

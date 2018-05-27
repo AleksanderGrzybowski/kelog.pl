@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: monitoring-influxdb
-  namespace: kube-system
+  namespace: heapster
 spec:
   replicas: 1
   template:
@@ -35,7 +35,7 @@ metadata:
     #kubernetes.io/cluster-service: 'true'
     #kubernetes.io/name: monitoring-influxdb
   name: monitoring-influxdb
-  namespace: kube-system
+  namespace: heapster
 spec:
   ports:
   - port: 8086

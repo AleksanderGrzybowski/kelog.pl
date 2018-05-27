@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: monitoring-grafana
-  namespace: kube-system
+  namespace: heapster
 spec:
   replicas: 1
   template:
@@ -32,12 +32,8 @@ spec:
           # the kubernetes api-server proxy. On production clusters, we recommend
           # removing these env variables, setup auth for grafana, and expose the grafana
           # service using a LoadBalancer or a public IP.
-        - name: GF_AUTH_BASIC_ENABLED
-          value: "false"
         - name: GF_AUTH_ANONYMOUS_ENABLED
-          value: "true"
-        - name: GF_AUTH_ANONYMOUS_ORG_ROLE
-          value: Admin
+          value: "false"
         - name: GF_SERVER_ROOT_URL
           # If you're only using the API Server proxy, set this value instead:
           # value: /api/v1/namespaces/kube-system/services/monitoring-grafana/proxy
@@ -62,7 +58,7 @@ metadata:
     #kubernetes.io/cluster-service: 'true'
     #kubernetes.io/name: monitoring-grafana
   name: monitoring-grafana
-  namespace: kube-system
+  namespace: heapster
 spec:
   # In a production setup, we recommend accessing Grafana through an external Loadbalancer
   # or through a public IP.
@@ -79,7 +75,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: heapster-grafana
-  namespace: kube-system
+  namespace: heapster
 spec:
   rules:
   - host: heapster-grafana.kelog.pl

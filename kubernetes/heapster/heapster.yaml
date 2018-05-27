@@ -2,13 +2,13 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: heapster
-  namespace: kube-system
+  namespace: heapster
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: heapster
-  namespace: kube-system
+  namespace: heapster
 spec:
   replicas: 1
   template:
@@ -25,7 +25,7 @@ spec:
         command:
         - /heapster
         - --source=kubernetes:https://kubernetes.default
-        - --sink=influxdb:http://monitoring-influxdb.kube-system.svc:8086
+        - --sink=influxdb:http://monitoring-influxdb.heapster.svc:8086
 ---
 apiVersion: v1
 kind: Service
@@ -37,7 +37,7 @@ metadata:
     #kubernetes.io/cluster-service: 'true'
     #kubernetes.io/name: Heapster
   name: heapster
-  namespace: kube-system
+  namespace: heapster
 spec:
   ports:
   - port: 80

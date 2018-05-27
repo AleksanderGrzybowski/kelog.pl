@@ -9,4 +9,4 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: heapster
-  namespace: kube-system
+  namespace: heapster

@@ -51,6 +51,8 @@
   with_items:
     - '/var/kelog.pl/k8s-jazzstandards'
     - '/var/kelog.pl/k8s-temperature'
+    - '/var/kelog.pl/k8s-heapster-grafana'
+    - '/var/kelog.pl/k8s-heapster-influxdb'
 
 - name: Print help
   debug:

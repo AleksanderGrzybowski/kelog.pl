@@ -78,7 +78,7 @@ metadata:
   namespace: heapster
 spec:
   rules:
-  - host: heapster-grafana.kelog.pl
+  - host: heapster.kelog.pl
     http:
       paths:
       - path: /

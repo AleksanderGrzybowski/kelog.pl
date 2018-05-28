@@ -1,6 +1,5 @@
 # Use for testing
-# scratch_droplet ansible_host=167.99.128.164 ansible_user=root ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+#scratch_droplet ansible_host=46.101.139.205 ansible_user=root ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 
 
 kelog.pl ansible_host=kelog.pl ansible_user=kelog ansible_ssh_common_args='-o StrictHostKeyChecking=no'
-ubuntu-k8s-worker1 ansible_host=206.189.57.157 ansible_user=root ansible_ssh_common_args='-o StrictHostKeyChecking=no'

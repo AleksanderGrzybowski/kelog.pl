@@ -20,11 +20,9 @@ spec:
         image: docker.elastic.co/elasticsearch/elasticsearch:5.3.0
         resources:
           limits:
-            cpu: 500m
-            memory: 2400Mi
+            memory: 550Mi
           requests:
-            cpu: 100m
-            memory: 2350Mi
+            memory: 550Mi
         ports:
         - containerPort: 9200
           name: db
@@ -33,15 +31,11 @@ spec:
           name: transport
           protocol: TCP
         volumeMounts:
-        - name: elasticsearch-logging
+        - name: elasticsearch-data
           mountPath: /usr/share/elasticsearch/data
         env:
         - name: ES_JAVA_OPTS
           value: "-Xmx256m -Xms256m"
-        - name: "NAMESPACE"
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.namespace
         - name: MINIMUM_MASTER_NODES
           value: "1"
       initContainers:
@@ -51,8 +45,12 @@ spec:
         securityContext:
           privileged: true
       volumes:
-      - name: elasticsearch-logging
-        emptyDir: {}
+      - name: elasticsearch-data
+        hostPath:
+          path: /var/kelog.pl/k8s-elasticsearch
+          type: Directory
+      nodeSelector:
+        ismasterhost: 'yes'
 ---
 apiVersion: v1
 kind: Service

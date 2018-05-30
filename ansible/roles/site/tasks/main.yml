@@ -54,6 +54,14 @@
     - '/var/kelog.pl/k8s-heapster-grafana'
     - '/var/kelog.pl/k8s-heapster-influxdb'
 
+- name: Create folder for Elasticsearch with proper permissions
+  file:
+    path: '/var/kelog.pl/k8s-elasticsearch'
+    state: directory
+    owner: 1000
+    group: 1000
+    mode: 0777
+
 - name: Print help
   debug:
     msg:

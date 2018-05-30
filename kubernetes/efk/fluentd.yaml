@@ -21,6 +21,16 @@ spec:
         env:
         - name: FLUENTD_ARGS
           value: --no-supervisor -q
+        - name: ELASTICSEARCH_USER
+          valueFrom:
+            secretKeyRef:
+              name: elasticsearch-creds
+              key: username
+        - name: ELASTICSEARCH_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: elasticsearch-creds
+              key: password
         resources:
           limits:
             memory: 500Mi

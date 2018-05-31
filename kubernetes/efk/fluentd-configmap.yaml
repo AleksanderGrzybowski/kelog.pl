@@ -266,6 +266,10 @@ data:
        password "#{ENV['ELASTICSEARCH_PASSWORD']}"
        port 9200
        logstash_format true
+
+       # https://github.com/uken/fluent-plugin-elasticsearch/issues/307
+       reload_connections false
+
        # Set the chunk limits.
        buffer_chunk_limit 2M
        buffer_queue_limit 8

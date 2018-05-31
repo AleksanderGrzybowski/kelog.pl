@@ -262,8 +262,6 @@ data:
        log_level info
        include_tag_key true
        host elasticsearch
-       user "#{ENV['ELASTICSEARCH_USER']}"
-       password "#{ENV['ELASTICSEARCH_PASSWORD']}"
        port 9200
        logstash_format true
 

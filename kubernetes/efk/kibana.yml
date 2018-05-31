@@ -46,6 +46,10 @@ kind: Ingress
 metadata:
   name: kibana
   namespace: efk
+  annotations:
+    nginx.ingress.kubernetes.io/auth-type: basic
+    nginx.ingress.kubernetes.io/auth-secret: kibana-basicauth
+    nginx.ingress.kubernetes.io/auth-realm: "Authentication Required - kibana.kelog.pl"
 spec:
   rules:
   - host: kibana.kelog.pl

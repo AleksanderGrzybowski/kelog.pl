@@ -1,4 +1,7 @@
 id_rsa
 id_rsa.pub
+kelogpl_id_rsa
+
 .env
 *.retry
+

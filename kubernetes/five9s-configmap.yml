@@ -1,0 +1,18 @@
+---
+name: google.com
+description: Google
+check:
+  type: http
+  url: 'https://google.com'
+---
+name: onet.pl
+description: Onet.pl
+check:
+  type: http
+  url: 'http://onet.pl'
+---
+name: 500error
+description: Always 500 Server error
+check:
+  type: http
+  url: 'http://httpstat.us/500'

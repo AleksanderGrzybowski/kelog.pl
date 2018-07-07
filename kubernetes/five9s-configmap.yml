@@ -1,18 +1,27 @@
----
-name: google.com
-description: Google
-check:
-  type: http
-  url: 'https://google.com'
----
-name: onet.pl
-description: Onet.pl
-check:
-  type: http
-  url: 'http://onet.pl'
----
-name: 500error
-description: Always 500 Server error
-check:
-  type: http
-  url: 'http://httpstat.us/500'
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: five9s-config
+  labels:
+    app: five9s
+data:
+  config.yml: |
+    ---
+    name: google.com
+    description: Google
+    check:
+      type: http
+      url: 'https://google.com'
+    ---
+    name: onet.pl
+    description: Onet.pl
+    check:
+      type: http
+      url: 'http://onet.pl'
+    ---
+    name: 500error
+    description: Always 500 Server error
+    check:
+      type: http
+      url: 'http://httpstat.us/500'
+    

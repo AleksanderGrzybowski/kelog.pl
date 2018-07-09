@@ -13,6 +13,7 @@ spec:
       labels:
         app: five9s-mariadb
     spec:
+      automountServiceAccountToken: false # allow mounting the secret in known place
       containers:
       - name: five9s-mariadb
         image: mariadb:latest
@@ -103,6 +104,8 @@ spec:
         volumeMounts:
         - name: five9s-config
           mountPath: /five9s-config
+        - name: sshkey
+          mountPath: /run/secrets
       volumes:
       - name: five9s-config
         configMap:
@@ -110,6 +113,12 @@ spec:
           items:
           - key: config.yml
             path: config.yml
+      - name: sshkey
+        secret:
+          secretName: icinga-creds
+          items:
+          - key: kelogpl_id_rsa
+            path: KELOGPL_ID_RSA
 ---
 apiVersion: v1
 kind: Service

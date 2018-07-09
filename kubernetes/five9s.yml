@@ -13,7 +13,6 @@ spec:
       labels:
         app: five9s-mariadb
     spec:
-      automountServiceAccountToken: false # allow mounting the secret in known place
       containers:
       - name: five9s-mariadb
         image: mariadb:latest
@@ -71,6 +70,7 @@ spec:
       labels:
         app: five9s-backend
     spec:
+      automountServiceAccountToken: false # allow mounting the secret in known place
       containers:
       - name: five9s-backend
         image: kelog/five9s:backend-latest

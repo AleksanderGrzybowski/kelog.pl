@@ -42,6 +42,10 @@ spec:
           name: grafana-data
         - mountPath: /etc/grafana/provisioning/datasources/
           name: grafana-datasource
+        - mountPath: /etc/grafana/provisioning/dashboards/
+          name: grafana-dashboard-provider
+        - mountPath: /var/lib/grafana/dashboards/
+          name: grafana-initial-dashboard
       volumes:
       - name: grafana-data
         hostPath:
@@ -53,6 +57,18 @@ spec:
           items:
           - key: influxdb.yml
             path: influxdb.yml
+      - name: grafana-dashboard-provider
+        configMap:
+          name: grafana-dashboard-provider
+          items:
+          - key: provider.yml
+            path: provider.yml
+      - name: grafana-initial-dashboard
+        configMap:
+          name: grafana-initial-dashboard
+          items:
+          - key: initial.json
+            path: initial.json
 ---
 apiVersion: v1
 kind: Service

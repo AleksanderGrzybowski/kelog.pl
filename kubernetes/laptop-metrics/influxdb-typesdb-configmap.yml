@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: influxdb-typesdb
+  name: laptop-metrics-influxdb-typesdb
   labels:
-    app: laptop-monitoring
+    app: laptop-metrics
 data:
   types.db: |
     absolute                value:ABSOLUTE:0:U

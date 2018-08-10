@@ -2,16 +2,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: laptop-monitoring-grafana
+  name: laptop-metrics-grafana
 spec:
   selector:
     matchLabels:
-      app: laptop-monitoring-grafana
+      app: laptop-metrics-grafana
   replicas: 1
   template:
     metadata:
       labels:
-        app: laptop-monitoring-grafana
+        app: laptop-metrics-grafana
     spec:
       containers:
       - name: grafana
@@ -35,7 +35,7 @@ spec:
         - name: GF_SECURITY_ADMIN_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: grafana-admin-password
+              name: laptop-metrics-grafana-admin-password
               key: password
         volumeMounts:
         - mountPath: /var/lib/grafana
@@ -49,23 +49,23 @@ spec:
       volumes:
       - name: grafana-data
         hostPath:
-          path: /grafana-data
+          path: /var/kelog.pl/k8s-laptop-metrics-grafana
           type: Directory
       - name: grafana-datasource
         configMap:
-          name: grafana-datasource
+          name: laptop-metrics-grafana-datasource
           items:
           - key: influxdb.yml
             path: influxdb.yml
       - name: grafana-dashboard-provider
         configMap:
-          name: grafana-dashboard-provider
+          name: laptop-metrics-grafana-dashboard-provider
           items:
           - key: provider.yml
             path: provider.yml
       - name: grafana-initial-dashboard
         configMap:
-          name: grafana-initial-dashboard
+          name: laptop-metrics-grafana-initial-dashboard
           items:
           - key: initial.json
             path: initial.json
@@ -73,25 +73,25 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: laptop-monitoring-grafana
+  name: laptop-metrics-grafana
 spec:
   ports:
   - port: 3000
     protocol: TCP
   selector:
-    app: laptop-monitoring-grafana
+    app: laptop-metrics-grafana
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: laptop-monitoring
+  name: laptop-metrics-grafana
 spec:
   rules:
-  - host: laptop-monitoring.test
+  - host: laptop-metrics.test
     http:
       paths:
       - path: /
         backend:
-          serviceName: laptop-monitoring-grafana
+          serviceName: laptop-metrics-grafana
           servicePort: 3000
 

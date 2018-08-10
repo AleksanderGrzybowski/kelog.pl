@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-dashboard-provider
+  name: laptop-metrics-grafana-dashboard-provider
   labels:
-    app: laptop-monitoring
+    app: laptop-metrics
 data:
   provider.yml: |
     apiVersion: 1

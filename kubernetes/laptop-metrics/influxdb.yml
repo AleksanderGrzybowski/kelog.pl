@@ -2,16 +2,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: laptop-monitoring-influxdb
+  name: laptop-metrics-influxdb
 spec:
   selector:
     matchLabels:
-      app: laptop-monitoring-influxdb
+      app: laptop-metrics-influxdb
   replicas: 1
   template:
     metadata:
       labels:
-        app: laptop-monitoring-influxdb
+        app: laptop-metrics-influxdb
     spec:
       containers:
       - name: influxdb
@@ -37,17 +37,17 @@ spec:
       volumes:
       - name: influxdb-data
         hostPath:
-          path: /influxdb-data
+          path: /var/kelog.pl/k8s-laptop-metrics-influxdb-data
           type: Directory
       - name: influxdb-config
         configMap:
-          name: influxdb-config
+          name: laptop-metrics-influxdb-config
           items:
           - key: influxdb.conf
             path: influxdb.conf
       - name: influxdb-typesdb
         configMap:
-          name: influxdb-typesdb
+          name: laptop-metrics-influxdb-typesdb
           items:
           - key: types.db
             path: types.db
@@ -55,7 +55,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: laptop-monitoring-influxdb-collectd-external
+  name: laptop-metrics-influxdb-collectd-external
 spec:
   type: NodePort
   ports:
@@ -63,16 +63,16 @@ spec:
     nodePort: 32222
     protocol: UDP
   selector:
-    app: laptop-monitoring-influxdb
+    app: laptop-metrics-influxdb
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: laptop-monitoring-influxdb-internal
+  name: laptop-metrics-influxdb-internal
 spec:
   type: ClusterIP
   ports:
   - port: 8086
     protocol: TCP
   selector:
-    app: laptop-monitoring-influxdb
+    app: laptop-metrics-influxdb

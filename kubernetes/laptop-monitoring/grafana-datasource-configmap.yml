@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-datasource
+  labels:
+    app: laptop-monitoring
+data:
+  influxdb.yml: |
+    apiVersion: 1
+    datasources:
+    - name: influxdb
+      type: influxdb
+      access: proxy
+      url: http://laptop-monitoring-influxdb-internal:8086
+      database: collectd
+      editable: true

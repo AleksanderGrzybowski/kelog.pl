@@ -1,0 +1,75 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: laptop-monitoring-grafana
+spec:
+  selector:
+    matchLabels:
+      app: laptop-monitoring-grafana
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: laptop-monitoring-grafana
+    spec:
+      containers:
+      - name: grafana
+        image: grafana/grafana
+        resources:
+          limits:
+            memory: "300Mi"
+        ports:
+        - containerPort: 3000
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 3000
+          failureThreshold: 30
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 3000
+          failureThreshold: 30
+        volumeMounts:
+        - mountPath: /var/lib/grafana
+          name: grafana-data
+        - mountPath: /etc/grafana/provisioning/datasources/
+          name: grafana-datasource
+      volumes:
+      - name: grafana-data
+        hostPath:
+          path: /grafana-data
+          type: Directory
+      - name: grafana-datasource
+        configMap:
+          name: grafana-datasource
+          items:
+          - key: influxdb.yml
+            path: influxdb.yml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: laptop-monitoring-grafana
+spec:
+  ports:
+  - port: 3000
+    protocol: TCP
+  selector:
+    app: laptop-monitoring-grafana
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: laptop-monitoring
+spec:
+  rules:
+  - host: laptop-monitoring.test
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: laptop-monitoring-grafana
+          servicePort: 3000
+

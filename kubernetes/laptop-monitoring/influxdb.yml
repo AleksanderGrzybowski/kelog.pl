@@ -1,0 +1,78 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: laptop-monitoring-influxdb
+spec:
+  selector:
+    matchLabels:
+      app: laptop-monitoring-influxdb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: laptop-monitoring-influxdb
+    spec:
+      containers:
+      - name: influxdb
+        image: influxdb:latest
+        resources:
+          limits:
+            memory: "500Mi"
+        ports:
+        - containerPort: 25826
+          protocol: UDP
+        - containerPort: 8086
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /var/lib/influxdb
+          name: influxdb-data
+        - mountPath: /etc/influxdb/
+          name: influxdb-config
+        - mountPath: /usr/share/collectd/
+          name: influxdb-typesdb
+        env:
+          - name: INFLUXDB_DB
+            value: collectd
+      volumes:
+      - name: influxdb-data
+        hostPath:
+          path: /influxdb-data
+          type: Directory
+      - name: influxdb-config
+        configMap:
+          name: influxdb-config
+          items:
+          - key: influxdb.conf
+            path: influxdb.conf
+      - name: influxdb-typesdb
+        configMap:
+          name: influxdb-typesdb
+          items:
+          - key: types.db
+            path: types.db
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: laptop-monitoring-influxdb-collectd-external
+spec:
+  type: NodePort
+  ports:
+  - port: 25826
+    nodePort: 32222
+    protocol: UDP
+  selector:
+    app: laptop-monitoring-influxdb
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: laptop-monitoring-influxdb-internal
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8086
+    protocol: TCP
+  selector:
+    app: laptop-monitoring-influxdb

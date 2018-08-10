@@ -31,6 +31,12 @@ spec:
             path: /api/health
             port: 3000
           failureThreshold: 30
+        env:
+        - name: GF_SECURITY_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: grafana-admin-password
+              key: password
         volumeMounts:
         - mountPath: /var/lib/grafana
           name: grafana-data

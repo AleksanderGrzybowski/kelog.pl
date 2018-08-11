@@ -77,7 +77,7 @@ spec:
         imagePullPolicy: Always
         resources:
           limits:
-            memory: "300Mi"
+            memory: "400Mi"
         ports:
         - containerPort: 8080
         livenessProbe:

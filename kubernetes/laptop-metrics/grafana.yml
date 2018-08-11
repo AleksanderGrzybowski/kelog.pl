@@ -87,7 +87,7 @@ metadata:
   name: laptop-metrics-grafana
 spec:
   rules:
-  - host: laptop-metrics.test
+  - host: laptop-metrics.kelog.pl
     http:
       paths:
       - path: /

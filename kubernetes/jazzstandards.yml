@@ -1,3 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jazzstandards-mariadb-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 200Mi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -39,9 +49,8 @@ spec:
             value: jazzstandards
       volumes:
       - name: mariadb-volume
-        hostPath:
-          path: /var/kelog.pl/k8s-jazzstandards
-          type: Directory
+        persistentVolumeClaim:
+          claimName: jazzstandards-mariadb-data
       nodeSelector:
         ismasterhost: 'yes'
 ---

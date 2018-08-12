@@ -1,3 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: laptop-metrics-influxdb-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -36,9 +46,8 @@ spec:
             value: collectd
       volumes:
       - name: influxdb-data
-        hostPath:
-          path: /var/kelog.pl/k8s-laptop-metrics-influxdb-data
-          type: Directory
+        persistentVolumeClaim:
+          claimName: laptop-metrics-influxdb-data
       - name: influxdb-config
         configMap:
           name: laptop-metrics-influxdb-config

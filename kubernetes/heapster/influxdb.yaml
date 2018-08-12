@@ -1,3 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: monitoring-influxdb-data
+  namespace: heapster
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -19,9 +31,8 @@ spec:
           name: influxdb-storage
       volumes:
       - name: influxdb-storage
-        hostPath:
-          path: /var/kelog.pl/k8s-heapster-influxdb
-          type: Directory
+        persistentVolumeClaim:
+          claimName: monitoring-influxdb-data
       nodeSelector:
         ismasterhost: 'yes'
 ---

@@ -1,3 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: laptop-metrics-grafana-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Mi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -48,9 +58,8 @@ spec:
           name: grafana-initial-dashboard
       volumes:
       - name: grafana-data
-        hostPath:
-          path: /var/kelog.pl/k8s-laptop-metrics-grafana
-          type: Directory
+        persistentVolumeClaim:
+          claimName: laptop-metrics-grafana-data
       - name: grafana-datasource
         configMap:
           name: laptop-metrics-grafana-datasource

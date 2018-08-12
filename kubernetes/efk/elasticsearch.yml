@@ -1,3 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: elasticsearch-data
+  namespace: efk
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -46,9 +58,8 @@ spec:
           privileged: true
       volumes:
       - name: elasticsearch-data
-        hostPath:
-          path: /var/kelog.pl/k8s-elasticsearch
-          type: Directory
+        persistentVolumeClaim:
+          claimName: elasticsearch-data
       nodeSelector:
         ismasterhost: 'yes'
 ---

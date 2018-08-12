@@ -1,3 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: temperature-mariadb-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 200Mi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -39,9 +49,8 @@ spec:
             value: temperature
       volumes:
       - name: mariadb-volume
-        hostPath:
-          path: /var/kelog.pl/k8s-temperature
-          type: Directory
+        persistentVolumeClaim:
+          claimName: temperature-mariadb-data
       nodeSelector:
         ismasterhost: 'yes'
 ---

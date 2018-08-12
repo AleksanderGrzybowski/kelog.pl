@@ -1,3 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: five9s-mariadb-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 200Mi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -39,9 +49,8 @@ spec:
             value: five9s
       volumes:
       - name: mariadb-volume
-        hostPath:
-          path: /var/kelog.pl/k8s-five9s
-          type: Directory
+        persistentVolumeClaim:
+          claimName: five9s-mariadb-data
       nodeSelector:
         ismasterhost: 'yes'
 ---

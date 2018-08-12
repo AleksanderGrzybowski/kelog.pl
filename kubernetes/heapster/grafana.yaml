@@ -1,3 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: monitoring-grafana-data
+  namespace: heapster
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Mi
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -43,9 +55,8 @@ spec:
         hostPath:
           path: /etc/ssl/certs
       - name: grafana-storage
-        hostPath:
-          path: /var/kelog.pl/k8s-heapster-grafana
-          type: Directory
+        persistentVolumeClaim:
+          claimName: monitoring-grafana-data
       nodeSelector:
         ismasterhost: 'yes'
 ---

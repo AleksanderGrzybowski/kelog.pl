@@ -13,7 +13,6 @@ spec:
       labels:
         app: icinga
     spec:
-      automountServiceAccountToken: false # allow mounting the secret in known place
       containers:
       - name: icinga
         image: kelog/icinga2:latest
@@ -43,16 +42,6 @@ spec:
             secretKeyRef:
               name: icinga-creds
               key: password
-        volumeMounts:
-        - name: icinga-sshkey
-          mountPath: /run/secrets
-      volumes:
-      - name: icinga-sshkey
-        secret:
-          secretName: icinga-creds
-          items:
-          - key: kelogpl_id_rsa
-            path: KELOGPL_ID_RSA
 ---
 apiVersion: v1
 kind: Service

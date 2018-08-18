@@ -3,8 +3,8 @@ services:
   icinga:
     build: .
     ports:
-      - 57270:80
-    volumes:
-      # Note: this file must be owned by UID:GID 102:102
-      - ./kelogpl_id_rsa:/run/secrets/KELOGPL_ID_RSA
+    - 57270:80
+    environment:
+    - ICINGAWEB2_ADMIN_USER=admin
+    - ICINGAWEB2_ADMIN_PASS=admin
 

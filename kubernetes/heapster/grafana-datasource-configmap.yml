@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: monitoring-grafana-datasource
+  namespace: heapster
+  labels:
+    app: monitoring-grafana
+data:
+  influxdb.yml: |
+    apiVersion: 1
+    datasources:
+    - name: heapster-influx
+      type: influxdb
+      access: proxy
+      url: http://monitoring-influxdb:8086
+      database: k8s
+      editable: true

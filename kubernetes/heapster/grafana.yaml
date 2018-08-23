@@ -1,15 +1,14 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: monitoring-grafana
+  name: grafana
   namespace: heapster
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        task: monitoring
-        k8s-app: grafana
+        app: grafana
     spec:
       containers:
       - name: grafana
@@ -30,24 +29,24 @@ spec:
         - name: GF_SECURITY_ADMIN_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: monitoring-grafana-admin-password
+              name: grafana-admin-password
               key: password
       volumes:
       - name: grafana-datasource
         configMap:
-          name: monitoring-grafana-datasource
+          name: grafana-datasource
           items:
           - key: influxdb.yml
             path: influxdb.yml
       - name: grafana-dashboard-provider
         configMap:
-          name: monitoring-grafana-dashboard-provider
+          name: grafana-dashboard-provider
           items:
           - key: provider.yml
             path: provider.yml
       - name: grafana-initial-dashboard
         configMap:
-          name: monitoring-grafana-initial-dashboard
+          name: grafana-initial-dashboard
           items:
           - key: initial.json
             path: initial.json
@@ -57,29 +56,19 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    # For use as a Cluster add-on (https://github.com/kubernetes/kubernetes/tree/master/cluster/addons)
-    # If you are NOT using this as an addon, you should comment out this line.
-    #kubernetes.io/cluster-service: 'true'
-    #kubernetes.io/name: monitoring-grafana
-  name: monitoring-grafana
+  name: grafana
   namespace: heapster
 spec:
-  # In a production setup, we recommend accessing Grafana through an external Loadbalancer
-  # or through a public IP.
-  # type: LoadBalancer
-  # You could also use NodePort to expose the service at a randomly-generated port
-  # type: NodePort
+  selector:
+    app: grafana
   ports:
   - port: 80
     targetPort: 3000
-  selector:
-    k8s-app: grafana
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: heapster-grafana
+  name: grafana
   namespace: heapster
 spec:
   rules:
@@ -88,5 +77,5 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: monitoring-grafana
+          serviceName: grafana
           servicePort: 80

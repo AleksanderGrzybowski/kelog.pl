@@ -1,10 +1,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: monitoring-grafana-initial-dashboard
+  name: grafana-initial-dashboard
   namespace: heapster
-  labels:
-    app: monitoring-grafana
 data:
   initial.json: |
     {

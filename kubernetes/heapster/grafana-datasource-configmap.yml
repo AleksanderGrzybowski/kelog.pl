@@ -10,6 +10,6 @@ data:
     - name: heapster-influx
       type: influxdb
       access: proxy
-      url: http://monitoring-influxdb:8086
+      url: http://influxdb:8086
       database: k8s
       editable: true

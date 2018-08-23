@@ -45,7 +45,7 @@ data:
             "current": false,
             "max": false,
             "min": false,
-            "show": true,
+            "show": false,
             "total": false,
             "values": false
           },
@@ -164,7 +164,7 @@ data:
             "current": false,
             "max": false,
             "min": false,
-            "show": true,
+            "show": false,
             "total": false,
             "values": false
           },
@@ -330,7 +330,7 @@ data:
             "current": false,
             "max": false,
             "min": false,
-            "show": true,
+            "show": false,
             "total": false,
             "values": false
           },
@@ -508,7 +508,7 @@ data:
             "current": false,
             "max": false,
             "min": false,
-            "show": true,
+            "show": false,
             "total": false,
             "values": false
           },
@@ -690,5 +690,5 @@ data:
       "timezone": "",
       "title": "kelog.pl",
       "uid": "8ZZTk5tmk",
-      "version": 10
+      "version": 1
     }

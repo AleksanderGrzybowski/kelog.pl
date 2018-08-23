@@ -24,7 +24,6 @@ data:
       "editable": true,
       "gnetId": null,
       "graphTooltip": 0,
-      "id": 1,
       "links": [],
       "panels": [
         {
@@ -140,7 +139,11 @@ data:
               "min": null,
               "show": false
             }
-          ]
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
         },
         {
           "aliasColors": {},
@@ -302,7 +305,11 @@ data:
               "min": null,
               "show": true
             }
-          ]
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
         },
         {
           "aliasColors": {},
@@ -476,7 +483,11 @@ data:
               "min": null,
               "show": false
             }
-          ]
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
         },
         {
           "aliasColors": {},
@@ -515,7 +526,6 @@ data:
           "steppedLine": false,
           "targets": [
             {
-              "$$hashKey": "object:1818",
               "groupBy": [
                 {
                   "params": [
@@ -558,7 +568,6 @@ data:
               ]
             },
             {
-              "$$hashKey": "object:1894",
               "groupBy": [
                 {
                   "params": [
@@ -620,7 +629,6 @@ data:
           },
           "yaxes": [
             {
-              "$$hashKey": "object:1943",
               "format": "Bps",
               "label": null,
               "logBase": 1,
@@ -629,7 +637,6 @@ data:
               "show": true
             },
             {
-              "$$hashKey": "object:1944",
               "format": "short",
               "label": null,
               "logBase": 1,
@@ -637,7 +644,11 @@ data:
               "min": null,
               "show": false
             }
-          ]
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
         }
       ],
       "refresh": false,
@@ -677,8 +688,7 @@ data:
         ]
       },
       "timezone": "",
-      "title": "playground",
+      "title": "kelog.pl",
       "uid": "8ZZTk5tmk",
-      "version": 8
+      "version": 10
     }
-

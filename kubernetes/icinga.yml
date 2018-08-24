@@ -48,11 +48,10 @@ kind: Service
 metadata:
   name: icinga
 spec:
-  ports:
-  - port: 80
-    protocol: TCP
   selector:
     app: icinga
+  ports:
+  - port: 80
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress

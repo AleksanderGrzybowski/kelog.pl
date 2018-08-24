@@ -67,12 +67,12 @@ metadata:
   name: laptop-metrics-influxdb-collectd-external
 spec:
   type: NodePort
+  selector:
+    app: laptop-metrics-influxdb
   ports:
   - port: 25826
     nodePort: 32222
     protocol: UDP
-  selector:
-    app: laptop-metrics-influxdb
 ---
 apiVersion: v1
 kind: Service
@@ -80,8 +80,8 @@ metadata:
   name: laptop-metrics-influxdb-internal
 spec:
   type: ClusterIP
-  ports:
-  - port: 8086
-    protocol: TCP
   selector:
     app: laptop-metrics-influxdb
+  ports:
+  - port: 8086
+

@@ -84,11 +84,10 @@ kind: Service
 metadata:
   name: laptop-metrics-grafana
 spec:
-  ports:
-  - port: 3000
-    protocol: TCP
   selector:
     app: laptop-metrics-grafana
+  ports:
+  - port: 3000
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress

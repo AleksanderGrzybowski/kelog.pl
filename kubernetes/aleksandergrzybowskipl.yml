@@ -37,11 +37,10 @@ kind: Service
 metadata:
   name: aleksandergrzybowskipl
 spec:
-  ports:
-  - port: 80
-    protocol: TCP
   selector:
     app: aleksandergrzybowskipl
+  ports:
+  - port: 80
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress

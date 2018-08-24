@@ -61,11 +61,10 @@ kind: Service
 metadata:
   name: smsalerts
 spec:
-  ports:
-  - port: 8080
-    protocol: TCP
   selector:
     app: smsalerts
+  ports:
+  - port: 8080
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress

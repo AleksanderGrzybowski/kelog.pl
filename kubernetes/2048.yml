@@ -40,18 +40,16 @@ kind: Service
 metadata:
   name: app2048
 spec:
+  selector:
+    app: app2048
+  type: NodePort
   ports:
   - port: 8080
     name: infopage
-    protocol: TCP
   - port: 2048
     name: game
     targetPort: 2048
     nodePort: 32048
-    protocol: TCP
-  type: NodePort
-  selector:
-    app: app2048
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress

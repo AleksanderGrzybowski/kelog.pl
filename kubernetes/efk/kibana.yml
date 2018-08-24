@@ -3,8 +3,6 @@ kind: Deployment
 metadata:
   name: kibana
   namespace: efk
-  labels:
-    app: kibana
 spec:
   replicas: 1
   selector:
@@ -31,15 +29,12 @@ kind: Service
 metadata:
   name: kibana
   namespace: efk
-  labels:
-    app: kibana
 spec:
-  ports:
-  - port: 5601
-    protocol: TCP
-    targetPort: ui
   selector:
     app: kibana
+  ports:
+  - port: 5601
+    targetPort: ui
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress

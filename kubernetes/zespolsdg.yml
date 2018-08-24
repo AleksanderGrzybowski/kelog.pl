@@ -1,7 +1,7 @@
 kind: Ingress
 apiVersion: extensions/v1beta1
 metadata:
-  name: redirect-ingress
+  name: zespolsdg-redirect
   annotations:
     nginx.ingress.kubernetes.io/configuration-snippet: |
       if ($host ~ ^.*espolsdg\.pl$) {

@@ -70,22 +70,20 @@ kind: Service
 metadata:
   name: chat-frontend
 spec:
-  ports:
-  - port: 80
-    protocol: TCP
   selector:
     app: chat-frontend
+  ports:
+  - port: 80
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: chat-backend
 spec:
-  ports:
-  - port: 8080
-    protocol: TCP
   selector:
     app: chat-backend
+  ports:
+  - port: 8080
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress

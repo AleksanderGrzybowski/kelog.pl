@@ -59,11 +59,10 @@ kind: Service
 metadata:
   name: jazzstandards-mariadb
 spec:
-  ports:
-  - port: 3306
-    protocol: TCP
   selector:
     app: jazzstandards-mariadb
+  ports:
+  - port: 3306
 
 ---
 apiVersion: apps/v1
@@ -125,11 +124,10 @@ kind: Service
 metadata:
   name: jazzstandards-backend
 spec:
-  ports:
-  - port: 8080
-    protocol: TCP
   selector:
     app: jazzstandards-backend
+  ports:
+  - port: 8080
 
 ---
 apiVersion: apps/v1
@@ -170,11 +168,10 @@ kind: Service
 metadata:
   name: jazzstandards-frontend
 spec:
-  ports:
-  - port: 80
-    protocol: TCP
   selector:
     app: jazzstandards-frontend
+  ports:
+  - port: 80
 
 ---
 apiVersion: extensions/v1beta1

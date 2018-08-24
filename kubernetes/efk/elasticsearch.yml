@@ -15,8 +15,6 @@ kind: Deployment
 metadata:
   name: elasticsearch
   namespace: efk
-  labels:
-    app: elasticsearch
 spec:
   replicas: 1
   selector:
@@ -68,12 +66,10 @@ kind: Service
 metadata:
   name: elasticsearch
   namespace: efk
-  labels:
-    app: elasticsearch
 spec:
+  selector:
+    app: elasticsearch
   ports:
   - port: 9200
     protocol: TCP
     targetPort: db
-  selector:
-    app: elasticsearch

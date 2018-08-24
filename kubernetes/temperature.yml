@@ -57,13 +57,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql # it's hardcoded in grafana image :(
+  name: mysql # it's hardcoded in grafana image
 spec:
-  ports:
-  - port: 3306
-    protocol: TCP
   selector:
     app: temperature-mariadb
+  ports:
+  - port: 3306
 
 ---
 apiVersion: apps/v1
@@ -111,12 +110,10 @@ kind: Service
 metadata:
   name: temperature-grafana
 spec:
-  ports:
-  - port: 3000
-    protocol: TCP
   selector:
     app: temperature-grafana
-
+  ports:
+  - port: 3000
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -165,11 +162,10 @@ kind: Service
 metadata:
   name: temperature-backend
 spec:
-  ports:
-  - port: 8080
-    protocol: TCP
   selector:
     app: temperature-backend
+  ports:
+  - port: 8080
 
 ---
 apiVersion: extensions/v1beta1

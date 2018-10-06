@@ -2,21 +2,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: smsalerts
+  name: smsalerts-backend
 spec:
   selector:
     matchLabels:
-      app: smsalerts
+      app: smsalerts-backend
   replicas: 1
   template:
     metadata:
       labels:
-        app: smsalerts
+        app: smsalerts-backend
     spec:
       automountServiceAccountToken: false # allow mounting the secret in known place
       containers:
       - name: smsalerts
         image: kelog/smsalerts:latest
+        imagePullPolicy: Always
         resources:
           limits:
             memory: "350Mi"
@@ -56,15 +57,59 @@ spec:
           - key: recipient
             path: SMSALERTS_RECIPIENT
 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smsalerts-frontend
+spec:
+  selector:
+    matchLabels:
+      app: smsalerts-frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: smsalerts-frontend
+    spec:
+      containers:
+      - name: smsalerts-frontend
+        image: kelog/smsalerts-frontend:latest
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "20Mi"
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /index.html
+            port: 80
+          failureThreshold: 30
+        readinessProbe:
+          httpGet:
+            path: /index.html
+            port: 80
+          failureThreshold: 30
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: smsalerts
+  name: smsalerts-backend
 spec:
   selector:
-    app: smsalerts
+    app: smsalerts-backend
   ports:
   - port: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: smsalerts-frontend
+spec:
+  selector:
+    app: smsalerts-frontend
+  ports:
+  - port: 80
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -75,8 +120,12 @@ spec:
   - host: smsalerts.kelog.pl
     http:
       paths:
-      - path:
+      - path: /
         backend:
-          serviceName: smsalerts
+          serviceName: smsalerts-frontend
+          servicePort: 80
+      - path: /api
+        backend:
+          serviceName: smsalerts-backend
           servicePort: 8080
 

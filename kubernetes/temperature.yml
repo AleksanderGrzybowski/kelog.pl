@@ -65,6 +65,20 @@ spec:
   - port: 3306
 
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-outside
+spec:
+  selector:
+    app: temperature-mariadb
+  type: NodePort
+  ports:
+  - port: 3306
+    targetPort: 3306
+    nodePort: 31306
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -115,59 +129,6 @@ spec:
   ports:
   - port: 3000
 ---
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: temperature-backend
-spec:
-  selector:
-    matchLabels:
-      app: temperature-backend
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: temperature-backend
-    spec:
-      containers:
-      - name: temperature-backend
-        image: kelog/temperature:backend
-        resources:
-          limits:
-            memory: "250Mi"
-        ports:
-        - containerPort: 8080
-        livenessProbe:
-          httpGet:
-            path: /actuator/health
-            port: 8080
-          failureThreshold: 30
-        readinessProbe:
-          httpGet:
-            path: /actuator/health
-            port: 8080
-          failureThreshold: 30
-        env:
-          - name: SPRING_PROFILES_ACTIVE
-            value: production
-          - name: SPRING_DATASOURCE_URL
-            value: 'jdbc:mysql://mysql:3306/temperature'
-          - name: SPRING_DATASOURCE_USERNAME
-            value: root
-          - name: SPRING_DATASOURCE_PASSWORD
-            value: root
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: temperature-backend
-spec:
-  selector:
-    app: temperature-backend
-  ports:
-  - port: 8080
-
----
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -177,14 +138,6 @@ spec:
   - host: temperature.kelog.pl
     http:
       paths:
-      - path: /api/store
-        backend:
-          serviceName: temperature-backend
-          servicePort: 8080
-      - path: /actuator
-        backend:
-          serviceName: temperature-backend
-          servicePort: 8080
       - path: /
         backend:
           serviceName: temperature-grafana

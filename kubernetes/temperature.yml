@@ -28,7 +28,7 @@ spec:
         image: mariadb:latest
         resources:
           limits:
-            memory: "150Mi"
+            memory: "300Mi"
         ports:
         - containerPort: 3306
         volumeMounts:

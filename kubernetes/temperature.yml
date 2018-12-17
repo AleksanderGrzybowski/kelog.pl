@@ -96,6 +96,7 @@ spec:
       containers:
       - name: temperature-grafana
         image: kelog/temperature:grafana
+        imagePullPolicy: Always
         resources:
           limits:
             memory: "50Mi"
@@ -118,6 +119,11 @@ spec:
             value: '/dashboards'
           - name: GF_AUTH_ANONYMOUS_ENABLED
             value: 'true'
+          - name: GF_SECURITY_ADMIN_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: temperature-grafana-admin-password
+                key: password
 ---
 apiVersion: v1
 kind: Service

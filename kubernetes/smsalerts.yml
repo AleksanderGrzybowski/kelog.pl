@@ -128,4 +128,16 @@ spec:
         backend:
           serviceName: smsalerts-backend
           servicePort: 8080
+      - path: /health
+        backend:
+          serviceName: smsalerts-backend
+          servicePort: 8080
+      - path: /info
+        backend:
+          serviceName: smsalerts-backend
+          servicePort: 8080
+      - path: /r
+        backend:
+          serviceName: smsalerts-backend
+          servicePort: 8080
 

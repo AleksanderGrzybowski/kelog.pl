@@ -1,4 +1,15 @@
 ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: smsalerts-db
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -44,9 +55,13 @@ spec:
           value: '300000'
         - name: SMSALERTS_BASEURL
           value: 'http://smsalerts.kelog.pl'
+        - name: SPRING_DATASOURCE_URL
+          value: 'jdbc:h2:file:/db/smsalerts-prod'
         volumeMounts:
         - name: smsalerts-creds
           mountPath: /run/secrets
+        - name: smsalerts-db
+          mountPath: /db
       volumes:
       - name: smsalerts-creds
         secret:
@@ -56,6 +71,9 @@ spec:
             path: SMSALERTS_APIPASSWORD
           - key: recipient
             path: SMSALERTS_RECIPIENT
+      - name: smsalerts-db
+        persistentVolumeClaim:
+          claimName: smsalerts-db
 ---
 apiVersion: apps/v1
 kind: Deployment

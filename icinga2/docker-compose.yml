@@ -7,4 +7,5 @@ services:
     environment:
     - ICINGAWEB2_ADMIN_USER=admin
     - ICINGAWEB2_ADMIN_PASS=admin
+    - ICINGA2_FEATURE_DIRECTOR=false
 

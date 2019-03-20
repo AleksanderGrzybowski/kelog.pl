@@ -42,6 +42,8 @@ spec:
             secretKeyRef:
               name: icinga-creds
               key: password
+        - name: ICINGA2_FEATURE_DIRECTOR
+          value: 'false'
 ---
 apiVersion: v1
 kind: Service

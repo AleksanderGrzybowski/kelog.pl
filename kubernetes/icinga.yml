@@ -33,15 +33,9 @@ spec:
           failureThreshold: 30
         env:
         - name: ICINGAWEB2_ADMIN_USER
-          valueFrom:
-            secretKeyRef:
-              name: icinga-creds
-              key: username
+          value: 'admin'
         - name: ICINGAWEB2_ADMIN_PASS
-          valueFrom:
-            secretKeyRef:
-              name: icinga-creds
-              key: password
+          value: 'admin'
         - name: ICINGA2_FEATURE_DIRECTOR
           value: 'false'
 ---

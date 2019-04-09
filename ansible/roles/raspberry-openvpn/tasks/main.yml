@@ -1,0 +1,16 @@
+- name: Put OpenVPN configuration file
+  template:
+    src: raspberry.conf.j2
+    dest: /etc/openvpn/raspberry.conf
+    owner: root
+    
+- name: Put OpenVPN static key
+  copy:
+    src: ./secrets/raspberry.key
+    dest: /etc/openvpn/raspberry.key
+
+- name: Enable OpenVPN client
+  systemd:
+    name: openvpn@raspberry.service
+    enabled: true
+    state: started

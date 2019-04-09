@@ -4,3 +4,6 @@ id_rsa.pub
 .env
 *.retry
 
+secrets/
+
+.idea

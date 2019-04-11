@@ -1,7 +1,0 @@
-remote {{ hostvars['kelog.pl']['ansible_host'] }}
-secret raspberry.key
-
-dev tun
-ifconfig {{ raspberry_vpn_client_ip }} {{ raspberry_vpn_server_ip }}
-
-

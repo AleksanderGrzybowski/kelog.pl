@@ -2,4 +2,68 @@
   apt:
     name: openvpn
     state: present
-    update_cache: yes
+    
+- name: Put OpenVPN configuration file for ASUS (client)
+  template:
+    src: openvpn-client.conf.j2
+    dest: /etc/openvpn/asus.conf
+    owner: root
+  vars:
+    vpn_remote_host: "{{ hostvars['kelog.pl']['ansible_host'] }}"
+    vpn_remote_port: 21212
+    vpn_static_key_file: asus.key
+    vpn_server_ip: 10.99.0.1 
+    vpn_client_ip: 10.99.0.2
+  when: inventory_hostname == 'asus'
+  
+- name: Put OpenVPN configuration file for Raspberry Pi (client)
+  template:
+    src: openvpn-client.conf.j2
+    dest: /etc/openvpn/raspberry.conf
+    owner: root
+  vars:
+    vpn_remote_host: "{{ hostvars['kelog.pl']['ansible_host'] }}"
+    vpn_remote_port: 21213
+    vpn_static_key_file: raspberry.key
+    vpn_server_ip: 10.98.0.1
+    vpn_client_ip: 10.98.0.2
+  when: inventory_hostname == 'raspberry'
+  
+  
+- name: Put OpenVPN configuration file for ASUS (server)
+  template:
+    src: openvpn-server.conf.j2
+    dest: /etc/openvpn/asus.conf
+    owner: root
+  vars:
+    vpn_remote_port: 21212
+    vpn_static_key_file: asus.key
+    vpn_server_ip: 10.99.0.1
+    vpn_client_ip: 10.99.0.2
+  when: inventory_hostname == 'kelog.pl'
+  
+- name: Put OpenVPN configuration file for Raspberry PI (server)
+  template:
+    src: openvpn-server.conf.j2
+    dest: /etc/openvpn/raspberry.conf
+    owner: root
+  vars:
+    vpn_remote_port: 21213
+    vpn_static_key_file: raspberry.key
+    vpn_server_ip: 10.98.0.1
+    vpn_client_ip: 10.98.0.2
+  when: inventory_hostname == 'kelog.pl'
+    
+- name: Enable OpenVPN client for ASUS
+  systemd:
+    name: openvpn@asus.service
+    enabled: true
+    state: restarted
+  when: inventory_hostname == 'asus' or inventory_hostname == 'kelog.pl'
+  
+- name: Enable OpenVPN client for Raspberry Pi
+  systemd:
+    name: openvpn@raspberry.service
+    enabled: true
+    state: restarted
+  when: inventory_hostname == 'raspberry' or inventory_hostname == 'kelog.pl'

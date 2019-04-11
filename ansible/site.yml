@@ -1,18 +1,16 @@
 ---
 
-- hosts: all
+- hosts:
+  - kelog.pl
+  - raspberry
   gather_facts: False
   become: yes
   tasks:
-  - name: install python 2
+  - name: Install Python (if not yet there)
     raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
-    
+
 - hosts: all
   become: yes
   roles:
-    - role: openvpn
+  - role: openvpn
 
-- hosts: raspberry
-  become: yes
-  roles:
-    - role: raspberry-openvpn

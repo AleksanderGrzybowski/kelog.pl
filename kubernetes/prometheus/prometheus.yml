@@ -35,6 +35,8 @@ metadata:
   labels:
     app: prometheus
 spec:
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: prometheus
@@ -45,7 +47,7 @@ spec:
     spec:
       containers:
       - name: prometheus
-        image: prom/prometheus
+        image: prom/prometheus:v2.8.1
         volumeMounts:
         - name: config
           mountPath: /etc/prometheus/prometheus.yml

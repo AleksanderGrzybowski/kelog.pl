@@ -13,4 +13,5 @@
   become: yes
   roles:
   - role: openvpn
+  - role: node_exporter
 

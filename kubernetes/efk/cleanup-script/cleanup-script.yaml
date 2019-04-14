@@ -1,0 +1,46 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: cleanup-script
+  namespace: efk
+data:
+  cleanup.py: |-
+    import urllib.request
+    import os
+
+    ES_HOST_PORT = os.environ.get('ES_HOST_PORT', 'elasticsearch:9200')
+    KEEP_LAST_COUNT = int(os.environ.get('KEEP_LAST_COUNT', 40))
+
+    print('Cleanup script configuration: ES_HOST_PORT={} KEEP_LAST_COUNT={}'.format(ES_HOST_PORT, KEEP_LAST_COUNT))
+
+    es_url = 'http://' + ES_HOST_PORT
+
+    print('Fetching indices list...')
+    contents = urllib.request.urlopen(es_url + '/_cat/indices?v').read()
+    print('Fetched successfully.')
+
+    all_indices = [line.split()[2] for line in contents.splitlines()]
+    log_indices = sorted([index for index in all_indices if b'logstash' in index])
+
+    print('Found the following logstash indices, count: {}'.format(len(log_indices)))
+    for index in log_indices:
+        print(index)
+
+    if len(log_indices) <= KEEP_LAST_COUNT:
+        print('Nothing to do, limit not reached.')
+        exit()
+
+    indices_to_delete = log_indices[0:(len(log_indices) - KEEP_LAST_COUNT)]
+
+    print('The following indices will be deleted:')
+    for index in indices_to_delete:
+        print(index)
+
+    for index in indices_to_delete:
+        print('Deleting {}...'.format(index))
+        request = urllib.request.Request(es_url + '/' + index.decode('UTF_8'), method='DELETE')
+        response = urllib.request.urlopen(request)
+        print('Response status: {}.'.format(response.getcode()))
+
+
+    print('Cleanup done.')

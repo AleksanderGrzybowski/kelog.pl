@@ -1,2 +1,2 @@
 ---
-node_exporter_cpu_arch: armv7
+node_exporter_cpu_arch: armv6

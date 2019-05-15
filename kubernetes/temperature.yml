@@ -5,6 +5,7 @@ metadata:
 spec:
   accessModes:
   - ReadWriteOnce
+  storageClassName: hostpath
   resources:
     requests:
       storage: 200Mi

@@ -1,0 +1,80 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tracking-app-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tracking-app
+spec:
+  selector:
+    matchLabels:
+      app: tracking-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: tracking-app
+    spec:
+      containers:
+      - name: tracking-app
+        image: kelog/tracking-app:latest
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "200Mi"
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          failureThreshold: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          failureThreshold: 30
+        env:
+        - name: STORAGEPATH
+          value: /storage
+        volumeMounts:
+        - name: tracking-app-data
+          mountPath: /storage
+      volumes:
+      - name: tracking-app-data
+        persistentVolumeClaim:
+          claimName: tracking-app-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tracking-app
+spec:
+  selector:
+    app: tracking-app
+  ports:
+  - port: 8080
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: tracking-app
+spec:
+  rules:
+  - host: extra-css.kelog.pl
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: tracking-app
+          servicePort: 8080
+

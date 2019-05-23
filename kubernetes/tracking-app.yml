@@ -69,6 +69,10 @@ kind: Ingress
 metadata:
   name: tracking-app
 spec:
+  tls:
+  - hosts:
+    - extra-css.kelog.pl
+    secretName: tracking-app-cert
   rules:
   - host: extra-css.kelog.pl
     http:

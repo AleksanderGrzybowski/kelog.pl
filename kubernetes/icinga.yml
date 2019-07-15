@@ -16,6 +16,7 @@ spec:
       containers:
       - name: icinga
         image: kelog/icinga2:latest
+        imagePullPolicy: Always
         resources:
           limits:
             memory: "300Mi"

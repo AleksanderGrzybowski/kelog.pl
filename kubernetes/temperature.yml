@@ -66,20 +66,6 @@ spec:
   - port: 3306
 
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: mysql-outside
-spec:
-  selector:
-    app: temperature-mariadb
-  type: NodePort
-  ports:
-  - port: 3306
-    targetPort: 3306
-    nodePort: 31306
-
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:

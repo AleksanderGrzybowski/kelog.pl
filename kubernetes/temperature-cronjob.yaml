@@ -12,6 +12,7 @@ spec:
           containers:
           - name: temperature-cronjob
             image: kelog/temperature:cronjob
+            imagePullPolicy: Always
             env:
             - name: MYSQL_HOST
               value: 'mysql'

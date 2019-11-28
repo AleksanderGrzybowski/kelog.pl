@@ -9,12 +9,15 @@ spec:
     requests:
       storage: 10Gi
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nextcloud
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: nextcloud
   template:
     metadata:
       labels:

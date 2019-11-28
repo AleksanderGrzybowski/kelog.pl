@@ -44,10 +44,13 @@ spec:
             - '-proot'
           failureThreshold: 30
         env:
-          - name: MYSQL_ROOT_PASSWORD
-            value: root
           - name: MYSQL_DATABASE
             value: temperature
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: temperature-mysql-root-password
+                key: password  
       volumes:
       - name: mariadb-volume
         persistentVolumeClaim:
@@ -58,7 +61,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql # it's hardcoded in grafana image
+  name: mysql
 spec:
   selector:
     app: temperature-mariadb
@@ -125,6 +128,17 @@ spec:
               secretKeyRef:
                 name: temperature-grafana-admin-password
                 key: password
+          - name: MYSQL_HOST
+            value: 'kelog.pl:31306'
+          - name: MYSQL_USERNAME
+            value: 'root'
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: temperature-mysql-root-password
+                key: password 
+          - name: MYSQL_DATABASE
+            value: 'temperature'
 ---
 apiVersion: v1
 kind: Service

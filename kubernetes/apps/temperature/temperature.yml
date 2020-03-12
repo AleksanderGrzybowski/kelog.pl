@@ -47,10 +47,7 @@ spec:
           - name: MYSQL_DATABASE
             value: temperature
           - name: MYSQL_ROOT_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: temperature-mysql-root-password
-                key: password  
+            value: Oopiethuv2paegh
       volumes:
       - name: mariadb-volume
         persistentVolumeClaim:
@@ -110,10 +107,7 @@ spec:
           - name: MYSQL_USERNAME
             value: 'root'
           - name: MYSQL_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: temperature-mysql-root-password
-                key: password
+            value: Oopiethuv2paegh
           - name: GF_DASHBOARDS_JSON_ENABLED
             value: 'true'
           - name: GF_DASHBOARDS_JSON_PATH
@@ -126,14 +120,11 @@ spec:
                 name: temperature-grafana-admin-password
                 key: password
           - name: MYSQL_HOST
-            value: 'kelog.pl:31306'
+            value: 'mysql'
           - name: MYSQL_USERNAME
             value: 'root'
           - name: MYSQL_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: temperature-mysql-root-password
-                key: password 
+            value: Oopiethuv2paegh
           - name: MYSQL_DATABASE
             value: 'temperature'
 ---

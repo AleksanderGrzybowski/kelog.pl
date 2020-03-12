@@ -47,12 +47,12 @@ spec:
             port: 8080
           failureThreshold: 30
         env:
-            ##- name: SMSALERTS_APIUSERNAME
-            #value: ahneith6Ph
         - name: SPRING_PROFILES_ACTIVE
           value: production
         - name: SMSALERTS_PATTERNS
           value: 'Wisła,Ustroń,Skoczów'
+        - name: SMSALERTS_RECIPIENT
+          value: '+48123456789'
         - name: SMSALERTS_INTERVAL
           value: '300000'
         - name: SMSALERTS_BASEURL
@@ -69,8 +69,6 @@ spec:
         secret:
           secretName: smsalerts-creds
           items:
-              #- key: apipassword
-              #path: SMSALERTS_APIPASSWORD
           - key: recipient
             path: SMSALERTS_RECIPIENT
       - name: smsalerts-db

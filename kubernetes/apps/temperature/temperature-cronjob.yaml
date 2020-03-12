@@ -28,7 +28,4 @@ spec:
                   name: temperature-appid
                   key: password
             - name: MYSQL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: temperature-mysql-root-password
-                  key: password
+              value: Oopiethuv2paegh

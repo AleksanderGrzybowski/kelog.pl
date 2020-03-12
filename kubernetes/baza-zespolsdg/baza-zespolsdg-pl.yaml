@@ -1,49 +1,49 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: nextcloud-data
+  name: baza-zespolsdg-data
 spec:
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi
+      storage: 5Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nextcloud
+  name: baza-zespolsdg
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nextcloud
+      app: baza-zespolsdg
   template:
     metadata:
       labels:
-        app: nextcloud
+        app: baza-zespolsdg
     spec:
       containers:
       - name: nextcloud
-        image: nextcloud
+        image: nextcloud:17.0.1-apache
         ports:
         - containerPort: 80
           protocol: TCP
         volumeMounts:
         - mountPath: /var/www/html
-          name: nextcloud-data
+          name: baza-zespolsdg-data
       volumes:
-      - name: nextcloud-data
+      - name: baza-zespolsdg-data
         persistentVolumeClaim:
-          claimName: nextcloud-data
+          claimName: baza-zespolsdg-data
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: nextcloud
+  name: baza-zespolsdg
 spec:
   selector:
-    app: nextcloud
+    app: baza-zespolsdg
   ports:
   - port: 80
     targetPort: 80
@@ -51,17 +51,22 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: nextcloud
+  name: baza-zespolsdg
   annotations:
     nginx.org/client_max_body_size: 1000m
     ingress.kubernetes.io/proxy-body-size: 1000m
     nginx.ingress.kubernetes.io/proxy-body-size: 1000m
 spec:
+  tls:
+  - hosts:
+    - baza.zespolsdg.pl
+    secretName: baza-zespolsdg-cert
   rules:
-  - host: pliki.zespolsdg.pl
+  - host: baza.zespolsdg.pl
     http:
       paths:
       - path: /
         backend:
-          serviceName: nextcloud
+          serviceName: baza-zespolsdg
           servicePort: 80
+

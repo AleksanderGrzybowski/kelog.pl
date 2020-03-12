@@ -10,13 +10,16 @@ spec:
     requests:
       storage: 50Mi
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: grafana
   namespace: prometheus
 spec:
   replicas: 1
+  selector:
+    matchLabels:  
+      app: grafana
   template:
     metadata:
       labels:
@@ -24,7 +27,7 @@ spec:
     spec:
       containers:
       - name: grafana
-        image: grafana/grafana:6.1.6
+        image: grafana/grafana:6.4.2
         ports:
         - containerPort: 3000
           protocol: TCP

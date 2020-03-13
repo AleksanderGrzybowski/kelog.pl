@@ -60,17 +60,9 @@ spec:
         - name: SPRING_DATASOURCE_URL
           value: 'jdbc:h2:file:/db/smsalerts-prod'
         volumeMounts:
-        - name: smsalerts-creds
-          mountPath: /run/secrets
         - name: smsalerts-db
           mountPath: /db
       volumes:
-      - name: smsalerts-creds
-        secret:
-          secretName: smsalerts-creds
-          items:
-          - key: recipient
-            path: SMSALERTS_RECIPIENT
       - name: smsalerts-db
         persistentVolumeClaim:
           claimName: smsalerts-db

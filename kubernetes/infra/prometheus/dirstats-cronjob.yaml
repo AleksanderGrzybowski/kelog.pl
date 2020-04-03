@@ -1,0 +1,39 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: dirstats-cronjob
+  namespace: prometheus
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 120
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: dirstats-cronjob
+            image: ubuntu:latest
+            args:
+            - bash
+            - /dirstats-script/update-dirstats.sh
+            env:
+            volumeMounts:
+            - name: dirstats-script
+              mountPath: /dirstats-script
+            - name: source-folder
+              mountPath: /source
+            - name: target-folder
+              mountPath: /target
+          volumes:
+          - name: dirstats-script
+            configMap:
+              name: dirstats-script
+          - name: source-folder
+            hostPath:
+              path: /var/kubernetes
+          - name: target-folder
+            persistentVolumeClaim:
+              claimName: textfile-collector-data
+
+

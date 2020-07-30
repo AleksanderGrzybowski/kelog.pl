@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: baza-zespolsdg-backup
 spec:
-  schedule: "0 0 * * *"
+  schedule: "0 0 */2 * *"
   jobTemplate:
     spec:
       activeDeadlineSeconds: 1200

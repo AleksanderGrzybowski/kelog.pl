@@ -31,6 +31,9 @@ data:
     s3cmd --config=/tmp/s3cfg put --recursive --storage-class=STANDARD_IA ${BACKUP_ARCHIVE} ${TARGET_BUCKET}
     echo "Finished."
 
+    echo "Removing archive to save space..."
+    rm ${BACKUP_ARCHIVE}
+
     echo "Starting up NextCloud again..."
     kubectl scale deployment baza-zespolsdg --replicas=1
 

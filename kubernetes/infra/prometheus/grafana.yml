@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: grafana
-        image: grafana/grafana:6.4.2
+        image: grafana/grafana:7.0.6
         ports:
         - containerPort: 3000
           protocol: TCP
@@ -39,6 +39,8 @@ spec:
           value: "true"
         - name: GF_AUTH_ORG_ROLE
           value: "Viewer"
+        - name: GF_SERVER_ROOT_URL
+          value: "http://grafana.kelog.pl"
         - name: GF_SECURITY_ADMIN_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -71,6 +73,13 @@ metadata:
 spec:
   rules:
   - host: prometheus.kelog.pl
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: grafana
+          servicePort: 80
+  - host: grafana.kelog.pl
     http:
       paths:
       - path: /

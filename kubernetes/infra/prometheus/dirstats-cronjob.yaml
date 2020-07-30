@@ -4,7 +4,7 @@ metadata:
   name: dirstats-cronjob
   namespace: prometheus
 spec:
-  schedule: "* * * * *"
+  schedule: "30 * * * *"
   jobTemplate:
     spec:
       activeDeadlineSeconds: 120

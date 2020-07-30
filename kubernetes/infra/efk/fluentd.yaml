@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: fluentd
-        image: k8s.gcr.io/fluentd-elasticsearch:v2.0.2
+        image: k8s.gcr.io/fluentd-elasticsearch:v2.4.0
         env:
         - name: FLUENTD_ARGS
           value: --no-supervisor -q

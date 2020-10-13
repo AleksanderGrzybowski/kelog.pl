@@ -31,9 +31,9 @@ spec:
               name: dirstats-script
           - name: source-folder
             hostPath:
-              path: /var/kubernetes
+              path: /var/k8s-hostpath
           - name: target-folder
-            persistentVolumeClaim:
-              claimName: textfile-collector-data
+            hostPath:
+              path: /var/k8s-hostpath/textfile-collector-data
 
 

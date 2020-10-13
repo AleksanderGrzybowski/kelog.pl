@@ -1,15 +1,3 @@
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: grafana-data
-  namespace: prometheus
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 50Mi
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -48,8 +36,8 @@ spec:
               key: password
       volumes:
       - name: grafana-data
-        persistentVolumeClaim:
-          claimName: grafana-data
+        hostPath:
+          path: /var/k8s-hostpath/grafana-data
       nodeSelector:
         ismasterhost: 'yes'
 ---

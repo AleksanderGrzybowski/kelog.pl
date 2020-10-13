@@ -39,7 +39,7 @@ spec:
             configMap:
               name: baza-zespolsdg-backup-script
           - name: source-folder
-            persistentVolumeClaim:
-              claimName: baza-zespolsdg-data
+            hostPath:
+              path: /var/k8s-hostpath/baza-zespolsdg-data
 
 

@@ -61,8 +61,8 @@ spec:
         configMap:
          name: prometheus-config
       - name: data
-        persistentVolumeClaim:
-          claimName: prometheus-data
+        hostPath:
+          path: /var/k8s-hostpath/prometheus-data 
 
 ---
 kind: Service

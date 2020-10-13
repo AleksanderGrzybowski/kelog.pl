@@ -43,5 +43,5 @@ spec:
         hostPath:
           path: /sys
       - name: textfile-collector-data
-        persistentVolumeClaim:
-          claimName: textfile-collector-data
+        hostPath:
+          path: /var/k8s-hostpath/textfile-collector-data

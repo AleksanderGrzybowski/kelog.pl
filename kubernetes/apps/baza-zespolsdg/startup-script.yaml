@@ -1,0 +1,20 @@
+# The reason this is needed is that the backup job sometimes might fail,
+# for example - pod eviction - out of disk space, which happened before.
+# So the easiest way to fix this is just to scale up every day in the morning.
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: baza-zespolsdg-startup-script
+data:
+  startup.sh: |-
+    #! /bin/bash
+    set -e
+
+    echo "Starting startup script, installing dependencies..."
+    apt update && apt-get -y install ca-certificates curl
+    curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+    cp kubectl /bin
+    chmod +x /bin/kubectl
+
+    kubectl scale deployment baza-zespolsdg --replicas=1
+    exit 0

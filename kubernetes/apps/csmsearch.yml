@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: csmsearch
+spec:
+  selector:
+    matchLabels:
+      app: csmsearch
+  replicas: 1
+  strategy: 
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: csmsearch
+    spec:
+      containers:
+      - name: csmsearch
+        image: kelog/csmsearch:latest
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "350Mi"
+        ports:
+        - containerPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: csmsearch
+spec:
+  selector:
+    app: csmsearch
+  ports:
+  - port: 8080
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: smsalerts
+spec:
+  rules:
+  - host: csmsearch.kelog.pl
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: csmsearch
+          servicePort: 8080
+

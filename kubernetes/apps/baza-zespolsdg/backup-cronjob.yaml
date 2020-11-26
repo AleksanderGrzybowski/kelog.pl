@@ -6,7 +6,7 @@ spec:
   schedule: "0 0 */2 * *"
   jobTemplate:
     spec:
-      activeDeadlineSeconds: 1200
+      activeDeadlineSeconds: 3600
       template:
         spec:
           serviceAccountName: baza-zespolsdg-sa

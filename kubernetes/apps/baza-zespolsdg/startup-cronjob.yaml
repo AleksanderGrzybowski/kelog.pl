@@ -1,0 +1,29 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: baza-zespolsdg-startup
+spec:
+  schedule: "0 6 * * *"
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 3600
+      template:
+        spec:
+          serviceAccountName: baza-zespolsdg-sa
+          restartPolicy: Never
+          containers:
+          - name: baza-zespolsdg-startup
+            image: ubuntu:latest
+            imagePullPolicy: Always
+            args:
+            - bash
+            - /startup-script/startup.sh
+            volumeMounts:
+            - name: startup-script
+              mountPath: /startup-script
+          volumes:
+          - name: startup-script
+            configMap:
+              name: baza-zespolsdg-startup-script
+
+

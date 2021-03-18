@@ -16,6 +16,7 @@ spec:
       containers:
       - name: app2048
         image: kelog/2048:latest
+        imagePullPolicy: Never
         ports:
         - containerPort: 2048
         - containerPort: 8080

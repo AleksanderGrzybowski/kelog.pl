@@ -17,7 +17,7 @@ spec:
       containers:
       - name: csmsearch
         image: kelog/csmsearch:latest
-        imagePullPolicy: Always
+        imagePullPolicy: Never
         resources:
           limits:
             memory: "350Mi"

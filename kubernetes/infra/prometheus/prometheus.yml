@@ -17,6 +17,20 @@ data:
         scrape_interval: 10s
         static_configs:
         - targets: ['prometheus-kubernetes-web:4567']
+      - job_name: 'blackbox'
+        metrics_path: /probe
+        params:
+          module: [icmp]
+        static_configs:
+        - targets:
+          - 192.168.1.25
+        relabel_configs:
+          - source_labels: [__address__]
+            target_label: __param_target
+          - source_labels: [__param_target]
+            target_label: instance
+          - target_label: __address__
+            replacement: 192.168.123.2:9115  # This is your blackbox exporter.
 
 ---
 apiVersion: apps/v1

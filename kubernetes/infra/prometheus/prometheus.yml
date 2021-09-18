@@ -53,7 +53,7 @@ spec:
     spec:
       containers:
       - name: prometheus
-        image: prom/prometheus:v2.13.0
+        image: prom/prometheus:v2.30.0
         volumeMounts:
         - name: config
           mountPath: /etc/prometheus/prometheus.yml

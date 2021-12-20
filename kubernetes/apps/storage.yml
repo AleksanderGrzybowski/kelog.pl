@@ -15,9 +15,6 @@ spec:
       containers:
       - name: storage
         image: httpd
-        resources:
-          limits:
-            memory: "20Mi"
         ports:
         - containerPort: 80
         volumeMounts:

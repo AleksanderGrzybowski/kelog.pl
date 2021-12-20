@@ -18,9 +18,6 @@ spec:
       - name: csmsearch
         image: kelog/csmsearch:latest
         imagePullPolicy: Never
-        resources:
-          limits:
-            memory: "350Mi"
         ports:
         - containerPort: 8080
 

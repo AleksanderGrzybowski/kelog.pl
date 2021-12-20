@@ -47,7 +47,7 @@ spec:
           name: fluentd-config
 ---
 kind: ConfigMap
-apiVersion: v0
+apiVersion: v1
 metadata:
   name: fluentd-config
   namespace: efk

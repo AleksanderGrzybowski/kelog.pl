@@ -396,10 +396,6 @@ spec:
             - name: webhook-cert
               mountPath: /usr/local/certificates/
               readOnly: true
-          resources:
-            requests:
-              cpu: 100m
-              memory: 90Mi
       nodeSelector:
         kubernetes.io/os: linux
       serviceAccountName: ingress-nginx

@@ -23,6 +23,7 @@ mkdir -p ${BUILD_DIR}
 cd ${BUILD_DIR}
 
 build aleksandergrzybowski.pl aleksandergrzybowski.pl aleksandergrzybowski
-build csmsearch csmsearch csmsearch
 build 2048 2048 2048
+
+docker system prune --force
 

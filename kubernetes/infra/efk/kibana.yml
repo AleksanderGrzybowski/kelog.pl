@@ -48,8 +48,11 @@ spec:
   - host: kibana.kelog.pl
     http:
       paths:
-      - path:
+      - path: /
+        pathType: Prefix
         backend:
-          serviceName: kibana
-          servicePort: 5601
+          service:
+            name: kibana
+            port:
+              number: 5601
 

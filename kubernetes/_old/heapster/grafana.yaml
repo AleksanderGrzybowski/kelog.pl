@@ -50,8 +50,6 @@ spec:
           items:
           - key: initial.json
             path: initial.json
-      nodeSelector:
-        ismasterhost: 'yes'
 ---
 apiVersion: v1
 kind: Service
@@ -76,6 +74,9 @@ spec:
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: grafana
-          servicePort: 80
+          service:
+            name: : grafana
+            port:
+              number: 80

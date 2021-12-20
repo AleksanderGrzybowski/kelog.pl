@@ -51,8 +51,6 @@ spec:
       - name: mariadb-volume
         persistentVolumeClaim:
           claimName: five9s-mariadb-data
-      nodeSelector:
-        ismasterhost: 'yes'
 ---
 apiVersion: v1
 kind: Service

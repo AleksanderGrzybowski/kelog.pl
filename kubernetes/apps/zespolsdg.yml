@@ -14,5 +14,7 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: aleksandergrzybowskipl # doesn't matter
-          servicePort: 80
+          service:
+            name: aleksandergrzybowskipl # doesn't matter
+            port:
+              number: 80

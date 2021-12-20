@@ -56,8 +56,11 @@ spec:
   - host: aleksandergrzybowski.pl
     http:
       paths:
-      - path:
+      - path: /
+        pathType: Prefix
         backend:
-          serviceName: aleksandergrzybowskipl
-          servicePort: 80
+          service:
+            name: aleksandergrzybowskipl
+            port:
+              number: 80
 

@@ -33,8 +33,6 @@ spec:
             path: /health
             port: 8080
           failureThreshold: 30
-      nodeSelector:
-        ismasterhost: 'yes'
 ---
 apiVersion: v1
 kind: Service
@@ -61,7 +59,10 @@ spec:
   - host: 2048.kelog.pl
     http:
       paths:
-      - path:
+      - path: /
+        pathType: Prefix
         backend:
-          serviceName: app2048
-          servicePort: 8080
+          service:
+            name: app2048
+            port:
+              number: 8080

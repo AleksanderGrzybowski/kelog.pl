@@ -57,8 +57,11 @@ spec:
   - host: storage.kelog.pl
     http:
       paths:
-      - path:
+      - path: /
+        pathType: Prefix
         backend:
-          serviceName: storage
-          servicePort: 80
+          service:
+            name: storage
+            port:
+              number: 80
 

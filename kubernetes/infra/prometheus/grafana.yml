@@ -38,8 +38,6 @@ spec:
       - name: grafana-data
         hostPath:
           path: /var/k8s-hostpath/grafana-data
-      nodeSelector:
-        ismasterhost: 'yes'
 ---
 apiVersion: v1
 kind: Service
@@ -60,17 +58,13 @@ metadata:
   namespace: prometheus
 spec:
   rules:
-  - host: prometheus.kelog.pl
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: grafana
-          servicePort: 80
   - host: grafana.kelog.pl
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: grafana
-          servicePort: 80
+          service:
+            name: grafana
+            port:
+              number: 80

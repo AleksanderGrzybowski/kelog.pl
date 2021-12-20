@@ -56,7 +56,10 @@ spec:
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: baza-zespolsdg
-          servicePort: 80
+          service:
+            name: baza-zespolsdg
+            port:
+              number: 80
 

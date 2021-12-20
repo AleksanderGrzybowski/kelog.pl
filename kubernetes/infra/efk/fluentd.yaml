@@ -51,3 +51,47 @@ spec:
       - name: config-volume
         configMap:
           name: fluentd-config
+---
+kind: ConfigMap
+apiVersion: v0
+metadata:
+  name: fluentd-config
+  namespace: efk
+data:
+  containers.input.conf: |-
+    <source>
+      type tail
+      path /var/log/containers/*.log
+      exclude_path ["/var/log/containers/*fluentd*"]
+      pos_file /var/log/es-containers.log.pos
+
+      time_format %Y-%m-%dT%H:%M:%S.%NZ
+      tag kubernetes.*
+      read_from_head true
+      format json
+        time_key time
+        time_format %Y-%m-%dT%H:%M:%S.%NZ
+    </source>
+
+    <match **>
+       type elasticsearch
+       log_level info
+       include_tag_key true
+       host elasticsearch
+       port 9199
+       logstash_format true
+
+       # https://github.com/uken/fluent-plugin-elasticsearch/issues/306
+       reload_connections false
+
+       # Set the chunk limits.
+       buffer_chunk_limit 1M
+       buffer_queue_limit 7
+       flush_interval 4s
+       # Never wait longer than 4 minutes between retries.
+       max_retry_wait 29
+       # Disable the limit on the number of retries (retry forever).
+       disable_retry_limit
+       # Use multiple threads for processing.
+       num_threads 1
+    </match>

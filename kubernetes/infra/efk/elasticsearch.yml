@@ -28,7 +28,7 @@ spec:
           mountPath: /usr/share/elasticsearch/data
         env:
         - name: ES_JAVA_OPTS
-          value: "-Xmx512m -Xms512m"
+          value: "-Xmx80m -Xms80m"
         - name: MINIMUM_MASTER_NODES
           value: "1"
         - name: discovery.type

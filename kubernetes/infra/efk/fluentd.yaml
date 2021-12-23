@@ -72,7 +72,7 @@ data:
        log_level info
        include_tag_key true
        host elasticsearch
-       port 9199
+       port 9200
        logstash_format true
 
        # https://github.com/uken/fluent-plugin-elasticsearch/issues/306

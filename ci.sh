@@ -24,6 +24,7 @@ cd ${BUILD_DIR}
 
 build aleksandergrzybowski.pl aleksandergrzybowski.pl aleksandergrzybowski
 build 2048 2048 2048
+build csmsearch csmsearch csmsearch
 
 docker system prune --force
 

@@ -20,7 +20,7 @@ spec:
             - name: ES_HOST_PORT
               value: 'elasticsearch:9200'
             - name: KEEP_LAST_COUNT
-              value: '14'
+              value: '3'
             volumeMounts:
             - name: cleanup-script
               mountPath: /cleanup-script

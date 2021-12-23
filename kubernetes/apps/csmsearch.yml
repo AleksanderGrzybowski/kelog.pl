@@ -19,7 +19,7 @@ spec:
         image: kelog/csmsearch:latest
         imagePullPolicy: Never
         ports:
-        - containerPort: 8080
+        - containerPort: 80
 
 ---
 
@@ -31,7 +31,7 @@ spec:
   selector:
     app: csmsearch
   ports:
-  - port: 8080
+  - port: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -48,5 +48,5 @@ spec:
           service:
             name: csmsearch
             port:
-              number: 8080
+              number: 80
 

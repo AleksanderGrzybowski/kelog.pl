@@ -3,6 +3,7 @@ set -e
 
 NAMESPACE="default"
 BUILD_DIR="/tmp/ci-${RANDOM}"
+EFK_COMPONENTS="elasticsearch kibana fluentd"
 
 build() {
   repo=$1
@@ -18,6 +19,10 @@ build() {
   echo "Building ${repo} finished."
 }
 
+for component in $EFK_COMPONENTS; do
+    kubectl -n efk scale deployment $component --replicas=0
+done
+
 echo "Building in ${BUILD_DIR}."
 mkdir -p ${BUILD_DIR}
 cd ${BUILD_DIR}
@@ -28,3 +33,6 @@ build csmsearch csmsearch csmsearch
 
 docker system prune --force
 
+for component in $EFK_COMPONENTS; do
+    kubectl -n efk scale deployment $component --replicas=1
+done

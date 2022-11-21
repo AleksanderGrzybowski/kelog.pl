@@ -3,6 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: baza-zespolsdg
+  namespace: default
 spec:
   replicas: 1
   selector:
@@ -31,6 +32,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: baza-zespolsdg
+  namespace: default
 spec:
   selector:
     app: baza-zespolsdg
@@ -42,6 +44,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: baza-zespolsdg
+  namespace: default
   annotations:
     nginx.org/client_max_body_size: 1000m
     ingress.kubernetes.io/proxy-body-size: 1000m

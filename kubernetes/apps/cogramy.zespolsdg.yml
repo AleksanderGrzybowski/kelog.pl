@@ -2,6 +2,7 @@ kind: Ingress
 apiVersion: networking.k8s.io/v1
 metadata:
   name: cogramy-zespolsdg-redirect
+  namespace: default
   annotations:
     nginx.ingress.kubernetes.io/configuration-snippet: |
       if ($host ~ ^.*cogramy.zespolsdg\.pl$) {

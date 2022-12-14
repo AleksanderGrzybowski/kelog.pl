@@ -6,11 +6,11 @@ metadata:
 data:
   prometheus.yml: |-
     global:
-      scrape_interval: 60s
+      scrape_interval: 120s
 
     scrape_configs:
       - job_name: 'node'
-        scrape_interval: 60s
+        scrape_interval: 120s
         static_configs:
         - targets: ['kelog.pl:9100', '192.168.79.2:9100']
 

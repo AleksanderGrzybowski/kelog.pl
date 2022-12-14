@@ -1,0 +1,26 @@
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: kanapka-zespolsdg-redirect
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      if ($host ~ ^.*anapka.zespolsdg\.pl$) {
+        return 302 https://www.dropbox.com/sh/jmicj8lciq80sc4/AAA14p73TEA685Yv3XBNvURla?dl=0;
+      }
+spec:
+  tls:
+  - hosts:
+    - kanapka.zespolsdg.pl
+    secretName: kanapka-zespolsdg-cert
+  rules:
+  - host: "kanapka.zespolsdg.pl"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: aleksandergrzybowskipl # doesn't matter
+            port:
+              number: 80

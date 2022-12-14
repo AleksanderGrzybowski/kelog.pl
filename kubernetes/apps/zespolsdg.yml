@@ -6,7 +6,7 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/configuration-snippet: |
       if ($host ~ ^.*espolsdg\.pl$) {
-        return 302 http://ustron.luteranie.pl/zespol-soli-deo-gloria,64.html;
+        return 302 https://ustron.luteranie.pl/spolecznosc/zespol-soli-deo-gloria;
       }
 spec:
   rules:

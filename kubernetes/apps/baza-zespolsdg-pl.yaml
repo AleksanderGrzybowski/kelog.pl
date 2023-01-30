@@ -53,7 +53,7 @@ spec:
   tls:
   - hosts:
     - baza.zespolsdg.pl
-    secretName: baza-zespolsdg-cert
+    secretName: baza.zespolsdg.pl
   rules:
   - host: baza.zespolsdg.pl
     http:

@@ -51,7 +51,7 @@ spec:
   tls:
   - hosts:
     - aleksandergrzybowski.pl
-    secretName: aleksandergrzybowskipl-cert
+    secretName: aleksandergrzybowski.pl
   rules:
   - host: aleksandergrzybowski.pl
     http:

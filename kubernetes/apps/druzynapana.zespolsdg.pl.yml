@@ -1,0 +1,25 @@
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: druzynapana-zespolsdg-redirect
+  annotations:
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      if ($host ~ ^.*ruzynapana.zespolsdg\.pl$) {
+        return 302 https://www.dropbox.com/sh/i9b3ugg8fzuqhhf/AAATnHnMpF1WA7bbskxYiJ_Ga?dl=0;
+      }
+spec:
+  tls:
+  - hosts:
+    - druzynapana.zespolsdg.pl
+    secretName: druzynapana.zespolsdg.pl
+  rules:
+  - host: "druzynapana.zespolsdg.pl"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: aleksandergrzybowskipl # doesn't matter
+            port:
+              number: 80

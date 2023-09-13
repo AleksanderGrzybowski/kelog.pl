@@ -1,0 +1,50 @@
+- name: Install autossh tool
+  apt:
+    name: autossh
+    state: present
+  when: False
+    
+- name: Put autossh key
+  template:
+    src: "{{ playbook_dir }}/secrets/autossh_id_rsa"
+    dest: /opt/autossh_id_rsa
+    owner: kelog
+    mode: '600'
+  when: inventory_hostname == 'dell'
+
+- name: Add autossh remote user
+  user:
+    name: autossh
+    shell: /bin/bash
+    create_home: yes
+  when: inventory_hostname == 'kelog.pl'
+
+- name: Add autossh SSH public key
+  authorized_key:
+    user: autossh
+    key: "{{ lookup('file', playbook_dir + '/secrets/autossh_id_rsa.pub') }}"
+  when: inventory_hostname == 'kelog.pl'
+
+- name: Block login access for autossh user
+  blockinfile:
+    path: /etc/ssh/sshd_config
+    block: |
+      Match User autossh
+      AllowTcpForwarding yes
+      X11Forwarding no
+      AllowAgentForwarding no
+      ForceCommand /bin/false
+  when: inventory_hostname == 'kelog.pl'
+
+- name: Add SystemD unit file
+  template:
+    src: ../files/autossh.service
+    dest: /etc/systemd/system/autossh.service
+  when: inventory_hostname == 'dell'
+
+- name: Enable autossh service
+  systemd:
+    name: autossh.service
+    enabled: true
+    state: restarted
+  when: inventory_hostname == 'dell'

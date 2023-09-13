@@ -1,0 +1,5 @@
+vpn_remote_host: kelog.pl
+vpn_remote_port: 1194
+vpn_static_key_file: dell.key
+vpn_server_ip: 192.168.79.1
+vpn_client_ip: 192.168.79.2

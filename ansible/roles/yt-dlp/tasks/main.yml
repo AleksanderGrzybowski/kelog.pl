@@ -1,0 +1,13 @@
+- name: Download yt-dlp executable
+  get_url:
+    url: https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp
+    dest: /usr/local/bin
+    mode: '775'
+
+- name: Force update of yt-dlp
+  shell: /usr/local/bin/yt-dlp -U
+  register: out
+
+- name: Print update status of yt-dlp
+  debug:
+    var: out.stdout_lines

@@ -24,6 +24,7 @@ refresh_certificate baza.zespolsdg.pl
 refresh_certificate cogramy.zespolsdg.pl
 refresh_certificate kanapka.zespolsdg.pl
 refresh_certificate kiedygramy.zespolsdg.pl
+refresh_certificate druzynapana.zespolsdg.pl
 
 
 kubectl -n ingress-nginx scale deployment ingress-nginx-controller --replicas=1

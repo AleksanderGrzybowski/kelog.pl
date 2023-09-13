@@ -1,0 +1,18 @@
+- name: Put dotfiles
+  template:
+    src: "../files/{{ item }}"
+    dest: "/home/kelog/.{{ item }}"
+    owner: kelog
+  with_items:
+  - vimrc
+  - tmux.conf
+
+- name: Create folder for tmux shell helpers
+  file:
+    path: /home/kelog/bin
+    state: directory
+
+- name: Copy extra shell scripts for information bar for tmux
+  copy:
+    src: "{{ role_path }}/files/tmux-bar/"
+    dest: /home/kelog/bin/tmux-bar/

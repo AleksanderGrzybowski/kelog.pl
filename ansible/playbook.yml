@@ -1,6 +1,10 @@
 ---
 - hosts: all
+  gather_facts: no
   become: yes
   roles:
   - dotfiles
+  - openvpn
+  - autossh
+  - yt-dlp
 

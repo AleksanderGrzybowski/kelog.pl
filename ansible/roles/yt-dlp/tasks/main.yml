@@ -11,3 +11,9 @@
 - name: Print update status of yt-dlp
   debug:
     var: out.stdout_lines
+
+- name: Put MP3 download script
+  template:
+    src: ../files/yt-dlp-mp3.sh
+    dest: /home/kelog/bin/yt-dlp-mp3.sh
+    mode: '755'

@@ -35,6 +35,7 @@ spec:
       - name: storage-volume
         hostPath:
           path: /var/k8s-hostpath/storage-data
+
 ---
 apiVersion: v1
 kind: Service
@@ -46,6 +47,7 @@ spec:
     app: storage
   ports:
   - port: 80
+
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress

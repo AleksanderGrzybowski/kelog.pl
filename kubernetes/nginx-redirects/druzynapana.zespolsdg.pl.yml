@@ -1,20 +1,20 @@
 kind: Ingress
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: kiedygramy-zespolsdg-redirect
+  name: druzynapana-zespolsdg-redirect
+  namespace: default
   annotations:
     nginx.ingress.kubernetes.io/configuration-snippet: |
-      if ($host ~ ^.*iedygramy.zespolsdg\.pl$) {
-        return 302 https://docs.google.com/spreadsheets/d/1ivEQhfoDYevSdUoFyemncJE9kw5oLlAO3J8h_yDjUKA/edit;
-
+      if ($host ~ ^.*ruzynapana.zespolsdg\.pl$) {
+        return 302 https://www.dropbox.com/sh/i9b3ugg8fzuqhhf/AAATnHnMpF1WA7bbskxYiJ_Ga?dl=0;
       }
 spec:
   tls:
   - hosts:
-    - kiedygramy.zespolsdg.pl
-    secretName: kiedygramy.zespolsdg.pl
+    - druzynapana.zespolsdg.pl
+    secretName: druzynapana.zespolsdg.pl
   rules:
-  - host: "kiedygramy.zespolsdg.pl"
+  - host: "druzynapana.zespolsdg.pl"
     http:
       paths:
       - path: /

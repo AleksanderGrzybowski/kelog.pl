@@ -9,6 +9,7 @@
   - dircolors
   - zshrc
   - gitconfig
+  - ideavimrc
 
 - name: Put custom zsh theme
   copy:
@@ -25,3 +26,9 @@
   copy:
     src: "{{ role_path }}/files/tmux-bar/"
     dest: /home/kelog/bin/tmux-bar/
+
+- name: Copy backup script
+  copy:
+    src: "{{ role_path }}/files/backup-xz.sh"
+    dest: /home/kelog/bin/
+  when: inventory_hostname == 'dell'

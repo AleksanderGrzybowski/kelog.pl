@@ -1,0 +1,5 @@
+source ~/.vimrc
+
+set ideajoin
+map ,r :action Rerun<CR>
+set clipboard+=ideaput

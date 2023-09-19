@@ -1,0 +1,11 @@
+- name: Install node-exporter
+  apt:
+    name: prometheus-node-exporter
+    state: present
+  when: inventory_hostname == 'dell'
+    
+- name: Enable node-exporter
+  systemd:
+    name: prometheus-node-exporter
+    enabled: true
+  when: inventory_hostname == 'dell'

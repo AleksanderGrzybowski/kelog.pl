@@ -4,7 +4,7 @@
   become: yes
   roles:
   - dotfiles
-  - openvpn
-  - autossh
   - yt-dlp
+  - tools 
+  - kubectx
 

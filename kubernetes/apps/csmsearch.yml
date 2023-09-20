@@ -13,10 +13,12 @@ spec:
       labels:
         app: csmsearch
     spec:
+      imagePullSecrets:
+      - name: regcred
       containers:
       - name: csmsearch
-        image: kelog/csmsearch:latest
-        imagePullPolicy: Never
+        image: registry.kelog.pl/kelog/csmsearch:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
 

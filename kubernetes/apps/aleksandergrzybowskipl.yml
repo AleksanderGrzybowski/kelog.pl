@@ -14,10 +14,12 @@ spec:
       labels:
         app: aleksandergrzybowskipl
     spec:
+      imagePullSecrets:
+      - name: regcred
       containers:
       - name: aleksandergrzybowskipl
-        imagePullPolicy: Never
-        image: kelog/aleksandergrzybowski.pl:latest
+        imagePullPolicy: Always
+        image: registry.kelog.pl/kelog/aleksandergrzybowski.pl:latest
         ports:
         - containerPort: 80
         livenessProbe:

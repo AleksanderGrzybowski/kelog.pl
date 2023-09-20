@@ -12,7 +12,8 @@ build() {
 
   git clone "https://github.com/AleksanderGrzybowski/${repo}.git"
   cd ${repo}
-  docker build --no-cache -t "kelog/${image}:latest" .
+  docker build --no-cache -t "registry.kelog.pl/kelog/${image}:latest" .
+  docker push "registry.kelog.pl/kelog/${image}:latest"
   kubectl -n ${NAMESPACE} get pods | grep ${pod} | awk '{print $1}' | xargs kubectl -n ${NAMESPACE} delete pod
   cd ..
   echo "Building ${repo} finished."

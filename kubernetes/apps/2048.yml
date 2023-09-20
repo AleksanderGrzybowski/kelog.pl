@@ -14,10 +14,12 @@ spec:
       labels:
         app: app2048
     spec:
+      imagePullSecrets:
+      - name: regcred
       containers:
       - name: app2048
-        image: kelog/2048:latest
-        imagePullPolicy: Never
+        image: registry.kelog.pl/kelog/2048:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 2048
         - containerPort: 8080

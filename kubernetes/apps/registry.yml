@@ -1,0 +1,97 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: registry
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: registry
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: registry
+    spec:
+      initContainers:
+      - name: setup-auth
+        image: httpd:latest
+        command: ['bash', '-c']
+        args: ["echo 'Preparing auth file for user ${USER}...' && htpasswd -Bbn ${USER} ${PASSWORD} > /auth/htpasswd && ls -l /auth"]
+        env:
+        - name: USER
+          valueFrom:
+            secretKeyRef:
+              name: registry
+              key: user
+        - name: PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: registry
+              key: password
+        volumeMounts:
+        - name: auth
+          mountPath: /auth
+      containers:
+      - name: registry
+        image: registry:2.8.2
+        env:
+        - name: REGISTRY_AUTH
+          value: "htpasswd"
+        - name: REGISTRY_AUTH_HTPASSWD_REALM
+          value: "My realm"
+        - name: REGISTRY_AUTH_HTPASSWD_PATH
+          value: "/auth/htpasswd"
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/registry
+        - name: auth
+          mountPath: /auth
+      volumes:
+      - name: data
+        hostPath:
+          path: "/var/k8s-hostpath/registry"
+      - name: auth
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: registry
+spec:
+  selector:
+    app: registry
+  ports:
+  - port: 5000
+    targetPort: 5000
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: registry
+  namespace: default
+  annotations:
+    nginx.org/client_max_body_size: 8000m
+    ingress.kubernetes.io/proxy-body-size: 8000m
+    nginx.ingress.kubernetes.io/proxy-body-size: 8000m
+
+spec:
+  tls:
+  - hosts: 
+    - registry.kelog.pl
+    secretName: registry.kelog.pl
+  rules:
+  - host: registry.kelog.pl
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: registry
+            port:
+              number: 5000
+
+

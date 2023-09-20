@@ -9,3 +9,19 @@
     name: prometheus-node-exporter
     enabled: true
   when: inventory_hostname == 'dell'
+
+- name: Copy Windows reboot script
+  copy:
+    src: "{{ role_path }}/files/windows-reboot.sh"
+    owner: root
+    group: root
+    mode: '0770'
+    dest: /usr/local/bin/windows-reboot
+  when: inventory_hostname == 'dell'
+
+- name: Allow kelog to run windows-reboot as root
+  blockinfile:
+    path: /etc/sudoers
+    block: |
+      kelog galera = (root) NOPASSWD: /usr/sbin/iwlist,/usr/local/bin/windows-reboot.sh
+  when: inventory_hostname == 'dell'

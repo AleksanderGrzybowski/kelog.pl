@@ -23,5 +23,5 @@
   blockinfile:
     path: /etc/sudoers
     block: |
-      kelog galera = (root) NOPASSWD: /usr/sbin/iwlist,/usr/local/bin/windows-reboot.sh
+      kelog galera = (root) NOPASSWD: /usr/sbin/iwlist,/usr/local/bin/windows-reboot
   when: inventory_hostname == 'dell'

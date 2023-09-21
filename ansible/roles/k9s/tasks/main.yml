@@ -1,0 +1,15 @@
+- name: Clear old k9s downloaded archive
+  file:
+    path: /tmp/k9s.tar.gz
+    state: absent
+    
+- name: Fetch k9s binary in form of tar.gz archive
+  get_url:
+    url: https://github.com/derailed/k9s/releases/download/v0.27.4/k9s_Linux_amd64.tar.gz
+    dest: /tmp/k9s.tar.gz
+
+- name: Unpack k9s binary
+  unarchive:
+    src: /tmp/k9s.tar.gz
+    remote_src: yes
+    dest: /usr/local/bin

@@ -19,7 +19,7 @@ build() {
 
   ${BUILD_TOOL} build --no-cache -t ${full_image} .
   ${BUILD_TOOL} push ${full_image}
-  ${BUILD_TOOL} system prune --force
+  ${BUILD_TOOL} system prune --force --all
 
   kubectl -n ${NAMESPACE} get pods | grep ${pod} | awk '{print $1}' | xargs kubectl -n ${NAMESPACE} delete pod
   cd ..

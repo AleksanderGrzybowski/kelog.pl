@@ -27,8 +27,11 @@
     src: "{{ role_path }}/files/tmux-bar/"
     dest: /home/kelog/bin/tmux-bar/
 
-- name: Copy backup script
+- name: Copy extra scripts for laptop only
   copy:
-    src: "{{ role_path }}/files/backup-xz.sh"
+    src: "{{ role_path }}/files/{{ item }}"
     dest: /home/kelog/bin/
+  with_items:
+  - backup-xz.sh
+  - mute-audio.sh
   when: inventory_hostname == 'dell'

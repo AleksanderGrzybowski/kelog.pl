@@ -25,3 +25,12 @@
     block: |
       kelog galera = (root) NOPASSWD: /usr/sbin/iwlist,/usr/local/bin/windows-reboot
   when: inventory_hostname == 'dell'
+
+- name: Copy WiFi reset script
+  copy:
+    src: "{{ role_path }}/files/wifi-reset.sh"
+    owner: kelog
+    group: kelog
+    mode: '0770'
+    dest: /usr/local/bin/wifi-reset.sh
+  when: inventory_hostname == 'dell'

@@ -1,7 +1,8 @@
-## My server
+## My stuff
 
-This repository contains almost whole configuration of my personal projects server:
+This repository contains configurations for my personal server and my personal laptop, which are:
 
-* Ansible basic stuff
-* Kuberentes YML-s for all my projects
+* Kuberentes resource definitions for all my demos
+* Ansible configurations for tools and scripts I use
 
+Feel free to look around :)

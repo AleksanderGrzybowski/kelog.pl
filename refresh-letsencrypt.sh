@@ -5,7 +5,7 @@ function refresh_certificate {
   domain="$1"
   echo "Refreshing for domain $1 ..."
 
-  sudo certbot certonly --standalone -d ${domain}
+  sudo certbot certonly --standalone -d ${domain} --key-type ecdsa
 
   sudo rm -rf /tmp/fullchain.pem /tmp/privkey.pem
   sudo cp /etc/letsencrypt/live/${domain}/fullchain.pem /tmp/

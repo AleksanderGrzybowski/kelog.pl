@@ -1,0 +1,68 @@
+- name: Install autossh tool
+  apt:
+    name: autossh
+    state: present
+
+- name: Configure local end of autossh tunnel
+  block:
+  - name: Put autossh key
+    template:
+      src: "{{ playbook_dir }}/secrets/autossh_id_rsa"
+      dest: /opt/autossh_id_rsa
+      owner: kelog
+      mode: '600'
+  - name: Add systemd unit file
+    template:
+      src: ../files/autossh.service
+      dest: /etc/systemd/system/autossh.service
+  - name: Enable autossh service
+    systemd:
+      name: autossh.service
+      enabled: true
+      state: restarted
+  when: inventory_hostname == 'dell'
+
+- name: Configure remote end of autossh tunnel
+  block:
+  - name: Add autossh remote user
+    user:
+      name: autossh
+      shell: /bin/bash
+      create_home: yes
+  - name: Add autossh SSH public key
+    authorized_key:
+      user: autossh
+      key: "{{ lookup('file', playbook_dir + '/secrets/autossh_id_rsa.pub') }}"
+  - name: Block login access for autossh user
+    blockinfile:
+      path: /etc/ssh/sshd_config
+      block: |
+        Match User autossh
+        AllowTcpForwarding yes
+        X11Forwarding no
+        AllowAgentForwarding no
+        ForceCommand /bin/false
+  when: inventory_hostname == 'kelog.pl'
+
+- name: Configure Termux tunnel
+  block:
+  - name: Add termuxtunnel remote user
+    user:
+      name: termuxtunnel
+      shell: /bin/bash
+      create_home: yes
+  - name: Block login access for termuxtunnel user
+    blockinfile:
+      path: /etc/ssh/sshd_config
+      block: |
+        Match User termuxtunnel
+        AllowTcpForwarding yes
+        X11Forwarding no
+        AllowAgentForwarding no
+        ForceCommand sudo /usr/sbin/iftop
+  - name: Allow termuxtunnel user to run iftop
+    blockinfile:
+      path: /etc/sudoers
+      block: |
+        termuxtunnel vps-2932c732 = (root) NOPASSWD: /usr/sbin/iftop
+  when: inventory_hostname == 'kelog.pl'

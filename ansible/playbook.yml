@@ -3,11 +3,7 @@
   gather_facts: no
   become: yes
   roles:
-  - k9s
-  - autossh
   - dotfiles
-  - k9s
-  - kubectx
-  - openvpn
   - tools
-  - yt-dlp
+  - ssh_tunnels
+  - openvpn

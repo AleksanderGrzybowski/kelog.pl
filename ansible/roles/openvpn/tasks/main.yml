@@ -9,21 +9,13 @@
     dest: /etc/openvpn/dell.key
     owner: root
 
-- name: Put OpenVPN configuration file for Dell laptop (client)
+- name: Put OpenVPN configuration files
   template:
-    src: ../files/openvpn-client.conf
+    src: "../files/openvpn-{{ 'client' if (inventory_hostname == 'dell') else 'server' }}.conf"
     dest: /etc/openvpn/dell.conf
     owner: root
-  when: inventory_hostname == 'dell'
-  
-- name: Put OpenVPN configuration file for Dell laptop (server)
-  template:
-    src: ../files/openvpn-server.conf
-    dest: /etc/openvpn/dell.conf
-    owner: root
-  when: inventory_hostname == 'kelog.pl'
-  
-- name: Enable OpenVPN client for Dell laptop
+
+- name: Enable OpenVPN client and server
   systemd:
     name: openvpn@dell.service
     enabled: true

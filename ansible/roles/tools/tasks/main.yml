@@ -1,36 +1,81 @@
-- name: Install node-exporter
-  apt:
-    name: prometheus-node-exporter
-    state: present
-  when: inventory_hostname == 'dell'
-    
-- name: Enable node-exporter
-  systemd:
-    name: prometheus-node-exporter
-    enabled: true
+- name: Configure tools on laptop
+  block:
+  - name: Install node-exporter
+    apt:
+      name: prometheus-node-exporter
+      state: present
+  - name: Enable node-exporter
+    systemd:
+      name: prometheus-node-exporter
+      enabled: true
+  - name: Copy Windows reboot script and WiFi reset script
+    copy:
+      src: "{{ role_path }}/files/{{ item }}.sh"
+      dest: "/usr/local/bin/{{ item }}"
+      owner: root
+      group: root
+      mode: '0770'
+    with_items:
+    - windows-reboot
+    - wifi-reset
+  - name: Allow kelog to run windows-reboot as root
+    blockinfile:
+      path: /etc/sudoers
+      block: |
+        kelog galera = (root) NOPASSWD: /usr/local/bin/windows-reboot
   when: inventory_hostname == 'dell'
 
-- name: Copy Windows reboot script
-  copy:
-    src: "{{ role_path }}/files/windows-reboot.sh"
-    owner: root
-    group: root
-    mode: '0770'
-    dest: /usr/local/bin/windows-reboot
-  when: inventory_hostname == 'dell'
+- name: Install kubectx and kubens
+  block:
+  - name: Clone kubectx repository
+    git:
+      repo: https://github.com/ahmetb/kubectx
+      dest: /opt/kubectx
+      version: master
+  - name: Symlink kubectx and kubens executables
+    file:
+      src: "/opt/kubectx/{{ item }}"
+      dest: "/usr/local/bin/{{ item }}"
+      state: link
+    with_items:
+    - kubectx
+    - kubens
 
-- name: Allow kelog to run windows-reboot as root
-  blockinfile:
-    path: /etc/sudoers
-    block: |
-      kelog galera = (root) NOPASSWD: /usr/sbin/iwlist,/usr/local/bin/windows-reboot
-  when: inventory_hostname == 'dell'
+- name: Install k9s
+  block:
+  - name: Clear old k9s downloaded archive
+    file:
+      path: /tmp/k9s.tar.gz
+      state: absent
+  - name: Fetch k9s binary in form of tar.gz archive
+    get_url:
+      url: https://github.com/derailed/k9s/releases/download/v0.27.4/k9s_Linux_amd64.tar.gz
+      dest: /tmp/k9s.tar.gz
+  - name: Unpack k9s binary
+    unarchive:
+      src: /tmp/k9s.tar.gz
+      remote_src: yes
+      dest: /usr/local/bin
 
-- name: Copy WiFi reset script
-  copy:
-    src: "{{ role_path }}/files/wifi-reset.sh"
-    owner: kelog
-    group: kelog
-    mode: '0770'
-    dest: /usr/local/bin/wifi-reset.sh
-  when: inventory_hostname == 'dell'
+- name: Install yt-dlp with dependencies and extra script
+  block:
+  - name: Install ffmpeg as a dependency for yt-dlp conversion features
+    apt:
+      pkg: ffmpeg
+      state: present
+  - name: Download yt-dlp executable
+    get_url:
+      url: https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp
+      dest: /usr/local/bin
+      mode: '775'
+  - name: Force update of yt-dlp
+    shell: /usr/local/bin/yt-dlp -U
+    register: stdout
+  - name: Print update status of yt-dlp
+    debug:
+      var: stdout.stdout_lines
+  - name: Put MP3 download script
+    template:
+      src: ../files/yt-dlp-mp3.sh
+      dest: /home/kelog/bin/yt-dlp-mp3.sh
+      mode: '755'

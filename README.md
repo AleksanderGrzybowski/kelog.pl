@@ -13,4 +13,4 @@ This repository contains all configurations for my server and my devices, writte
 
 ## Why this exists?
 
-I like Infrastructure as Code and Configuration as Code approaches, because they essentially prove that servers and services I use are configured the way I documented it. Also, this is the main demo project that shows my skills in Ansible and Kubernetes :0
+I like Infrastructure as Code and Configuration as Code approaches, because they essentially prove that servers and services I use are configured the way I documented it. Also, this is the main demo project that shows my skills in Ansible and Kubernetes :)

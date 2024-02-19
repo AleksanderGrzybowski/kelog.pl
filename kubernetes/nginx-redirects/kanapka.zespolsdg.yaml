@@ -12,7 +12,7 @@ spec:
   tls:
   - hosts:
     - kanapka.zespolsdg.pl
-    secretName: kanapka-zespolsdg-cert
+    secretName: kanapka.zespolsdg.pl
   rules:
   - host: "kanapka.zespolsdg.pl"
     http:

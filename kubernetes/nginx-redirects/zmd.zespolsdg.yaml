@@ -1,0 +1,26 @@
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: zmd-zespolsdg-redirect
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      if ($host ~ ^.*md.zespolsdg\.pl$) {
+        return 302 https://www.dropbox.com/scl/fo/lfm65gpzqgdteplikxnqv/h?rlkey=gkdk5eipyfp0plbvph5q574fm&dl=0;
+      }
+spec:
+  tls:
+  - hosts:
+    - zmd.zespolsdg.pl
+    secretName: zmd.zespolsdg.pl
+  rules:
+  - host: "zmd.zespolsdg.pl"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: aleksandergrzybowskipl # doesn't matter
+            port:
+              number: 80

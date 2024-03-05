@@ -1,6 +1,14 @@
 #! /bin/bash
 set -e
 
+domains="aleksandergrzybowski.pl baza.zespolsdg.pl cogramy.zespolsdg.pl kanapka.zespolsdg.pl kiedygramy.zespolsdg.pl druzynapana.zespolsdg.pl registry.kelog.pl zmd.zespolsdg.pl"
+
+function scale_ingress_controller {
+  replicas="$1"
+
+  kubectl -n ingress-nginx scale deployment ingress-nginx-controller --replicas=${replicas}
+}
+
 function refresh_certificate {
   domain="$1"
   echo "Refreshing for domain $1 ..."
@@ -16,15 +24,11 @@ function refresh_certificate {
   kubectl -n default create secret tls ${domain} --key=/tmp/privkey.pem --cert=/tmp/fullchain.pem
 }
 
-kubectl -n ingress-nginx scale deployment ingress-nginx-controller --replicas=0
-sleep 30 # good enough
+scale_ingress_controller 0
+sleep 30
 
-refresh_certificate aleksandergrzybowski.pl
-refresh_certificate baza.zespolsdg.pl
-refresh_certificate cogramy.zespolsdg.pl
-refresh_certificate kanapka.zespolsdg.pl
-refresh_certificate kiedygramy.zespolsdg.pl
-refresh_certificate druzynapana.zespolsdg.pl
+for domain in ${domains}; do
+  refresh_certificate ${domain}
+done
 
-
-kubectl -n ingress-nginx scale deployment ingress-nginx-controller --replicas=1
+scale_ingress_controller 1

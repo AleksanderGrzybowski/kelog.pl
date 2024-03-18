@@ -63,7 +63,7 @@ bindkey "^G" edit-command-line
 
 # User configuration
 
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/kelog/.local/bin:/usr/local/bin/s3cmd-dir:."
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/kelog/.local/bin:/home/kelog/bin:."
 
 source $ZSH/oh-my-zsh.sh
 

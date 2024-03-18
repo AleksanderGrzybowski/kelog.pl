@@ -98,10 +98,16 @@ prompt_git() {
   if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
     dirty=$(parse_git_dirty)
     ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git rev-parse --short HEAD 2> /dev/null)"
-    if [[ -n $dirty ]]; then
-      prompt_segment yellow black
+    if [[ -f "/home/kelog/.light" ]]; then
+      theme_color="white"
     else
-      prompt_segment green black
+      theme_color="black"
+    fi
+
+    if [[ -n $dirty ]]; then
+      prompt_segment yellow ${theme_color}
+    else
+      prompt_segment green  ${theme_color}
     fi
 
     if [[ -e "${repo_path}/BISECT_LOG" ]]; then
@@ -187,7 +193,13 @@ prompt_hg() {
 
 # Dir: current working directory
 prompt_dir() {
-  prompt_segment blue black '%~'
+  if [[ -f "/home/kelog/.light" ]]; then
+    theme_color="white"
+  else
+    theme_color="black"
+  fi
+
+  prompt_segment blue ${theme_color} '%~'
 }
 
 # Virtualenv: current working virtualenv
@@ -209,7 +221,13 @@ prompt_status() {
   [[ $UID -eq 0 ]] && symbols+="%{%F{yellow}%}⚡"
   [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="%{%F{cyan}%}⚙"
 
-  [[ -n "$symbols" ]] && prompt_segment black default "$symbols"
+  if [[ -f "/home/kelog/.light" ]]; then
+    theme_color="white"
+  else
+    theme_color="black"
+  fi
+
+  [[ -n "$symbols" ]] && prompt_segment ${theme_color} default "$symbols"
 }
 
 ## Main prompt

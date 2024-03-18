@@ -1,0 +1,18 @@
+#! /bin/bash
+
+if [ "$1" = "light" ]; then
+    echo "Enabling light mode"
+    rm -f ~/.dark
+    touch ~/.light
+    printf '\033Ptmux;\033\033]50;%s\007\033\\' "colors=SolarizedLight"
+elif [ "$1" = "dark" ]; then
+    echo "Enabling dark mode"
+    rm -rf ~/.light
+    touch ~/.dark
+    printf '\033Ptmux;\033\033]50;%s\007\033\\' "colors=Solarized"
+else
+    echo "Usage: theme <dark/light>"
+    exit 1
+fi
+
+tmux source-file ~/.tmux.conf

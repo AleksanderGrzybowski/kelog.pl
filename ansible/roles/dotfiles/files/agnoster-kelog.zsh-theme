@@ -230,11 +230,24 @@ prompt_status() {
   [[ -n "$symbols" ]] && prompt_segment ${theme_color} default "$symbols"
 }
 
+prompt_kubernetes() {
+  context=$(kubectl config current-context)
+  namespace=$(kubectl config view --minify --output 'jsonpath={..namespace}')
+
+  if [[ -f "/home/kelog/.light" ]]; then
+    theme_color="white"
+  else
+    theme_color="black"
+  fi
+
+  prompt_segment green ${theme_color} "${context}/${namespace}"
+}
+
 ## Main prompt
 build_prompt() {
   RETVAL=$?
-  [[ -n "$DOCKER_MACHINE_NAME" ]] && prompt_segment red white "$DOCKER_MACHINE_NAME"
   prompt_status
+  prompt_kubernetes
   prompt_virtualenv
   prompt_context
   prompt_dir
@@ -245,3 +258,4 @@ build_prompt() {
 }
 
 PROMPT='%{%f%b%k%}$(build_prompt) '
+

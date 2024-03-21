@@ -5,11 +5,13 @@ if [ "$1" = "light" ]; then
     rm -f ~/.dark
     touch ~/.light
     printf '\033Ptmux;\033\033]50;%s\007\033\\' "colors=SolarizedLight"
+    sed -i 's/skin: default/skin: solarized-light/g' ~/.config/k9s/config.yaml
 elif [ "$1" = "dark" ]; then
     echo "Enabling dark mode"
     rm -rf ~/.light
     touch ~/.dark
     printf '\033Ptmux;\033\033]50;%s\007\033\\' "colors=Solarized"
+    sed -i 's/skin: solarized-light/skin: default/g' ~/.config/k9s/config.yaml
 else
     echo "Usage: theme <dark/light>"
     exit 1

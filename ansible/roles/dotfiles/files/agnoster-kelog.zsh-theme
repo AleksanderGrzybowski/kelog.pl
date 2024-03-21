@@ -232,6 +232,10 @@ prompt_status() {
 
 prompt_kubernetes() {
   context=$(kubectl config current-context)
+  if [[ "${context}" == "ovh" ]]; then
+    return
+  fi
+ 
   namespace=$(kubectl config view --minify --output 'jsonpath={..namespace}')
 
   if [[ -f "/home/kelog/.light" ]]; then

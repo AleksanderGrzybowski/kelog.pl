@@ -244,7 +244,7 @@ prompt_kubernetes() {
     theme_color="black"
   fi
 
-  prompt_segment green ${theme_color} "${context}/${namespace}"
+  prompt_segment 006 ${theme_color} "${context}/${namespace}"
 }
 
 ## Main prompt

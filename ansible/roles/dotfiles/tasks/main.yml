@@ -5,6 +5,7 @@
     owner: kelog
   with_items:
   - vimrc
+  - ideavimrc
   - tmux.conf
   - dircolors
   - zshrc

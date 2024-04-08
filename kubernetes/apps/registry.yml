@@ -35,7 +35,7 @@ spec:
           mountPath: /auth
       containers:
       - name: registry
-        image: registry:2.8.2
+        image: registry:2.8.3
         env:
         - name: REGISTRY_AUTH
           value: "htpasswd"

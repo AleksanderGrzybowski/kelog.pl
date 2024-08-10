@@ -57,25 +57,38 @@
       remote_src: yes
       dest: /usr/local/bin
 
-- name: Install yt-dlp with dependencies and extra script
+- name: Install yt-dlp with dependencies and extra scripts
   block:
   - name: Install ffmpeg as a dependency for yt-dlp conversion features
     apt:
       pkg: ffmpeg
       state: present
+  - name: Check if yt-dlp is already installed
+    stat:
+      path: /usr/local/bin/yt-dlp
+      register: yt_dlp_chedk
   - name: Download yt-dlp executable
     get_url:
       url: https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp
       dest: /usr/local/bin
       mode: '775'
+    when: not yt_dlp_check.stat.exists
   - name: Force update of yt-dlp
     shell: /usr/local/bin/yt-dlp -U
     register: stdout
+    when: yt_dlp_check.stat.exists
   - name: Print update status of yt-dlp
     debug:
       var: stdout.stdout_lines
-  - name: Put MP3 download script
+  - name: Put yt-dlp video download script
     template:
-      src: ../files/yt-dlp-mp3.sh
-      dest: /home/kelog/bin/yt-dlp-mp3.sh
+      src: ../files/yy.sh
+      dest: /home/kelog/bin/yy.sh
+      mode: '755'
+  - name: Put yt-dlp audio download script
+    vars:
+      yt_dlp_extra_args: "-x --audio-format=mp3"
+    template:
+      src: ../files/yy.sh
+      dest: /home/kelog/bin/yymp3.sh
       mode: '755'

@@ -2,4 +2,3 @@ host: kelog.pl
 remote_forwarded_port: 10022
 ssh_key_filename: autossh_id_rsa
 ssh_key_local_path: /opt/autossh_id_rsa
-autossh_socks_port: 6969

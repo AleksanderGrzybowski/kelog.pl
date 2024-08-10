@@ -12,6 +12,7 @@
   - gitconfig
   - ideavimrc
 
+
 - name: Put custom zsh theme
   copy:
     src: "../files/agnoster-kelog.zsh-theme"

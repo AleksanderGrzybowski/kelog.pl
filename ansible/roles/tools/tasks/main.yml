@@ -1,4 +1,4 @@
-- name: Configure tools on laptop
+- name: Configure tools on laptop only
   block:
   - name: Install node-exporter
     apt:
@@ -25,6 +25,11 @@
         kelog galera = (root) NOPASSWD: /usr/local/bin/windows-reboot
   when: inventory_hostname == 'dell'
 
+- name: Check if kubectx is already installed
+  stat:
+    path: /opt/kubectx
+    register: check_kubectx
+
 - name: Install kubectx and kubens
   block:
   - name: Clone kubectx repository
@@ -40,6 +45,13 @@
     with_items:
     - kubectx
     - kubens
+  when: not check_kubectx.stat.exists
+
+
+- name: Check if k9s is already installed
+  stat:
+    path: /usr/local/bin/k9s
+    register: check_k9s
 
 - name: Install k9s
   block:
@@ -49,13 +61,38 @@
       state: absent
   - name: Fetch k9s binary in form of tar.gz archive
     get_url:
-      url: https://github.com/derailed/k9s/releases/download/v0.27.4/k9s_Linux_amd64.tar.gz
+      url: {{ urls.k9s }}
       dest: /tmp/k9s.tar.gz
   - name: Unpack k9s binary
     unarchive:
       src: /tmp/k9s.tar.gz
       remote_src: yes
       dest: /usr/local/bin
+  when: not check_k9s.stat.exists
+
+- name: Check if fzf is already installed
+  stat:
+    path: /usr/local/bin/fzf
+    register: check_fzf
+
+- name: Install fzf
+  block:
+  - name: Download fzf from GitHub
+    get_url:
+      url: {{ urls.fzf }}
+      dest: /tmp/fzf.tar.gz
+  - name: Unpack fzf
+    unarchive:
+      src: /tmp/fzf.tar.gz
+      dest: /usr/local/bin/
+      remote_src: yes
+  when: not check_fzf.stat.exists
+
+
+- name: Install ripgrep
+  apt:
+    pkg: ripgrep
+    state: present
 
 - name: Install yt-dlp with dependencies and extra scripts
   block:
@@ -69,7 +106,7 @@
       register: yt_dlp_chedk
   - name: Download yt-dlp executable
     get_url:
-      url: https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp
+      url: {{ urls.yt_dlp }}
       dest: /usr/local/bin
       mode: '775'
     when: not yt_dlp_check.stat.exists

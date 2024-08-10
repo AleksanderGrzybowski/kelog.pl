@@ -8,6 +8,8 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Bundle 'altercation/vim-colors-solarized'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
 
 call vundle#end()
 
@@ -80,3 +82,6 @@ autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 " Do not show startup screen
 set shm+=I
 inoremap jk <Esc>
+
+nnoremap <silent> <expr> <Leader>f (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
+nmap <Leader>g :Rg<CR>

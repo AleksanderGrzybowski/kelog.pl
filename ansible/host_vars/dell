@@ -1,4 +1,2 @@
 zsh_theme: agnoster-kelog
-autossh_socks_port: 6969
-
 yt_dlp_output_path: /mnt/Dysk2/yy

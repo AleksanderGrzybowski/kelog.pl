@@ -28,7 +28,7 @@
 - name: Check if kubectx is already installed
   stat:
     path: /opt/kubectx
-    register: check_kubectx
+  register: check_kubectx
 
 - name: Install kubectx and kubens
   block:
@@ -51,7 +51,7 @@
 - name: Check if k9s is already installed
   stat:
     path: /usr/local/bin/k9s
-    register: check_k9s
+  register: check_k9s
 
 - name: Install k9s
   block:
@@ -61,7 +61,7 @@
       state: absent
   - name: Fetch k9s binary in form of tar.gz archive
     get_url:
-      url: {{ urls.k9s }}
+      url: "{{ urls.k9s }}"
       dest: /tmp/k9s.tar.gz
   - name: Unpack k9s binary
     unarchive:
@@ -73,13 +73,13 @@
 - name: Check if fzf is already installed
   stat:
     path: /usr/local/bin/fzf
-    register: check_fzf
+  register: check_fzf
 
 - name: Install fzf
   block:
   - name: Download fzf from GitHub
     get_url:
-      url: {{ urls.fzf }}
+      url: "{{ urls.fzf }}"
       dest: /tmp/fzf.tar.gz
   - name: Unpack fzf
     unarchive:
@@ -103,10 +103,10 @@
   - name: Check if yt-dlp is already installed
     stat:
       path: /usr/local/bin/yt-dlp
-      register: yt_dlp_chedk
+    register: yt_dlp_check
   - name: Download yt-dlp executable
     get_url:
-      url: {{ urls.yt_dlp }}
+      url: "{{ urls.yt_dlp }}"
       dest: /usr/local/bin
       mode: '775'
     when: not yt_dlp_check.stat.exists

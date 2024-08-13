@@ -1,0 +1,74 @@
+- name: Create directory for containerd configuration file
+  file:
+    path: /etc/containerd
+    state: directory
+
+- name: Put containerd config for kubeadm with SystemdCgroup = true
+  copy:
+    src: "{{ role_path }}/files/config.toml"
+    dest: /etc/containerd/config.toml
+
+- name: Install containerd
+  apt:
+    pkg: containerd
+    state: present
+
+- name: Check if buildkit is already installed
+  stat:
+    path: /usr/local/bin/buildkitd
+  register: check_buildkit
+
+- name: Install buildkit
+  shell: |
+    cd /tmp
+    rm -rf buildkit.tar.gz
+    wget {{ buildkit_url }} -O buildkit.tar.gz
+    tar xf buildkit.tar.gz
+    cp ./bin/* /usr/local/bin
+  when: not check_buildkit.stat.exists
+
+- name: Put systemd service for buildkit
+  copy:
+    src: "{{ role_path }}/files/buildkit.service"
+    dest: /etc/systemd/system/buildkit.service
+- name: Enable buildkit service
+  systemd:
+    name: buildkit.service
+    state: started
+    enabled: true
+    daemon_reload: true
+
+
+- name: Enable IP forwarding for Kubernetes
+  copy:
+    src: "{{ role_path }}/files/k8s.conf"
+    dest: /etc/sysctl.d/k8s.conf
+- name: Force reload of sysctl parameters
+  shell: sysctl --system
+
+- name: Add required module for flannel to work
+  lineinfile:
+    path: /etc/modules
+    line: br_netfilter
+    create: yes
+    state: present
+- name: Force required module load now without reboot
+  shell: "modprobe br_netfilter"
+
+- name: Install certbot for Lets Encrypt
+  apt:
+    pkg: certbot
+    state: present
+
+- name: Check if kelog.pl repository needs to be cloned
+  stat:
+    path: /home/kelog/kelog.pl
+  register: check_kelog_pl
+
+- name: Clone main infrastructure repository for later
+  git:
+    repo: 'https://github.com/AleksanderGrzybowski/kelog.pl.git'
+    dest: /home/kelog/kelog.pl
+    version: 'master' 
+  when: not check_kelog_pl.stat.exists
+    

@@ -7,3 +7,5 @@
   - dotfiles
   - ssh_tunnels
   - openvpn
+  - role: kubeadm-prerequisites
+    when: inventory_hostname == 'kelog.pl'

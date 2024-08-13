@@ -19,6 +19,12 @@
     dest: "/home/kelog/.oh-my-zsh/themes/agnoster-kelog.zsh-theme"
     owner: kelog
 
+- name: Put folder for custom k9s light theme
+  file:
+    path: "/home/kelog/.config/k9s/skins/"
+    state: directory
+    recursive: true
+
 - name: Put custom k9s light theme
   copy:
     src: "../files/solarized-light.yaml"

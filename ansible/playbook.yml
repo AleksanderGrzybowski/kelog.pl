@@ -3,7 +3,7 @@
   gather_facts: no
   become: yes
   roles:
-  - dotfiles
   - tools
+  - dotfiles
   - ssh_tunnels
   - openvpn

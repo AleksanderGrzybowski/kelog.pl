@@ -6,17 +6,6 @@
   user:
     name: kelog
     shell: /bin/zsh
-- name: Check if oh-my-zsh is installed
-  stat:
-    path: /home/kelog/.oh-my-zsh
-  register: oh_my_zsh_stat
-
-- name: Install oh-my-zsh
-  shell: |
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  become: true
-  become_user: kelog
-  when: not oh_my_zsh_stat.stat.exists
 
 - name: Configure tools on laptop only
   block:

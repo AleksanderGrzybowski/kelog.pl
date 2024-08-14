@@ -1,3 +1,7 @@
+- name: Force IPv4 for APT
+  shell: |
+    echo 'Acquire::ForceIPv4 "true";' | tee /etc/apt/apt.conf.d/99force-ipv4
+
 - name: Install zsh
   apt:
     name: zsh
@@ -126,6 +130,10 @@
   - name: Print update status of yt-dlp
     debug:
       var: stdout.stdout_lines
+  - name: Ensure that bin directory exists
+    file:
+      path: /home/kelog/bin
+      state: directory
   - name: Put yt-dlp video download script
     template:
       src: ../files/yy.sh

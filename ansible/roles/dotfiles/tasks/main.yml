@@ -23,7 +23,6 @@
   file:
     path: "/home/kelog/.config/k9s/skins/"
     state: directory
-    recursive: true
 
 - name: Put custom k9s light theme
   copy:

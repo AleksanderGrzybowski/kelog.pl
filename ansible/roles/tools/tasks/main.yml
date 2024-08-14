@@ -2,6 +2,12 @@
   shell: |
     echo 'Acquire::ForceIPv4 "true";' | tee /etc/apt/apt.conf.d/99force-ipv4
 
+- name: Install Vundle for Vim plugin management
+  git: 
+    repo: https://github.com/VundleVim/Vundle.vim.git
+    dest: /home/kelog/.vim/bundle/Vundle.vim
+    update: false
+
 - name: Install zsh
   apt:
     name: zsh

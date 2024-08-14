@@ -38,6 +38,15 @@
     enabled: true
     daemon_reload: true
 
+- name: Download nerdctl
+  get_url:
+    url: https://github.com/containerd/nerdctl/releases/download/v1.7.6/nerdctl-1.7.6-linux-amd64.tar.gz
+    dest: /tmp/nerdctl.tar.gz
+- name: Unpack nerdctl
+  unarchive:
+    remote_src: true
+    src: /tmp/nerdctl.tar.gz
+    dest: /usr/local/bin/
 
 - name: Enable IP forwarding for Kubernetes
   copy:

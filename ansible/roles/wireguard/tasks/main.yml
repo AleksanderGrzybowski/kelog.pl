@@ -5,8 +5,10 @@
     
 - name: Extract public keys
   shell: |
-    cat {{ playbook_dir }}/secrets/wireguard-private-remote.b64 | wg pubkey > {{ playbook_dir }}/secrets/wireguard-public-remote.b64
-    cat {{ playbook_dir }}/secrets/wireguard-private-local.b64 | wg pubkey > {{ playbook_dir }}/secrets/wireguard-public-local.b64
+    cat {{ playbook_dir }}/secrets/wireguard-private-{{ item }}.b64 | wg pubkey > {{ playbook_dir }}/secrets/wireguard-public-{{ item }}.b64
+  with_items:
+  - remote
+  - local
   when: inventory_hostname == 'dell'
 
 - name: Load keys as variables

@@ -7,5 +7,6 @@
   - dotfiles
   - ssh_tunnels
   - openvpn
+  - wireguard
   - role: kubeadm-prerequisites
     when: inventory_hostname == 'kelog.pl'

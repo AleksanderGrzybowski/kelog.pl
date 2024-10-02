@@ -1,0 +1,6 @@
+wireguard_remote_host: kelog.pl
+wireguard_remote_port: 51820
+wireguard_subnet: 192.168.80.0/24
+wireguard_server_ip: 192.168.80.1
+wireguard_client_ip: 192.168.80.2
+

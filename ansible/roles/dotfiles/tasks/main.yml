@@ -6,20 +6,21 @@
   with_items:
   - vimrc
   - ideavimrc
-  - tmux.conf
   - dircolors
-  - zshrc
   - gitconfig
-  - ideavimrc
 
-
+- name: Put .zshrc
+  template:
+    src: "../files/zsh/zshrc"
+    dest: "/home/kelog/.zshrc"
+    owner: kelog
 - name: Put custom zsh theme
   copy:
-    src: "../files/agnoster-kelog.zsh-theme"
+    src: "../files/zsh/agnoster-kelog.zsh-theme"
     dest: "/home/kelog/.oh-my-zsh/themes/agnoster-kelog.zsh-theme"
     owner: kelog
 
-- name: Put folder for custom k9s light theme
+- name: Put folders for custom k9s light theme
   file:
     path: "{{ item }}"
     state: directory
@@ -27,17 +28,14 @@
   with_items:
   - "/home/kelog/.config/k9s"
   - "/home/kelog/.config/k9s/skins/"
-
-
 - name: Put custom k9s light theme
   copy:
-    src: "../files/solarized-light.yml"
+    src: "../files/k9s/solarized-light.yml"
     dest: "/home/kelog/.config/k9s/skins/solarized-light.yml"
     owner: kelog
-
 - name: Put custom k9s config file
   copy:
-    src: "../files/k9s-config.yml"
+    src: "../files/k9s/config.yml"
     dest: "/home/kelog/.config/k9s/config.yml"
     owner: kelog
 
@@ -45,16 +43,21 @@
   file:
     path: /home/kelog/bin
     state: directory
-
-- name: Copy script for setting tmux colors
-  copy:
-    src: "{{ role_path }}/files/tmux-theme-switch.sh"
-    dest: /home/kelog/bin/
     owner: kelog
 
+- name: Put tmux.conf
+  template:
+    src: "../files/tmux/tmux.conf"
+    dest: "/home/kelog/.tmux.conf"
+    owner: kelog
+- name: Copy script for setting tmux colors
+  copy:
+    src: "{{ role_path }}/files/tmux/tmux-theme-switch.sh"
+    dest: /home/kelog/bin/
+    owner: kelog
 - name: Copy extra shell scripts for information bar for tmux
   copy:
-    src: "{{ role_path }}/files/tmux-bar/"
+    src: "{{ role_path }}/files/tmux/bar/"
     dest: /home/kelog/bin/tmux-bar/
     owner: kelog
 
@@ -63,13 +66,4 @@
     src: "{{ role_path }}/files/theme"
     dest: /home/kelog/bin/
     owner: kelog
-
-- name: Copy extra scripts for laptop only
-  copy:
-    src: "{{ role_path }}/files/{{ item }}"
-    dest: /home/kelog/bin/
-    owner: kelog
-  with_items:
-  - backup-xz.sh
-  - mute-audio.sh
-  when: inventory_hostname == 'dell'
+    mode: "0755"

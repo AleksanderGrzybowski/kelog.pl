@@ -27,28 +27,33 @@
     systemd:
       name: prometheus-node-exporter
       enabled: true
-  - name: Copy Windows reboot script and WiFi reset script
+  - name: Copy Windows reboot script
     copy:
-      src: "{{ role_path }}/files/{{ item }}.sh"
-      dest: "/usr/local/bin/{{ item }}"
+      src: "{{ role_path }}/files/windows-reboot.sh"
+      dest: "/usr/local/bin/windows-reboot"
       owner: root
       group: root
       mode: '0770'
-    with_items:
-    - windows-reboot
-    - wifi-reset
   - name: Allow kelog to run windows-reboot as root
     blockinfile:
       path: /etc/sudoers
       block: |
         kelog galera = (root) NOPASSWD: /usr/local/bin/windows-reboot
+  - name: Copy extra scripts for laptop only
+    copy:
+      src: "{{ role_path }}/files/{{ item }}"
+      dest: /home/kelog/bin/
+      owner: kelog
+      mode: "0755"
+    with_items:
+    - backup-xz.sh
+    - mute-audio.sh
   when: inventory_hostname == 'dell'
 
 - name: Check if kubectx is already installed
   stat:
     path: /opt/kubectx
   register: check_kubectx
-
 - name: Install kubectx and kubens
   block:
   - name: Clone kubectx repository
@@ -66,12 +71,10 @@
     - kubens
   when: not check_kubectx.stat.exists
 
-
 - name: Check if k9s is already installed
   stat:
     path: /usr/local/bin/k9s
   register: check_k9s
-
 - name: Install k9s
   block:
   - name: Clear old k9s downloaded archive
@@ -93,7 +96,6 @@
   stat:
     path: /usr/local/bin/fzf
   register: check_fzf
-
 - name: Install fzf
   block:
   - name: Download fzf from GitHub
@@ -106,7 +108,6 @@
       dest: /usr/local/bin/
       remote_src: yes
   when: not check_fzf.stat.exists
-
 
 - name: Install ripgrep
   apt:

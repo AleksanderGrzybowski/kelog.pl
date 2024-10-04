@@ -2,12 +2,10 @@
   file:
     path: /etc/containerd
     state: directory
-
 - name: Put containerd config for kubeadm with SystemdCgroup = true
   copy:
     src: "{{ role_path }}/files/config.toml"
     dest: /etc/containerd/config.toml
-
 - name: Install containerd
   apt:
     pkg: containerd
@@ -17,7 +15,6 @@
   stat:
     path: /usr/local/bin/buildkitd
   register: check_buildkit
-
 - name: Install buildkit
   shell: |
     cd /tmp
@@ -26,7 +23,6 @@
     tar xf buildkit.tar.gz
     cp ./bin/* /usr/local/bin
   when: not check_buildkit.stat.exists
-
 - name: Put systemd service for buildkit
   copy:
     src: "{{ role_path }}/files/buildkit.service"
@@ -38,15 +34,22 @@
     enabled: true
     daemon_reload: true
 
-- name: Download nerdctl
-  get_url:
-    url: https://github.com/containerd/nerdctl/releases/download/v1.7.6/nerdctl-1.7.6-linux-amd64.tar.gz
-    dest: /tmp/nerdctl.tar.gz
-- name: Unpack nerdctl
-  unarchive:
-    remote_src: true
-    src: /tmp/nerdctl.tar.gz
-    dest: /usr/local/bin/
+- name: Check if nerdctl is already installed
+  stat:
+    path: /usr/local/bin/nerdctl
+  register: check_nerdctl
+- name: Install nerdctl
+  block:
+  - name: Download nerdctl
+    get_url:
+      url: https://github.com/containerd/nerdctl/releases/download/v1.7.6/nerdctl-1.7.6-linux-amd64.tar.gz
+      dest: /tmp/nerdctl.tar.gz
+  - name: Unpack nerdctl
+    unarchive:
+      remote_src: true
+      src: /tmp/nerdctl.tar.gz
+      dest: /usr/local/bin/
+  when: not check_nerdctl.stat.exists
 
 - name: Enable IP forwarding for Kubernetes
   copy:
@@ -54,7 +57,6 @@
     dest: /etc/sysctl.d/k8s.conf
 - name: Force reload of sysctl parameters
   shell: sysctl --system
-
 - name: Add required module for flannel to work
   lineinfile:
     path: /etc/modules
@@ -73,7 +75,6 @@
   stat:
     path: /home/kelog/kelog.pl
   register: check_kelog_pl
-
 - name: Clone main infrastructure repository for later
   git:
     repo: 'https://github.com/AleksanderGrzybowski/kelog.pl.git'

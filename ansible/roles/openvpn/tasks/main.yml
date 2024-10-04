@@ -3,7 +3,7 @@
     name: openvpn
     state: present
     
-- name: Put OpenVPN key
+- name: Put OpenVPN shared key
   template:
     src: "{{ playbook_dir }}/secrets/dell.key"
     dest: /etc/openvpn/dell.key

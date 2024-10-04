@@ -9,7 +9,7 @@ User=kelog
 # -M 0 --> no monitoring
 # -N Just open the connection and do nothing (not interactive)
 # LOCALPORT:IP_ON_EXAMPLE_COM:PORT_ON_EXAMPLE_COM
-ExecStart=/usr/bin/autossh -D {{ autossh_socks_port }} -M 0 -N -v -o "ServerAliveInterval 60" -o "ServerAliveCountMax 3" -p 22 -l autossh {{ host }} -R {{ remote_forwarded_port }}:127.0.0.1:22 -i {{ ssh_key_local_path }}
+ExecStart=/usr/bin/autossh -D {{ autossh_socks_port }} -M 0 -N -v -o "ServerAliveInterval 60" -o "ServerAliveCountMax 3" -p 22 -l autossh {{ autossh.host }} -R {{ autossh.remote_forwarded_port }}:127.0.0.1:22 -i {{ autossh.key_local_path }}
 RestartSec=60
 Restart=always
 

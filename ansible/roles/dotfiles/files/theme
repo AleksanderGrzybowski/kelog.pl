@@ -4,13 +4,11 @@ if [ "$1" = "light" ]; then
     echo "Enabling light mode"
     rm -f ~/.dark
     touch ~/.light
-    printf '\033Ptmux;\033\033]50;%s\007\033\\' "colors=SolarizedLight"
     cp ~/.config/k9s/skins/solarized-light.yml ~/.config/k9s/skin.yml
 elif [ "$1" = "dark" ]; then
     echo "Enabling dark mode"
     rm -rf ~/.light
     touch ~/.dark
-    printf '\033Ptmux;\033\033]50;%s\007\033\\' "colors=Solarized"
     rm -rf ~/.config/k9s/skin.yml
 else
     echo "Usage: theme <dark/light>"

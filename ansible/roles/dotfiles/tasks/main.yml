@@ -21,19 +21,24 @@
 
 - name: Put folder for custom k9s light theme
   file:
-    path: "/home/kelog/.config/k9s/skins/"
+    path: "{{ item }}"
     state: directory
+    owner: kelog
+  with_items:
+  - "/home/kelog/.config/k9s"
+  - "/home/kelog/.config/k9s/skins/"
+
 
 - name: Put custom k9s light theme
   copy:
-    src: "../files/solarized-light.yaml"
-    dest: "/home/kelog/.config/k9s/skins/solarized-light.yaml"
+    src: "../files/solarized-light.yml"
+    dest: "/home/kelog/.config/k9s/skins/solarized-light.yml"
     owner: kelog
 
 - name: Put custom k9s config file
   copy:
-    src: "../files/k9s-config.yaml"
-    dest: "/home/kelog/.config/k9s/config.yaml"
+    src: "../files/k9s-config.yml"
+    dest: "/home/kelog/.config/k9s/config.yml"
     owner: kelog
 
 - name: Create folder for shell helpers
@@ -45,21 +50,25 @@
   copy:
     src: "{{ role_path }}/files/tmux-theme-switch.sh"
     dest: /home/kelog/bin/
+    owner: kelog
 
 - name: Copy extra shell scripts for information bar for tmux
   copy:
     src: "{{ role_path }}/files/tmux-bar/"
     dest: /home/kelog/bin/tmux-bar/
+    owner: kelog
 
 - name: Copy scripts for setting theme (dark/light)
   copy:
     src: "{{ role_path }}/files/theme"
     dest: /home/kelog/bin/
+    owner: kelog
 
 - name: Copy extra scripts for laptop only
   copy:
     src: "{{ role_path }}/files/{{ item }}"
     dest: /home/kelog/bin/
+    owner: kelog
   with_items:
   - backup-xz.sh
   - mute-audio.sh

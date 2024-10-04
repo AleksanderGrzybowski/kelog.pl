@@ -22,7 +22,7 @@
   shell: |
     cd /tmp
     rm -rf buildkit.tar.gz
-    wget {{ buildkit_url }} -O buildkit.tar.gz
+    wget https://github.com/moby/buildkit/releases/download/v0.15.1/buildkit-v0.15.1.linux-amd64.tar.gz -O buildkit.tar.gz
     tar xf buildkit.tar.gz
     cp ./bin/* /usr/local/bin
   when: not check_buildkit.stat.exists

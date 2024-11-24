@@ -3,44 +3,51 @@ set -e
 
 TIMESTAMP=$(date '+%Y-%m-%d_%Hh%Mm%Ss')
 BASEFOLDER="backup-${TIMESTAMP}"
+ARCHIVE="backup-${TIMESTAMP}.tar.xz"
 EXTERNAL="/media/kelog/SAMSUNG-EXT4/kelog-backups/"
 S3_TARGET="s3://kelog-backups/"
+
+cd /tmp
 
 echo "Using folder ${BASEFOLDER} as the temporary place to store files."
 mkdir ${BASEFOLDER}
 cd ${BASEFOLDER}
 
 echo "Thunderbird..."
-tar cJf "dot_thunderbird-${TIMESTAMP}.tar.xz" -C /mnt/Dysk dot_thunderbird
+cp -ar /mnt/Dysk/dot_thunderbird .
 
 echo "Chrome..."
-tar cJf "dot_config_google-chrome-${TIMESTAMP}.tar.xz" -C /mnt/Dysk dot_config_google-chrome
+cp -a /mnt/Dysk/dot_config_google-chrome .
 
 echo "Kodzenie..."
-tar cJf "Kodzenie-${TIMESTAMP}.tar.xz" -C /mnt/Dysk/ --exclude=node_modules --exclude=.gradle --exclude=build Kodzenie
+cp -a /mnt/Dysk/Kodzenie .
 
 echo "stuff..."
-tar cJf "stuff-${TIMESTAMP}.tar.xz" -C /mnt/Dysk/ stuff
+cp -a /mnt/Dysk/stuff .
 
 echo "Dropbox..."
-tar cJf "dropbox-${TIMESTAMP}.tar.xz" -C /mnt/Dysk/ Dropbox
+cp -a /mnt/Dysk/Dropbox .
 
 echo "MuseScore..."
-tar cJf "musescore-${TIMESTAMP}.tar.xz" -C /mnt/Shared/ MuseScore2
+cp -a /mnt/Shared/MuseScore .
 
 echo "SSH keys..."
-tar cJf "dot_ssh-${TIMESTAMP}.tar.xz" -C /home/kelog .ssh 
+cp -a /home/kelog/.ssh dot_ssh
+
+echo "Reaper projects..."
+cp -a /mnt/Shared/Reaper .
 
 echo "Done."
 cd ..
 
+XZ_OPT="-6T0 --memlimit=10000Mi" tar cJf ${ARCHIVE} ${BASEFOLDER}
 echo "Copying to external disk..."
-cp -r ${BASEFOLDER} "${EXTERNAL}"
+cp -r ${ARCHIVE} ${EXTERNAL}
 echo "Copying finished."
-ls -l "${EXTERNAL}/${BASEFOLDER}"
-du -sh "${EXTERNAL}/${BASEFOLDER}"
+ls -l "${EXTERNAL}/${ARCHIVE}"
+du -sh "${EXTERNAL}/${ARCHIVE}"
 
 echo "Copying to S3..."
-s3cmd put --recursive --storage-class=ONEZONE_IA ${BASEFOLDER} ${S3_TARGET} 
+s3cmd put --recursive --storage-class=ONEZONE_IA --multipart-chunk-size-mb=500 ${ARCHIVE} ${S3_TARGET} 
 echo "Copy finished."
 

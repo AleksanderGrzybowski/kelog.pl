@@ -1,0 +1,9 @@
+[Unit]
+Description=Block k3s VXLAN traffic from outside
+
+[Service]
+ExecStart=iptables -I INPUT -p udp --dport 8472 -j DROP
+
+
+[Install]
+WantedBy=multi-user.target

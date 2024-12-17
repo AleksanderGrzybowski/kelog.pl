@@ -8,5 +8,5 @@
   - ssh_tunnels
   - openvpn
   - wireguard
-  - role: kubeadm-prerequisites
+  - role: k3s-prerequisites
     when: inventory_hostname == 'kelog.pl'

@@ -1,16 +1,3 @@
-- name: Create directory for containerd configuration file
-  file:
-    path: /etc/containerd
-    state: directory
-- name: Put containerd config for kubeadm with SystemdCgroup = true
-  copy:
-    src: "{{ role_path }}/files/config.toml"
-    dest: /etc/containerd/config.toml
-- name: Install containerd
-  apt:
-    pkg: containerd
-    state: present
-
 - name: Check if buildkit is already installed
   stat:
     path: /usr/local/bin/buildkitd
@@ -65,6 +52,17 @@
     state: present
 - name: Force required module load now without reboot
   shell: "modprobe br_netfilter"
+
+- name: Put systemd service for blocking external VXLAN port
+  copy:
+    src: "{{ role_path }}/files/k3s-block-vxlan.service"
+    dest: /etc/systemd/system/k3s-block-vxlan.service
+- name: Enable iptables VXLAN blocking on startup
+  systemd:
+    name: k3s-block-vxlan.service
+    state: started
+    enabled: true
+    daemon_reload: true
 
 - name: Install certbot for Lets Encrypt
   apt:

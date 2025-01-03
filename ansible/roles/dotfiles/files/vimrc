@@ -85,3 +85,5 @@ inoremap jk <Esc>
 
 nnoremap <silent> <expr> <Leader>f (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
 nmap <Leader>g :Rg<CR>
+hi Directory ctermfg=4
+

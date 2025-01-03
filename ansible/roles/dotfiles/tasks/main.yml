@@ -67,3 +67,28 @@
     dest: /home/kelog/bin/
     owner: kelog
     mode: "0755"
+
+- name: Create directory for vim colorschemes
+  file:
+    path: "/home/kelog/.vim/colors"
+    state: directory
+    owner: kelog
+
+- name: Download selenized colorscheme for Vim
+  get_url:
+    url: https://raw.githubusercontent.com/jan-warchol/selenized/refs/heads/master/editors/vim/colors/selenized.vim
+    dest: /home/kelog/.vim/colors/selenized.vim
+
+- name: Create directory for Konsole colorschemes
+  file:
+    path: "/home/kelog/.local/share/konsole"
+    state: directory
+    owner: kelog
+
+- name: Download selenized colorschemes for Konsole
+  get_url:
+    url: "https://raw.githubusercontent.com/jan-warchol/selenized/refs/heads/master/terminals/konsole/selenized-{{ item }}.colorscheme"
+    dest: "/home/kelog/.local/share/konsole/selenized-{{ item }}.colorscheme"
+  with_items:
+  - dark
+  - light

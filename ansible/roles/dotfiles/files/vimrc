@@ -11,6 +11,8 @@ Bundle 'altercation/vim-colors-solarized'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'machakann/vim-highlightedyank'
+Plugin 'tpope/vim-commentary'
+
 
 call vundle#end()
 
@@ -86,6 +88,8 @@ inoremap jk <Esc>
 
 nnoremap <silent> <expr> <Leader>f (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
 nmap <Leader>g :Rg<CR>
+nmap <Leader>c gcc
+vmap <Leader>c gc
 hi Directory ctermfg=4
 
 

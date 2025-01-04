@@ -10,6 +10,7 @@ Plugin 'scrooloose/nerdtree'
 Bundle 'altercation/vim-colors-solarized'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
+Plugin 'machakann/vim-highlightedyank'
 
 call vundle#end()
 
@@ -87,3 +88,7 @@ nnoremap <silent> <expr> <Leader>f (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" 
 nmap <Leader>g :Rg<CR>
 hi Directory ctermfg=4
 
+
+let g:highlightedyank_highlight_duration = 300
+
+highlight HighlightedyankRegion ctermbg=7

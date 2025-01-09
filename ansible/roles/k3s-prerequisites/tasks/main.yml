@@ -1,7 +1,3 @@
-- name: Check if buildkit is already installed
-  stat:
-    path: /usr/local/bin/buildkitd
-  register: check_buildkit
 - name: Install buildkit
   shell: |
     cd /tmp
@@ -9,7 +5,6 @@
     wget https://github.com/moby/buildkit/releases/download/v0.15.1/buildkit-v0.15.1.linux-amd64.tar.gz -O buildkit.tar.gz
     tar xf buildkit.tar.gz
     cp ./bin/* /usr/local/bin
-  when: not check_buildkit.stat.exists
 - name: Put systemd service for buildkit
   copy:
     src: "{{ role_path }}/files/buildkit.service"
@@ -21,22 +16,19 @@
     enabled: true
     daemon_reload: true
 
-- name: Check if nerdctl is already installed
-  stat:
-    path: /usr/local/bin/nerdctl
-  register: check_nerdctl
-- name: Install nerdctl
-  block:
-  - name: Download nerdctl
-    get_url:
-      url: https://github.com/containerd/nerdctl/releases/download/v1.7.6/nerdctl-1.7.6-linux-amd64.tar.gz
-      dest: /tmp/nerdctl.tar.gz
-  - name: Unpack nerdctl
-    unarchive:
-      remote_src: true
-      src: /tmp/nerdctl.tar.gz
-      dest: /usr/local/bin/
-  when: not check_nerdctl.stat.exists
+- name: Clear out temporary archive download for nerdcel
+  file:
+    path: /tmp/nerdctl.tar.gz
+    state: absent
+- name: Download nerdctl
+  get_url:
+    url: https://github.com/containerd/nerdctl/releases/download/v1.7.6/nerdctl-1.7.6-linux-amd64.tar.gz
+    dest: /tmp/nerdctl.tar.gz
+- name: Unpack nerdctl
+  unarchive:
+    remote_src: true
+    src: /tmp/nerdctl.tar.gz
+    dest: /usr/local/bin/
 
 - name: Enable IP forwarding for Kubernetes
   copy:

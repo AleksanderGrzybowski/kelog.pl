@@ -57,8 +57,8 @@
     owner: kelog
 - name: Copy extra shell scripts for information bar for tmux
   copy:
-    src: "{{ role_path }}/files/tmux/bar/"
-    dest: /home/kelog/bin/tmux-bar/
+    src: "{{ role_path }}/files/tmux-bar.sh"
+    dest: /home/kelog/bin/
     owner: kelog
 
 - name: Copy scripts for setting theme (dark/light)

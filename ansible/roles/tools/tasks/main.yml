@@ -75,7 +75,7 @@
 
 - name: Clear old k9s downloaded archive and binary
   file:
-    path:
+    path: "{{ item }}"
     state: absent
   with_items:
   - /tmp/k9s.tar.gz
@@ -92,7 +92,7 @@
 
 - name: Clear old fzf downloaded archive and binary
   file:
-    path:
+    path: "{{ item }}"
     state: absent
   with_items:
     - /tmp/fzf.tar.gz

@@ -1,6 +1,6 @@
 yt_dlp_output_path: /mnt/Dysk2/yy
 
 urls:
-  k9s: "https://github.com/derailed/k9s/releases/download/v0.27.4/k9s_Linux_amd64.tar.gz"
+  k9s: "https://github.com/derailed/k9s/releases/download/v0.32.7/k9s_Linux_amd64.tar.gz"
   fzf: "https://github.com/junegunn/fzf/releases/download/v0.54.3/fzf-0.54.3-linux_amd64.tar.gz"
   yt_dlp: "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp"

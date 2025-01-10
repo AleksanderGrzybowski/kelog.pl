@@ -1,0 +1,100 @@
+bg_0: &bg_0                  '#103c48'
+bg_1: &bg_1                  '#184956'
+bg_2: &bg_2                  '#2d5b69'
+dim_0: &dim_0                '#72898f'
+fg_0: &fg_0                  '#adbcbc'
+fg_1: &fg_1                  '#cad8d9'
+red: &red                    '#fa5750'
+green: &green                '#75b938'
+yellow: &yellow              '#dbb32d'
+blue: &blue                  '#4695f7'
+magenta: &magenta            '#f275be'
+cyan: &cyan                  '#41c7b9'
+orange: &orange              '#ed8649'
+violet: &violet              '#af88eb'
+br_red: &br_red              '#ff665c'
+br_green: &br_green          '#84c747'
+br_yellow: &br_yellow        '#ebc13d'
+br_blue: &br_blue            '#58a3ff'
+br_magenta: &br_magenta      '#ff84cd'
+br_cyan: &br_cyan            '#53d6c7'
+br_orange: &br_orange        '#fd9456'
+br_violet: &br_violet        '#bd96fa'
+
+k9s:
+  # General K9s styles
+  body:
+    fgColor: *br_cyan
+    bgColor: default
+    logoColor: *br_cyan
+
+  # ClusterInfoView styles
+  info:
+    fgColor: *yellow
+    sectionColor: *br_yellow
+
+  # Frame styles
+  frame:
+    # Borders styles
+    border:
+      fgColor: *fg_0
+      focusColor: default
+
+    # MenuView attributes and styles
+    menu:
+      fgColor: *fg_0
+      keyColor: cornflowerblue
+      # Used for favorite namespaces
+      numKeyColor: *fg_0
+
+    # CrumbView attributes for history navigation.
+    crumbs:
+      fgColor: white
+      bgColor: *bg_0
+      activeColor: *bg_1
+
+    # Resource status and update styles
+    status:
+      newColor: *fg_1
+      modifyColor: default
+      addColor: lightskyblue
+      errorColor: *red
+      highlightcolor: *blue
+      killColor: slategray
+      completedColor: *br_cyan
+
+    # Border title styles.
+    title:
+      fgColor: *fg_0
+      bgColor: default
+      highlightColor: skyblue
+      counterColor: skyblue
+      filterColor: *red
+  # Specific views styles
+  views:
+    # TableView attributes.
+    table:
+      fgColor: blue
+      bgColor: default
+      cursorColor: aqua
+      # Header row styles.
+      header:
+        fgColor: white
+        bgColor: default
+        sorterColor: orange
+
+    # YAML info styles.
+    yaml:
+      keyColor: *blue
+      colonColor: *blue
+      valueColor: *fg_1
+
+    # Logs styles.
+    logs:
+      fgColor: *fg_0
+      bgColor: default
+      indicator:
+        fgColor: *blue
+        bgColor: default
+        toggleOnColor: *green
+        toggleOffColor: *dim_0

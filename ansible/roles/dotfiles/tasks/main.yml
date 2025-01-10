@@ -20,7 +20,7 @@
     dest: "/home/kelog/.oh-my-zsh/themes/agnoster-kelog.zsh-theme"
     owner: kelog
 
-- name: Put folders for custom k9s light theme
+- name: Put folders for custom k9s themes
   file:
     path: "{{ item }}"
     state: directory
@@ -28,6 +28,11 @@
   with_items:
   - "/home/kelog/.config/k9s"
   - "/home/kelog/.config/k9s/skins/"
+- name: Put custom k9s Selenized dark theme
+  copy:
+    src: "../files/k9s/selenized.yaml"
+    dest: "/home/kelog/.config/k9s/skins/selenized.yaml"
+    owner: kelog
 - name: Put custom k9s light theme
   copy:
     src: "../files/k9s/solarized-light.yml"
@@ -35,8 +40,8 @@
     owner: kelog
 - name: Put custom k9s config file
   copy:
-    src: "../files/k9s/config.yml"
-    dest: "/home/kelog/.config/k9s/config.yml"
+    src: "../files/k9s/config.yaml"
+    dest: "/home/kelog/.config/k9s/config.yaml"
     owner: kelog
 
 - name: Create folder for shell helpers

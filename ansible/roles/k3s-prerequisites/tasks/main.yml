@@ -1,3 +1,13 @@
+- name: Put systemd service for buildkit
+  copy:
+    src: "{{ role_path }}/files/buildkit.service"
+    dest: /etc/systemd/system/buildkit.service
+- name: Disable buildkit service before reinstalling
+  systemd:
+    name: buildkit.service
+    state: stopped
+    enabled: false
+    daemon_reload: true
 - name: Install buildkit
   shell: |
     cd /tmp
@@ -5,10 +15,6 @@
     wget https://github.com/moby/buildkit/releases/download/v0.15.1/buildkit-v0.15.1.linux-amd64.tar.gz -O buildkit.tar.gz
     tar xf buildkit.tar.gz
     cp ./bin/* /usr/local/bin
-- name: Put systemd service for buildkit
-  copy:
-    src: "{{ role_path }}/files/buildkit.service"
-    dest: /etc/systemd/system/buildkit.service
 - name: Enable buildkit service
   systemd:
     name: buildkit.service
@@ -16,7 +22,7 @@
     enabled: true
     daemon_reload: true
 
-- name: Clear out temporary archive download for nerdcel
+- name: Clear out temporary archive download for nerdctl
   file:
     path: /tmp/nerdctl.tar.gz
     state: absent

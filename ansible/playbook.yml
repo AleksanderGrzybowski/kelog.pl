@@ -6,7 +6,6 @@
   - tools
   - dotfiles
   - ssh_tunnels
-  - openvpn
   - wireguard
   - role: k3s-prerequisites
     when: inventory_hostname == 'kelog.pl'

@@ -12,6 +12,7 @@ Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'machakann/vim-highlightedyank'
 Plugin 'tpope/vim-commentary'
+Plugin 'raimondi/delimitmate'
 
 
 call vundle#end()

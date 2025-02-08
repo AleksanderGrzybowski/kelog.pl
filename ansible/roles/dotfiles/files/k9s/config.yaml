@@ -8,10 +8,10 @@ k9s:
   ui:
     skin: selenized
     enableMouse: true
-    headless: false
-    logoless: false
-    crumbsless: false
-    reactive: false
+    headless: true
+    logoless: true
+    crumbsless: true
+    reactive: true
     noIcons: false
     defaultsToFullScreen: false
   skipLatestRevCheck: false

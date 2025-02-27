@@ -1,7 +1,7 @@
 #! /bin/bash
 set -e
 
-domains="aleksandergrzybowski.pl baza.zespolsdg.pl cogramy.zespolsdg.pl kanapka.zespolsdg.pl kiedygramy.zespolsdg.pl druzynapana.zespolsdg.pl registry.kelog.pl zmd.zespolsdg.pl"
+domains="aleksandergrzybowski.pl baza.zespolsdg.pl cogramy.zespolsdg.pl kanapka.zespolsdg.pl kiedygramy.zespolsdg.pl druzynapana.zespolsdg.pl registry.kelog.pl"
 
 function scale_ingress_controller {
   replicas="$1"

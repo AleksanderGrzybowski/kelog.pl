@@ -13,6 +13,7 @@ Plugin 'junegunn/fzf.vim'
 Plugin 'machakann/vim-highlightedyank'
 Plugin 'tpope/vim-commentary'
 Plugin 'raimondi/delimitmate'
+Plugin 'hashivim/vim-terraform'
 
 
 call vundle#end()
@@ -72,6 +73,7 @@ set scrolloff=2
 let mapleader = ","
 nmap <Leader>n :NERDTreeToggle<CR>
 nmap <Leader>w :wa<CR>
+nmap <Leader>x :xa<CR>
 
 " different colors for normal/insert mode
 au InsertEnter * hi StatusLine ctermfg=3

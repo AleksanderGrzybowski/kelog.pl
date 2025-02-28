@@ -98,16 +98,11 @@ prompt_git() {
   if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
     dirty=$(parse_git_dirty)
     ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git rev-parse --short HEAD 2> /dev/null)"
-    if [[ -f "/home/kelog/.light" ]]; then
-      theme_color="white"
-    else
-      theme_color="black"
-    fi
 
     if [[ -n $dirty ]]; then
-      prompt_segment yellow ${theme_color}
+      prompt_segment yellow black
     else
-      prompt_segment green  ${theme_color}
+      prompt_segment green black
     fi
 
     if [[ -e "${repo_path}/BISECT_LOG" ]]; then
@@ -193,13 +188,7 @@ prompt_hg() {
 
 # Dir: current working directory
 prompt_dir() {
-  if [[ -f "/home/kelog/.light" ]]; then
-    theme_color="white"
-  else
-    theme_color="black"
-  fi
-
-  prompt_segment blue ${theme_color} '%~'
+  prompt_segment blue black '%~'
 }
 
 # Virtualenv: current working virtualenv
@@ -221,13 +210,8 @@ prompt_status() {
   [[ $UID -eq 0 ]] && symbols+="%{%F{yellow}%}⚡"
   [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="%{%F{cyan}%}⚙"
 
-  if [[ -f "/home/kelog/.light" ]]; then
-    theme_color="white"
-  else
-    theme_color="black"
-  fi
 
-  [[ -n "$symbols" ]] && prompt_segment ${theme_color} default "$symbols"
+  [[ -n "$symbols" ]] && prompt_segment black default "$symbols"
 }
 
 prompt_kubernetes() {
@@ -238,13 +222,7 @@ prompt_kubernetes() {
  
   namespace=$(kubectl config view --minify --output 'jsonpath={..namespace}')
 
-  if [[ -f "/home/kelog/.light" ]]; then
-    theme_color="white"
-  else
-    theme_color="black"
-  fi
-
-  prompt_segment 006 ${theme_color} "${context}/${namespace}"
+  prompt_segment 006 black "${context}/${namespace}"
 }
 
 ## Main prompt

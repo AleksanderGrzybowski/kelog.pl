@@ -55,11 +55,6 @@
     src: "../files/tmux/tmux.conf"
     dest: "/home/kelog/.tmux.conf"
     owner: kelog
-- name: Copy script for setting tmux colors
-  copy:
-    src: "{{ role_path }}/files/tmux/tmux-theme-switch.sh"
-    dest: /home/kelog/bin/
-    owner: kelog
 - name: Copy extra shell scripts for information bar for tmux
   copy:
     src: "{{ role_path }}/files/tmux/tmux-bar.sh"

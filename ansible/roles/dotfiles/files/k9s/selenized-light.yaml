@@ -69,8 +69,8 @@ k9s:
     title:
       fgColor: *fg_0
       bgColor: default
-      highlightColor: skyblue
-      counterColor: skyblue
+      highlightColor: *green
+      counterColor: *green
       filterColor: *red
   # Specific views styles
   views:

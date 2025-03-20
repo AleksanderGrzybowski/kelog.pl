@@ -12,7 +12,7 @@ data:
       - job_name: 'node'
         scrape_interval: 120s
         static_configs:
-        - targets: ['kelog.pl:9100', '192.168.79.2:9100']
+        - targets: ['kelog.pl:9100', '192.168.80.2:9100']
 
 ---
 apiVersion: apps/v1

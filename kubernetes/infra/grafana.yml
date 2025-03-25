@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: grafana
-        image: grafana/grafana:11.3.1
+        image: grafana/grafana:11.5.3
         ports:
         - containerPort: 3000
           protocol: TCP
@@ -59,6 +59,7 @@ metadata:
   name: grafana
   namespace: prometheus
 spec:
+  ingressClassName: nginx
   rules:
   - host: grafana.kelog.pl
     http:

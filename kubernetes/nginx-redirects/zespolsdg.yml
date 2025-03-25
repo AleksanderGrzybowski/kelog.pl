@@ -9,6 +9,7 @@ metadata:
         return 302 https://ustron.luteranie.pl/spolecznosc/zespol-soli-deo-gloria;
       }
 spec:
+  ingressClassName: nginx
   rules:
   - host: "zespolsdg.pl"
     http:

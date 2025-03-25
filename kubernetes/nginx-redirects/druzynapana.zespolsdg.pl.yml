@@ -9,6 +9,7 @@ metadata:
         return 302 https://www.dropbox.com/sh/i9b3ugg8fzuqhhf/AAATnHnMpF1WA7bbskxYiJ_Ga?dl=0;
       }
 spec:
+  ingressClassName: nginx
   tls:
   - hosts:
     - druzynapana.zespolsdg.pl

@@ -13,9 +13,11 @@ spec:
       labels:
         app: storage
     spec:
+      imagePullSecrets:
+      - name: regcred
       containers:
       - name: storage
-        image: httpd
+        image: registry.kelog.pl/httpd:2.4.63
         ports:
         - containerPort: 80
         volumeMounts:
@@ -55,6 +57,7 @@ metadata:
   name: storage
   namespace: default
 spec:
+  ingressClassName: nginx
   rules:
   - host: storage.kelog.pl
     http:

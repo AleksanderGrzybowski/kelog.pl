@@ -10,6 +10,7 @@ metadata:
 
       }
 spec:
+  ingressClassName: nginx
   tls:
   - hosts:
     - kiedygramy.zespolsdg.pl

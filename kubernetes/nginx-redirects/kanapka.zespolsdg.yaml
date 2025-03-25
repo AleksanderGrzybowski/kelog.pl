@@ -9,6 +9,7 @@ metadata:
         return 302 https://www.dropbox.com/sh/jmicj8lciq80sc4/AAA14p73TEA685Yv3XBNvURla?dl=0;
       }
 spec:
+  ingressClassName: nginx
   tls:
   - hosts:
     - kanapka.zespolsdg.pl

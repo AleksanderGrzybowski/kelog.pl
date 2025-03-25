@@ -9,6 +9,7 @@ metadata:
         return 302 https://www.dropbox.com/sh/58s8dmi8rv4oo8p/AACG2EcqT1q5JKQsH-qMY6LVa?dl=0;
       }
 spec:
+  ingressClassName: nginx
   tls:
   - hosts:
     - cogramy.zespolsdg.pl

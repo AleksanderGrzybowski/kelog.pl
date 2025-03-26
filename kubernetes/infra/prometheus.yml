@@ -33,9 +33,11 @@ spec:
       labels:
         app: prometheus
     spec:
+      imagePullSecrets:
+      - name: regcred
       containers:
       - name: prometheus
-        image: prom/prometheus:v3.0.1
+        image: registry.kelog.pl/prom/prometheus:v3.2.1
         volumeMounts:
         - name: config
           mountPath: /etc/prometheus/prometheus.yml

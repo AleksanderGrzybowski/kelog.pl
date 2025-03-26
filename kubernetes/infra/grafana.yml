@@ -13,9 +13,11 @@ spec:
       labels:
         app: grafana
     spec:
+      imagePullSecrets:
+      - name: regcred
       containers:
       - name: grafana
-        image: grafana/grafana:11.5.3
+        image: registry.kelog.pl/grafana/grafana:11.5.3
         ports:
         - containerPort: 3000
           protocol: TCP

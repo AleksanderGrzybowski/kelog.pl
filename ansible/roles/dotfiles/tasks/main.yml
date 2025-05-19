@@ -9,6 +9,12 @@
   - dircolors
   - gitconfig
 
+- name: Put NeoVim config
+  template:
+    src: "../files/init.lua"
+    dest: "/home/kelog/.config/nvim/init.lua"
+    owner: kelog
+
 - name: Put .zshrc
   template:
     src: "../files/zsh/zshrc"

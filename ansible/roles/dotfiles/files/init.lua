@@ -170,6 +170,7 @@ require('lazy').setup({
     },
   },
   { 'calind/selenized.nvim' },
+  { 'shaunsingh/solarized.nvim' },
   { 'scrooloose/nerdtree' },
   {
     'nvim-lualine/lualine.nvim',
@@ -257,7 +258,10 @@ require('lazy').setup({
   },
 })
 
+vim.cmd.colorscheme 'solarized'
 vim.cmd.colorscheme 'selenized'
+
+vim.opt.shortmess:append("I")
 
 vim.keymap.set('n', '<leader>n', ':NERDTreeToggle<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>w', ':w<CR>', { noremap = true, silent = true })

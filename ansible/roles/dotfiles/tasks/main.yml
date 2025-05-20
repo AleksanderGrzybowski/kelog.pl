@@ -9,7 +9,14 @@
   - dircolors
   - gitconfig
 
-- name: Put NeoVim config
+
+- name: Put folder for Neovim config
+  file:
+    path: "/home/kelog/.config/nvim"
+    state: directory
+    owner: kelog
+
+- name: Put Neovim config
   template:
     src: "../files/init.lua"
     dest: "/home/kelog/.config/nvim/init.lua"

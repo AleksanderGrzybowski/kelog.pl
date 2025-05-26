@@ -14,14 +14,13 @@ end)
 vim.o.breakindent = true
 vim.o.undofile = false
 vim.o.ignorecase = true
-vim.o.smartcase = true
-vim.o.signcolumn = 'yes'
+vim.o.signcolumn = 'no'
 vim.o.updatetime = 250
-vim.o.timeoutlen = 300
+vim.o.timeoutlen = 1000
 vim.o.splitright = true
 vim.o.splitbelow = true
 vim.o.list = false
-vim.o.inccommand = 'split'
+vim.o.inccommand = 'nosplit'
 
 vim.o.cursorline = true
 vim.o.scrolloff = 5
@@ -54,7 +53,6 @@ rtp:prepend(lazypath)
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
-
   {
     'lewis6991/gitsigns.nvim',
     opts = {
@@ -80,12 +78,9 @@ require('lazy').setup({
         end,
       },
       { 'nvim-telescope/telescope-ui-select.nvim' },
-
-      -- Useful for getting pretty icons, but requires a Nerd Font.
-      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font }
     },
     config = function()
-      -- [[ Configure Telescope ]]
       local actions = require('telescope.actions')
       require('telescope').setup {
         defaults = {
@@ -107,71 +102,28 @@ require('lazy').setup({
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
-      vim.keymap.set('n', '<leader>f', builtin.find_files, { desc = '[S]earch [F]iles' })
-      vim.keymap.set('n', '<leader>g', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+      vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '' })
+      vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = '' })
+      vim.keymap.set('n', '<leader>fs', builtin.grep_string, { desc = '' })
+      vim.keymap.set('n', '<leader>fz', builtin.current_buffer_fuzzy_find, { desc = '' })
 
-      -- Slightly advanced example of overriding default behavior and theme
-      vim.keymap.set('n', '<leader>/', function()
-        -- You can pass additional configuration to Telescope to change the theme, layout, etc.
-        builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-          winblend = 10,
-          previewer = false,
-        })
-      end, { desc = '[/] Fuzzily search in current buffer' })
-
-      -- It's also possible to pass additional configuration options.
-      vim.keymap.set('n', '<leader>s/', function()
-        builtin.live_grep {
-          grep_open_files = true,
-          prompt_title = 'Live Grep in Open Files',
-        }
-      end, { desc = '[S]earch [/] in Open Files' })
-
-      -- Shortcut for searching your Neovim configuration files
-      vim.keymap.set('n', '<leader>sn', function()
-        builtin.find_files { cwd = vim.fn.stdpath 'config' }
-      end, { desc = '[S]earch [N]eovim files' })
+      vim.keymap.set('n', '<leader>fb', builtin.git_branches, { desc = '' })
+      vim.keymap.set('n', '<leader>fc', builtin.git_commits, { desc = '' })
     end,
   },
-
-  { -- Autoformat
-    'stevearc/conform.nvim',
-    event = { 'BufWritePre' },
-    cmd = { 'ConformInfo' },
-    keys = {
-      {
-        '<leader>u',
-        function()
-          require('conform').format { async = true, lsp_format = 'fallback' }
-        end,
-        mode = '',
-        desc = '[F]ormat buffer',
-      },
-    },
-    opts = {
-      notify_on_error = false,
-      format_on_save = function(bufnr)
-        -- Disable "format_on_save lsp_fallback" for languages that don't
-        -- have a well standardized coding style. You can add additional
-        -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
-        if disable_filetypes[vim.bo[bufnr].filetype] then
-          return nil
-        else
-          return {
-            timeout_ms = 500,
-            lsp_format = 'fallback',
-          }
-        end
-      end,
-      formatters_by_ft = {
-        lua = { 'stylua' }
-      },
-    },
+  'shaunsingh/solarized.nvim',
+  'calind/selenized.nvim',
+  'tpope/vim-fugitive',
+  'scrooloose/nerdtree',
+  {
+    "FabijanZulj/blame.nvim",
+    lazy = false,
+    config = function()
+      require('blame').setup {
+        colors = "#53676d"
+      }
+    end
   },
-  { 'calind/selenized.nvim' },
-  { 'shaunsingh/solarized.nvim' },
-  { 'scrooloose/nerdtree' },
   {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -232,14 +184,10 @@ require('lazy').setup({
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
-      -- Autoinstall languages that are not installed
+      ensure_installed = {},
       auto_install = true,
       highlight = {
         enable = true,
-        -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-        --  If you are experiencing weird indenting issues, add the language to
-        --  the list of additional_vim_regex_highlighting and disabled languages for indent.
         additional_vim_regex_highlighting = { 'ruby' },
       },
       indent = { enable = true, disable = { 'ruby' } },
@@ -258,25 +206,35 @@ require('lazy').setup({
   },
 })
 
-vim.cmd.colorscheme 'solarized'
+vim.cmd.colorscheme 'solarized' -- selenized doesn't work otherwise
 vim.cmd.colorscheme 'selenized'
 
 vim.opt.shortmess:append("I")
 
-vim.keymap.set('n', '<leader>n', ':NERDTreeToggle<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>w', ':w<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>x', ':x<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', 'Y', 'yy', { noremap = true, silent = true })
-vim.keymap.set('i', 'jk', '<esc>', { noremap = true, silent = true })
+local opts = { noremap = true, silent = true }
 
-vim.keymap.set('n', "'", "`", { noremap = true, silent = true })
-vim.keymap.set('n', "`", "'", { noremap = true, silent = true })
+vim.keymap.set('n', 'Y', 'yy', opts)
+vim.keymap.set('i', 'jk', '<esc>', opts)
+vim.keymap.set('n', "'", "`", opts)
+vim.keymap.set('n', "`", "'", opts)
 
-vim.api.nvim_buf_set_keymap(0, 'n', 'k', 'gk', { noremap = true, silent = true })
-vim.api.nvim_buf_set_keymap(0, 'n', 'j', 'gj', { noremap = true, silent = true })
-vim.api.nvim_buf_set_keymap(0, 'n', '0', 'g0', { noremap = true, silent = true })
-vim.api.nvim_buf_set_keymap(0, 'n', '$', 'g$', { noremap = true, silent = true })
+vim.api.nvim_buf_set_keymap(0, 'n', 'k', 'gk', opts)
+vim.api.nvim_buf_set_keymap(0, 'n', 'j', 'gj', opts)
+vim.api.nvim_buf_set_keymap(0, 'n', '0', 'g0', opts)
+vim.api.nvim_buf_set_keymap(0, 'n', '$', 'g$', opts)
 
+vim.keymap.set('n', '<leader>n', ':NERDTreeToggle<CR>', opts)
+vim.keymap.set('n', '<leader>w', ':w<CR>', opts)
+vim.keymap.set('n', '<leader>x', ':x<CR>', opts)
+
+vim.keymap.set('n', '<leader>gb', ':BlameToggle<CR>', opts)
+vim.keymap.set('n', '<leader>ga', ':wa<CR>:Git add .<CR>', opts)
+vim.keymap.set('n', '<leader>gc', ':Git commit<CR>', opts)
+vim.keymap.set('n', '<leader>gd', ':wa<CR>:Git diff<CR>', opts)
+vim.keymap.set('n', '<leader>gp', ':Git push<CR>', opts)
+vim.keymap.set('n', '<leader>gl', ':Git pull<CR>', opts)
+
+-- fix for colorschemes clash
 vim.defer_fn(function()
   vim.cmd [[highlight Directory guifg=#006DCE]]
   vim.cmd [[highlight Visual guibg=#d2cfc0]]

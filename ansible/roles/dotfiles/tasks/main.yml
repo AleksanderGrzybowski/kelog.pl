@@ -41,16 +41,14 @@
   with_items:
   - "/home/kelog/.config/k9s"
   - "/home/kelog/.config/k9s/skins/"
-- name: Put custom k9s Selenized dark theme
+- name: Put custom k9s Selenized themes
   copy:
-    src: "../files/k9s/selenized.yaml"
-    dest: "/home/kelog/.config/k9s/skins/selenized.yaml"
+    src: "../files/k9s/selenized-{{ item }}.yaml"
+    dest: "/home/kelog/.config/k9s/skins/selenized-{{ item }}.yaml"
     owner: kelog
-- name: Put custom k9s light theme
-  copy:
-    src: "../files/k9s/solarized-light.yml"
-    dest: "/home/kelog/.config/k9s/skins/solarized-light.yml"
-    owner: kelog
+  with_items:
+  - dark
+  - light
 - name: Put custom k9s config file
   copy:
     src: "../files/k9s/config.yaml"

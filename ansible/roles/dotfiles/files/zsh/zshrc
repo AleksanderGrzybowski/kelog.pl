@@ -72,7 +72,8 @@ export EDITOR='vim'
 alias s='sudo'
 alias d='docker'
 alias dc='docker compose'
-alias v='vim'
+alias v='nvim'
+alias n='nvim'
 alias tf='terraform'
 
 setopt NO_HUP

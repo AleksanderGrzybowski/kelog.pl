@@ -14,7 +14,7 @@ end)
 vim.o.breakindent = true
 vim.o.undofile = false
 vim.o.ignorecase = true
-vim.o.signcolumn = 'no'
+vim.o.signcolumn = 'auto'
 vim.o.updatetime = 250
 vim.o.timeoutlen = 1000
 vim.o.splitright = true

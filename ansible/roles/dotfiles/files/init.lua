@@ -135,8 +135,7 @@ require('lazy').setup({
           component_separators = { left = '', right = ''},
           section_separators = { left = '', right = ''},
           disabled_filetypes = {
-            statusline = { 'NvimTree', 'nerdtree' }, -- NvimTree or nerdtree
-            winbar = { 'NvimTree', 'nerdtree' },
+            statusline = { 'nerdtree' }, winbar = { 'nerdtree' },
           },
           ignore_focus = {},
           always_divide_middle = true,
@@ -233,11 +232,13 @@ vim.keymap.set('n', '<leader>gc', ':Git commit<CR>', opts)
 vim.keymap.set('n', '<leader>gd', ':wa<CR>:Git diff<CR>', opts)
 vim.keymap.set('n', '<leader>gp', ':Git push<CR>', opts)
 vim.keymap.set('n', '<leader>gl', ':Git pull<CR>', opts)
+vim.keymap.set('n', '<leader>gs', ':Git status<CR>', opts)
 
 -- fix for colorschemes clash
 vim.defer_fn(function()
   vim.cmd [[highlight Directory guifg=#006DCE]]
   vim.cmd [[highlight Visual guibg=#d2cfc0]]
-end, 1000)
+  vim.cmd.colorscheme 'selenized'
+end, 200)
 
 -- vim: ts=2 sts=2 sw=2 et

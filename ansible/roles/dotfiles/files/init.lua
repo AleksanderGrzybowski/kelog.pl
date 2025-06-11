@@ -236,9 +236,9 @@ vim.keymap.set('n', '<leader>gs', ':Git status<CR>', opts)
 
 -- fix for colorschemes clash
 vim.defer_fn(function()
+  vim.cmd.colorscheme 'selenized'
   vim.cmd [[highlight Directory guifg=#006DCE]]
   vim.cmd [[highlight Visual guibg=#d2cfc0]]
-  vim.cmd.colorscheme 'selenized'
-end, 200)
+end, 1000)
 
 -- vim: ts=2 sts=2 sw=2 et

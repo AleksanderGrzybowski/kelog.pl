@@ -17,7 +17,7 @@ spec:
       - name: regcred
       containers:
       - name: grafana
-        image: registry.kelog.pl/grafana/grafana:11.5.3
+        image: registry.kelog.pl/grafana/grafana:12.0.2
         ports:
         - containerPort: 3000
           protocol: TCP

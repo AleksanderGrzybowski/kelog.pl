@@ -37,7 +37,7 @@ spec:
       - name: regcred
       containers:
       - name: prometheus
-        image: registry.kelog.pl/prom/prometheus:v3.2.1
+        image: registry.kelog.pl/prom/prometheus:v3.4.1
         volumeMounts:
         - name: config
           mountPath: /etc/prometheus/prometheus.yml

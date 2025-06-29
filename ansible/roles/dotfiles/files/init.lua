@@ -174,7 +174,6 @@ require('lazy').setup({
     'echasnovski/mini.nvim',
     config = function()
       require('mini.ai').setup { n_lines = 500 }
-      require('mini.surround').setup()
     end,
   },
   { -- Highlight, edit, and navigate code
@@ -216,6 +215,8 @@ vim.keymap.set('n', 'Y', 'yy', opts)
 vim.keymap.set('i', 'jk', '<esc>', opts)
 vim.keymap.set('n', "'", "`", opts)
 vim.keymap.set('n', "`", "'", opts)
+vim.keymap.set('n', "gg", "gg0", opts)
+vim.keymap.set('v', "gg", "gg0", opts)
 
 vim.api.nvim_buf_set_keymap(0, 'n', 'k', 'gk', opts)
 vim.api.nvim_buf_set_keymap(0, 'n', 'j', 'gj', opts)
@@ -233,6 +234,7 @@ vim.keymap.set('n', '<leader>gd', ':wa<CR>:Git diff<CR>', opts)
 vim.keymap.set('n', '<leader>gp', ':Git push<CR>', opts)
 vim.keymap.set('n', '<leader>gl', ':Git pull<CR>', opts)
 vim.keymap.set('n', '<leader>gs', ':Git status<CR>', opts)
+vim.keymap.set('n', '<leader>go', ':Git log --oneline --graph --decorate<CR>', opts)
 
 -- fix for colorschemes clash
 vim.defer_fn(function()

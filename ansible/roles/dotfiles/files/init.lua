@@ -255,7 +255,7 @@ vim.defer_fn(function()
 
   if vim.fn.filereadable(vim.fn.expand("~/.dark")) == 1 then
     vim.cmd [[highlight Directory guifg=#58a3ff]]
-    vim.cmd [[highlight Visual guibg=#d2cfc0]]
+    vim.cmd [[highlight Visual guibg=#275966]]
   end
 end, 1000)
 

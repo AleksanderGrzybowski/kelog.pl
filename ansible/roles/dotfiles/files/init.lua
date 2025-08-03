@@ -234,13 +234,30 @@ vim.keymap.set('n', '<leader>gd', ':wa<CR>:Git diff<CR>', opts)
 vim.keymap.set('n', '<leader>gp', ':Git push<CR>', opts)
 vim.keymap.set('n', '<leader>gl', ':Git pull<CR>', opts)
 vim.keymap.set('n', '<leader>gs', ':Git status<CR>', opts)
-vim.keymap.set('n', '<leader>go', ':Git log --oneline --graph --decorate<CR>', opts)
+vim.keymap.set('n', '<leader>go', ':Git log --all --oneline --graph --decorate<CR>', opts)
 
--- fix for colorschemes clash
+
+if vim.fn.filereadable(vim.fn.expand("~/.light")) == 1 then
+  vim.o.background = "light"
+end
+if vim.fn.filereadable(vim.fn.expand("~/.dark")) == 1 then
+  vim.o.background = "dark"
+end
+
+
+-- fix for colorschemes issue with NerdTree
 vim.defer_fn(function()
   vim.cmd.colorscheme 'selenized'
-  vim.cmd [[highlight Directory guifg=#006DCE]]
-  vim.cmd [[highlight Visual guibg=#d2cfc0]]
+
+  if vim.fn.filereadable(vim.fn.expand("~/.light")) == 1 then
+    vim.cmd [[highlight Directory guifg=#006DCE]]
+  end
+
+  if vim.fn.filereadable(vim.fn.expand("~/.dark")) == 1 then
+    vim.cmd [[highlight Directory guifg=#58a3ff]]
+    vim.cmd [[highlight Visual guibg=#d2cfc0]]
+  end
 end, 1000)
+
 
 -- vim: ts=2 sts=2 sw=2 et

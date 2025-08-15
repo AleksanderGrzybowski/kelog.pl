@@ -259,10 +259,4 @@ vim.defer_fn(function()
   end
 end, 1000)
 
-vim.fn.timer_start(2000, function()
-  vim.schedule(function()
-    vim.cmd("NERDTreeRefreshRoot")
-  end)
-end, { ['repeat'] = -1 })
-
 -- vim: ts=2 sts=2 sw=2 et

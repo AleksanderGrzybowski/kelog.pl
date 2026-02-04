@@ -1,0 +1,35 @@
+---
+- name: Install zsh
+  apt:
+    name: zsh
+    state: present
+    update_cache: yes
+
+- name: Create user kelog
+  user:
+    name: kelog
+    state: present
+    create_home: yes
+    shell: /usr/bin/zsh
+
+- name: Grant kelog sudo permissions without password
+  copy:
+    dest: /etc/sudoers.d/kelog
+    content: "kelog ALL=(ALL) NOPASSWD:ALL"
+    mode: '0440'
+    validate: /usr/sbin/visudo -cf %s
+
+- name: Check if oh-my-zsh is installed
+  stat:
+    path: /home/kelog/.oh-my-zsh
+  register: oh_my_zsh_status
+  become: yes
+  become_user: kelog
+
+- name: Install oh-my-zsh
+  shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+  args:
+    creates: /home/kelog/.oh-my-zsh
+  when: not oh_my_zsh_status.stat.exists
+  become: yes
+  become_user: kelog

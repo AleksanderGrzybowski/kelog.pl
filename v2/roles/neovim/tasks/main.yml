@@ -1,0 +1,50 @@
+---
+- name: Check if Neovim is already installed
+  stat:
+    path: /opt/neovim/bin/nvim
+  register: nvim_bin_stat
+
+- name: Download Neovim tarball
+  get_url:
+    url: https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+    dest: /tmp/nvim-linux64.tar.gz
+    mode: '0644'
+  when: not nvim_bin_stat.stat.exists
+
+- name: Create Neovim installation directory
+  file:
+    path: /opt/neovim
+    state: directory
+    mode: '0755'
+  when: not nvim_bin_stat.stat.exists
+
+- name: Extract Neovim tarball
+  unarchive:
+    src: /tmp/nvim-linux64.tar.gz
+    dest: /opt/neovim
+    remote_src: yes
+    extra_opts: [--strip-components=1] # Strip the top-level directory (e.g., nvim-linux64)
+  when: not nvim_bin_stat.stat.exists
+
+- name: Create symlink for nvim executable
+  file:
+    src: /opt/neovim/bin/nvim
+    dest: /usr/local/bin/nvim
+    state: link
+    force: yes
+
+- name: Create ~/.config/nvim directory for kelog user
+  file:
+    path: /home/kelog/.config/nvim
+    state: directory
+    owner: kelog
+    group: kelog
+    mode: '0755'
+
+- name: Copy init.lua config for kelog user
+  template:
+    src: init.lua
+    dest: /home/kelog/.config/nvim/init.lua
+    owner: kelog
+    group: kelog
+    mode: '0644'

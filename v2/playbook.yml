@@ -2,7 +2,15 @@
 - hosts: all
   become: yes
   roles:
-  - user
-  - nginx
-  - monitoring
-  - neovim
+  - role: user
+    tags: [user]
+  - role: docker
+    tags: [docker]
+  - role: nginx
+    tags: [nginx]
+  - role: monitoring
+    tags: [monitoring]
+  - role: neovim
+    tags: [neovim]
+  - role: dotfiles
+    tags: [dotfiles]

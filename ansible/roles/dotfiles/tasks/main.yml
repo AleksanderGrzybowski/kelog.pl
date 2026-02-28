@@ -1,105 +1,24 @@
-- name: Put dotfiles
-  template:
-    src: "../files/{{ item }}"
+---
+- name: Copy dotfiles
+  copy:
+    src: "{{ role_path }}/templates/{{ item }}"
     dest: "/home/kelog/.{{ item }}"
-    owner: kelog
+    mode: '0644'
   with_items:
-  - vimrc
-  - ideavimrc
   - dircolors
   - gitconfig
-
-
-- name: Put folder for Neovim config
-  file:
-    path: "/home/kelog/.config/nvim"
-    state: directory
-    owner: kelog
-
-- name: Put Neovim config
-  template:
-    src: "../files/init.lua"
-    dest: "/home/kelog/.config/nvim/init.lua"
-    owner: kelog
-
-- name: Put .zshrc
-  template:
-    src: "../files/zsh/zshrc"
-    dest: "/home/kelog/.zshrc"
-    owner: kelog
-- name: Put custom zsh theme
-  copy:
-    src: "../files/zsh/agnoster-kelog.zsh-theme"
-    dest: "/home/kelog/.oh-my-zsh/themes/agnoster-kelog.zsh-theme"
-    owner: kelog
-
-- name: Put folders for custom k9s themes
-  file:
-    path: "{{ item }}"
-    state: directory
-    owner: kelog
-  with_items:
-  - "/home/kelog/.config/k9s"
-  - "/home/kelog/.config/k9s/skins/"
-- name: Put custom k9s Selenized themes
-  copy:
-    src: "../files/k9s/selenized-{{ item }}.yaml"
-    dest: "/home/kelog/.config/k9s/skins/selenized-{{ item }}.yaml"
-    owner: kelog
-  with_items:
-  - dark
-  - light
-- name: Put custom k9s config file
-  copy:
-    src: "../files/k9s/config.yaml"
-    dest: "/home/kelog/.config/k9s/config.yaml"
-    owner: kelog
+  - tmux.conf
 
 - name: Create folder for shell helpers
   file:
-    path: /home/kelog/bin
+    dest: "/home/kelog/bin"
     state: directory
     owner: kelog
+    mode: '0644'
 
-- name: Put tmux.conf
-  template:
-    src: "../files/tmux/tmux.conf"
-    dest: "/home/kelog/.tmux.conf"
-    owner: kelog
 - name: Copy extra shell scripts for information bar for tmux
   copy:
-    src: "{{ role_path }}/files/tmux/tmux-bar.sh"
-    dest: /home/kelog/bin/
+    src: "{{ role_path }}/templates/tmux-bar.sh"
+    dest: /home/kelog/bin/tmux-bar.sh
     owner: kelog
-
-- name: Copy scripts for setting theme (dark/light)
-  copy:
-    src: "{{ role_path }}/files/theme"
-    dest: /home/kelog/bin/
-    owner: kelog
-    mode: "0755"
-
-- name: Create directory for vim colorschemes
-  file:
-    path: "/home/kelog/.vim/colors"
-    state: directory
-    owner: kelog
-
-- name: Download selenized colorscheme for Vim
-  get_url:
-    url: https://raw.githubusercontent.com/jan-warchol/selenized/refs/heads/master/editors/vim/colors/selenized.vim
-    dest: /home/kelog/.vim/colors/selenized.vim
-
-- name: Create directory for Konsole colorschemes
-  file:
-    path: "/home/kelog/.local/share/konsole"
-    state: directory
-    owner: kelog
-
-- name: Download selenized colorschemes for Konsole
-  get_url:
-    url: "https://raw.githubusercontent.com/jan-warchol/selenized/refs/heads/master/terminals/konsole/selenized-{{ item }}.colorscheme"
-    dest: "/home/kelog/.local/share/konsole/selenized-{{ item }}.colorscheme"
-  with_items:
-  - dark
-  - light
+    mode: '0755'

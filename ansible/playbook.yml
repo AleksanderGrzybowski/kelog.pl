@@ -1,11 +1,16 @@
 ---
 - hosts: all
-  gather_facts: no
   become: yes
   roles:
-  - tools
-  - dotfiles
-  - ssh_tunnels
-  - wireguard
-  - role: k3s-prerequisites
-    when: inventory_hostname == 'kelog.pl'
+  - role: user
+    tags: [user]
+  - role: docker
+    tags: [docker]
+  - role: nginx
+    tags: [nginx]
+  - role: monitoring
+    tags: [monitoring]
+  - role: neovim
+    tags: [neovim]
+  - role: dotfiles
+    tags: [dotfiles]

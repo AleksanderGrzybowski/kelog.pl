@@ -9,7 +9,6 @@ This repository contains all configurations for my server and my devices, writte
 * Ansible playbooks for configuring basic tools (like vim, zsh, k9s) on my machines
 * Ansible roles for SSH tunnels and VPNs for remote access
 * Kuberentes resource definitions for supporting tools (Prometheus, Grafana) and all my demos from this GitHub
-* `_archive` folder with configs no longer used (like Docker Swarm, Icinga2 etc.)
 
 ## Why this exists?
 

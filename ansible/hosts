@@ -1,2 +1,1 @@
-dell ansible_connection=local
-kelog.pl ansible_host=kelog.pl ansible_user=kelog ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+kelog.pl ansible_user=kelog

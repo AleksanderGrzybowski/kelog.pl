@@ -7,6 +7,7 @@
   with_items:
   - dircolors
   - gitconfig
+  - zshrc
   - tmux.conf
 
 - name: Create folder for shell helpers
@@ -22,3 +23,10 @@
     dest: /home/kelog/bin/tmux-bar.sh
     owner: kelog
     mode: '0755'
+
+- name: Copy custom zsh theme
+  copy:
+    src: "{{ role_path }}/templates/agnoster-kelog.zsh-theme"
+    dest: /home/kelog/.oh-my-zsh/themes/agnoster-kelog.zsh-theme
+    owner: kelog
+    mode: '0644'

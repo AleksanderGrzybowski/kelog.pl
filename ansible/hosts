@@ -1,1 +1,2 @@
 kelog.pl ansible_user=kelog
+localhost ansible_connection=local ansible_become=yes

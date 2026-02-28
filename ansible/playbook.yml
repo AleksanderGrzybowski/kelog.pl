@@ -14,3 +14,9 @@
     tags: [neovim]
   - role: dotfiles
     tags: [dotfiles]
+
+- hosts: localhost
+  become: yes
+  roles:
+  - role: laptop
+    tags: [laptop]

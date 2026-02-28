@@ -1,0 +1,12 @@
+---
+- name: Copy laptop helper scripts
+  copy:
+    src: "{{ role_path }}/templates/{{ item }}"
+    dest: "/home/kelog/bin/{{ item }}"
+    mode: '0755'
+  with_items:
+  - backup-xz.sh
+  - konsole-tmux.sh
+  - mute-audio.sh
+  - reaper-snapshot.sh
+  - touchpad-scroll-speed.sh

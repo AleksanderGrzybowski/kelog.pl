@@ -77,11 +77,11 @@
     state: present
     update_cache: yes
 
-- name: Set Grafana HTTP address to localhost
+- name: Set Grafana HTTP address
   lineinfile:
     path: /etc/grafana/grafana.ini
-    regexp: '^http_addr\s*='
-    line: 'http_addr = 127.0.0.1'
+    regexp: '^;?http_addr\s*='
+    line: 'http_addr = 100.75.217.10'
 
 - name: Enable and start Grafana
   systemd:

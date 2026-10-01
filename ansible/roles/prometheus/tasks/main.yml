@@ -1,0 +1,29 @@
+---
+- name: Install Prometheus
+  apt:
+    name: prometheus
+    state: present
+
+- name: Ensure Prometheus override directory exists
+  file:
+    path: /etc/systemd/system/prometheus.service.d
+    state: directory
+    mode: '0755'
+
+- name: Create Prometheus systemd override file
+  copy:
+    dest: /etc/systemd/system/prometheus.service.d/override.conf
+    content: |
+      [Service]
+      ExecStart=
+      ExecStart=/usr/bin/prometheus --web.listen-address=127.0.0.1:9090 $ARGS
+    mode: '0644'
+  notify:
+  - reload systemd daemon
+  - restart prometheus
+
+- name: Configure Prometheus
+  template:
+    src: prometheus.yml
+    dest: /etc/prometheus/prometheus.yml
+  notify: restart prometheus

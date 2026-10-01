@@ -1,0 +1,43 @@
+---
+- name: Install prerequisites for Grafana
+  apt:
+    name:
+    - apt-transport-https
+    - software-properties-common
+    state: present
+
+- name: Create keyrings directory for Grafana
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
+- name: Add Grafana GPG key
+  shell: "wget -q -O - https://apt.grafana.com/gpg.key | gpg --dearmor > /etc/apt/keyrings/grafana.gpg"
+  args:
+    creates: /etc/apt/keyrings/grafana.gpg
+
+- name: Add Grafana repository
+  apt_repository:
+    repo: "deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stable main"
+    state: present
+    filename: grafana
+
+- name: Install Grafana
+  apt:
+    name: grafana
+    state: present
+    update_cache: yes
+
+- name: Set Grafana HTTP address
+  lineinfile:
+    path: /etc/grafana/grafana.ini
+    regexp: '^;?http_addr\s*='
+    line: 'http_addr = {{ tailscale_ip }}'
+  notify: restart grafana
+
+- name: Enable and start Grafana
+  systemd:
+    name: grafana-server
+    enabled: yes
+    state: started

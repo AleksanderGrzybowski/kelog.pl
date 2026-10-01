@@ -15,7 +15,7 @@
     dest: "/home/kelog/bin"
     state: directory
     owner: kelog
-    mode: '0644'
+    mode: '0755'
 
 - name: Copy extra shell scripts for information bar for tmux
   copy:

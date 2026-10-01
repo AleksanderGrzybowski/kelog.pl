@@ -8,13 +8,9 @@
   template:
     src: nginx.conf
     dest: /etc/nginx/nginx.conf
+  notify: restart nginx
 
 - name: Install Certbot and Nginx plugin
   apt:
     name: python3-certbot-nginx
     state: present
-
-- name: Restart Nginx
-  service:
-    name: nginx
-    state: restarted

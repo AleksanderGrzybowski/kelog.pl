@@ -1,2 +1,2 @@
 kelog.pl ansible_user=kelog
-localhost ansible_connection=local ansible_become=yes
+localhost ansible_connection=local ansible_become=yes ansible_become_exe=/usr/bin/sudo.ws

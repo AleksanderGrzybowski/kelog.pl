@@ -214,22 +214,10 @@ prompt_status() {
   [[ -n "$symbols" ]] && prompt_segment black default "$symbols"
 }
 
-prompt_kubernetes() {
-  context=$(kubectl config current-context)
-  if [[ "${context}" == "ovh" ]]; then
-    return
-  fi
- 
-  namespace=$(kubectl config view --minify --output 'jsonpath={..namespace}')
-
-  prompt_segment 006 black "${context}/${namespace}"
-}
-
 ## Main prompt
 build_prompt() {
   RETVAL=$?
   prompt_status
-  prompt_kubernetes
   prompt_virtualenv
   prompt_context
   prompt_dir

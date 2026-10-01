@@ -4,16 +4,24 @@
   roles:
   - role: user
     tags: [user]
-  - role: docker
-    tags: [docker]
-  - role: nginx
-    tags: [nginx]
-  - role: monitoring
-    tags: [monitoring]
+  - role: node-exporter
+    tags: [node-exporter]
   - role: neovim
     tags: [neovim]
   - role: dotfiles
     tags: [dotfiles]
+
+- hosts: kelog.pl
+  become: yes
+  roles:
+  - role: docker
+    tags: [docker]
+  - role: nginx
+    tags: [nginx]
+  - role: prometheus
+    tags: [prometheus]
+  - role: grafana
+    tags: [grafana]
 
 - hosts: localhost
   become: yes

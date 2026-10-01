@@ -1,0 +1,16 @@
+---
+nginx_cert_domain: aleksandergrzybowski.pl
+
+nginx_redirect_sites:
+- domain: cogramy.zespolsdg.pl
+  redirect_url: https://www.dropbox.com/sh/58s8dmi8rv4oo8p/AACG2EcqT1q5JKQsH-qMY6LVa?dl=0
+- domain: druzynapana.zespolsdg.pl
+  redirect_url: https://www.dropbox.com/sh/i9b3ugg8fzuqhhf/AAATnHnMpF1WA7bbskxYiJ_Ga?dl=0
+- domain: kanapka.zespolsdg.pl
+  redirect_url: https://www.dropbox.com/sh/jmicj8lciq80sc4/AAA14p73TEA685Yv3XBNvURla?dl=0
+- domain: kiedygramy.zespolsdg.pl
+  redirect_url: https://docs.google.com/spreadsheets/d/1ivEQhfoDYevSdUoFyemncJE9kw5oLlAO3J8h_yDjUKA/edit
+
+nginx_static_site:
+  domain: aleksandergrzybowski.pl
+  root: /var/aleksandergrzybowski.pl

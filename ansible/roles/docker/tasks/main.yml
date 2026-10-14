@@ -21,7 +21,7 @@
 
 - name: Add Docker repository
   apt_repository:
-    repo: "deb [signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable"
+    repo: "deb [signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ ansible_facts['lsb']['codename'] }} stable"
     state: present
     filename: docker
 

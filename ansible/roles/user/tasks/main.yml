@@ -20,17 +20,9 @@
     validate: /usr/sbin/visudo -cf %s
   when: inventory_hostname == 'kelog.pl'
 
-- name: Check if oh-my-zsh is installed
-  stat:
-    path: /home/kelog/.oh-my-zsh
-  register: oh_my_zsh_status
-  become: yes
-  become_user: kelog
-
 - name: Install oh-my-zsh
   shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
   args:
     creates: /home/kelog/.oh-my-zsh
-  when: not oh_my_zsh_status.stat.exists
   become: yes
   become_user: kelog

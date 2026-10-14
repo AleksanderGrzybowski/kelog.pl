@@ -1,0 +1,3 @@
+---
+tailscale_ip: 100.105.152.18
+node_exporter_listen_ip: "{{ tailscale_ip }}"

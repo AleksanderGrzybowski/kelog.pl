@@ -2,7 +2,7 @@
 
 perc=$[100-$(vmstat 1 2|tail -1|awk '{printf "%d", $15}')]
 cpu_usage=$(echo $perc | awk '{printf "%2d", $1}')
-mem_usage=$(free | grep Mem | awk '{printf "%d", $3/$2 * 100}')
+mem_usage=$(awk '/^MemTotal:/ {t=$2} /^MemAvailable:/ {a=$2} END {printf "%d", (t-a)/t * 100}' /proc/meminfo)
 
 before_download=$(cat /proc/net/dev | grep wlp0 | awk '{print $2}')
 before_upload=$(cat /proc/net/dev | grep wlp0 | awk '{print $10}')

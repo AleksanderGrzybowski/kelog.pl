@@ -3,6 +3,7 @@ set -e
 
 REPO_URL="https://github.com/AleksanderGrzybowski/aleksandergrzybowski.pl.git"
 TEMP_DIR=$(mktemp -d -t git-clone-XXXXXXXX)
+trap 'rm -rf "${TEMP_DIR}"' EXIT
 IMAGE_NAME="aleksandergrzybowskipl:latest"
 TARGET_HOST_DIR="/var/aleksandergrzybowski.pl"
 

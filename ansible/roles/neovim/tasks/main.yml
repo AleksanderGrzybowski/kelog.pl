@@ -33,6 +33,11 @@
     state: link
     force: yes
 
+- name: Remove Neovim tarball
+  file:
+    path: /tmp/nvim-linux64.tar.gz
+    state: absent
+
 - name: Create ~/.config/nvim directory for kelog user
   file:
     path: /home/kelog/.config/nvim

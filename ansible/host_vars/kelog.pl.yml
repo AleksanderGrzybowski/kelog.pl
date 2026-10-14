@@ -1,3 +1,4 @@
 ---
 tailscale_ip: 100.75.217.10
 node_exporter_listen_ip: 127.0.0.1
+prompt_dir_color: white

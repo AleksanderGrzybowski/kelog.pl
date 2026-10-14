@@ -10,12 +10,12 @@
     tags: [neovim]
   - role: dotfiles
     tags: [dotfiles]
+  - role: docker
+    tags: [docker]
 
 - hosts: kelog.pl
   become: yes
   roles:
-  - role: docker
-    tags: [docker]
   - role: nginx
     tags: [nginx]
   - role: prometheus

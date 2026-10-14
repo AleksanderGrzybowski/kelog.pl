@@ -24,8 +24,8 @@
     owner: kelog
     mode: '0755'
 
-- name: Copy custom zsh theme
-  copy:
+- name: Template custom zsh theme
+  template:
     src: "{{ role_path }}/templates/agnoster-kelog.zsh-theme"
     dest: /home/kelog/.oh-my-zsh/themes/agnoster-kelog.zsh-theme
     owner: kelog

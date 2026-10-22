@@ -15,6 +15,6 @@ cd "${TEMP_DIR}"
 echo "Building Docker image ${IMAGE_NAME}"
 docker build -t "${IMAGE_NAME}" .
 
-echo "Attempting to copy /usr/share/nginx/html from container to ${TARGET_HOST_DIR} on host."
-docker run --rm -v /var:/hostvar "${IMAGE_NAME}" /bin/bash -c "cp -R /usr/share/nginx/html/* /hostvar/aleksandergrzybowski.pl/"
+echo "Attempting to copy /frontend/dist from container to ${TARGET_HOST_DIR} on host."
+docker run --rm -v /var:/hostvar "${IMAGE_NAME}" /bin/bash -c "cp -R /frontend/dist/* /hostvar/aleksandergrzybowski.pl/"
 

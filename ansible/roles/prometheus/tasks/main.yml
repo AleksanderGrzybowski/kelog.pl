@@ -27,3 +27,9 @@
     src: prometheus.yml
     dest: /etc/prometheus/prometheus.yml
   notify: restart prometheus
+
+- name: Enable and start Prometheus
+  systemd:
+    name: prometheus
+    enabled: yes
+    state: started
